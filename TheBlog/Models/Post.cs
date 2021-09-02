@@ -5,6 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace TheBlog.Models
 {
@@ -41,5 +43,14 @@ namespace TheBlog.Models
 
         [NotMapped]
         public IFormFile Image { get; set; }
+
+
+        //Navigation Properties
+        public virtual Blog Blog { get; set; } // Blog is a parent for Post
+        public virtual IdentityUser Author { get; set; } // Author is a parent for Post
+
+        public virtual ICollection<Tag> Tags { get; set; } = new HashSet<Tag>(); // Post is a parent for Tag
+        public virtual ICollection<Comment> Comments { get; set; } = new HashSet<Comment>(); // Post is a parent for Comment
+
     }
 }

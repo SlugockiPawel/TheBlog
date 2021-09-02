@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 
 namespace TheBlog.Models
 {
@@ -38,6 +39,10 @@ namespace TheBlog.Models
         [NotMapped]
         public IFormFile Image { get; set; }
 
+        // Navigation Properties
+        public virtual IdentityUser Author { get; set; } // Author is a parent for Blog
+
+        public virtual ICollection<Post> Posts { get; set; } = new HashSet<Post>(); // Blog is a parent for Post
 
     }
 }

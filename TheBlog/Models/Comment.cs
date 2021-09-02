@@ -11,6 +11,7 @@ namespace TheBlog.Models
     public class Comment
     {
         public int Id { get; set; }
+        public int PostId { get; set; }
         public string AuthorId { get; set; }
         public string ModeratorId { get; set; }
 
@@ -28,7 +29,6 @@ namespace TheBlog.Models
         public string ModeratedBody { get; set; }
 
         // Navigation properties -> they will get the whole object they refer to
-
         public virtual Post Post { get; set; }
         public virtual IdentityUser Author { get; set; }
         public virtual IdentityUser Moderator { get; set; }
