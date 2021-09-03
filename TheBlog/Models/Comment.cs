@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using TheBlog.Enums;
 
 namespace TheBlog.Models
 {
@@ -27,6 +28,8 @@ namespace TheBlog.Models
 
         [StringLength(500, ErrorMessage = "The {0} must be between {2} and {1} characters long.", MinimumLength = 2)]
         public string ModeratedBody { get; set; }
+
+        public ModerationType ModerationType { get; set; }
 
         // Navigation properties -> they will get the whole object they refer to
         public virtual Post Post { get; set; }

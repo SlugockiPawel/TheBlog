@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using TheBlog.Enums;
 
 namespace TheBlog.Models
 {
@@ -35,7 +36,8 @@ namespace TheBlog.Models
         [Display(Name = "Updated Date")]
         public DateTime? Updated { get; set; }
 
-        public bool IsReady { get; set; }
+        public ReadyStatus ReadyStatus { get; set; }
+
         public string Slug { get; set; }
 
         public byte[] ImageData { get; set; }
