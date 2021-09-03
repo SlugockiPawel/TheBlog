@@ -12,7 +12,7 @@ namespace TheBlog.Models
     {
         public int Id { get; set; }
         public int PostId { get; set; }
-        public string AuthorTag { get; set; }
+        public string BlogUserId { get; set; }
 
         [Required]
         [StringLength(25, ErrorMessage = "The {0} must be between {2} and {1} characters long.", MinimumLength = 2)]
@@ -20,6 +20,6 @@ namespace TheBlog.Models
 
         // Navigation properties -> they will get the whole object they refer to
         public virtual Post Post { get; set; }
-        public virtual BlogUser Author { get; set; }
+        public virtual BlogUser BlogUser { get; set; }
     }
 }

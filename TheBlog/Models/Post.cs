@@ -15,7 +15,7 @@ namespace TheBlog.Models
     {
         public int Id { get; set; }
         public int BlogId { get; set; }
-        public string AuthorId { get; set; }
+        public string BlogUserId { get; set; }
 
         [Required]
         [StringLength(75, ErrorMessage = "The {0} has to be between {2} and {1} characters long", MinimumLength = 2)]
@@ -49,7 +49,7 @@ namespace TheBlog.Models
 
         //Navigation Properties
         public virtual Blog Blog { get; set; } // Blog is a parent for Post
-        public virtual BlogUser Author { get; set; } // Author is a parent for Post
+        public virtual BlogUser BlogUser { get; set; } // Author is a parent for Post
 
         public virtual ICollection<Tag> Tags { get; set; } = new HashSet<Tag>(); // Post is a parent for Tag
         public virtual ICollection<Comment> Comments { get; set; } = new HashSet<Comment>(); // Post is a parent for Comment
