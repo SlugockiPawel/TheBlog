@@ -40,7 +40,7 @@ namespace TheBlog.Models
         public IFormFile Image { get; set; }
 
         // Navigation Properties
-        public virtual IdentityUser Author { get; set; } // Author is a parent for Blog
+        public virtual BlogUser Author { get; set; } // Author is a parent for Blog
 
         public virtual ICollection<Post> Posts { get; set; } = new HashSet<Post>(); // Blog is a parent for Post
 

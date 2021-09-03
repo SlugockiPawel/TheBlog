@@ -33,7 +33,7 @@ namespace TheBlog.Models
 
         // Navigation properties -> they will get the whole object they refer to
         public virtual Post Post { get; set; }
-        public virtual IdentityUser Author { get; set; }
-        public virtual IdentityUser Moderator { get; set; }
+        public virtual BlogUser Author { get; set; }
+        public virtual BlogUser Moderator { get; set; }
     }
 }

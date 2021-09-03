@@ -49,7 +49,7 @@ namespace TheBlog.Models
 
         //Navigation Properties
         public virtual Blog Blog { get; set; } // Blog is a parent for Post
-        public virtual IdentityUser Author { get; set; } // Author is a parent for Post
+        public virtual BlogUser Author { get; set; } // Author is a parent for Post
 
         public virtual ICollection<Tag> Tags { get; set; } = new HashSet<Tag>(); // Post is a parent for Tag
         public virtual ICollection<Comment> Comments { get; set; } = new HashSet<Comment>(); // Post is a parent for Comment
