@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Identity;
 
 namespace TheBlog.Models
 {
+    using System.ComponentModel;
+
     public class Blog
     {
         public int Id { get; set; }
@@ -40,6 +42,8 @@ namespace TheBlog.Models
         public IFormFile Image { get; set; }
 
         // Navigation Properties
+
+        [DisplayName("Author")]
         public virtual BlogUser BlogUser { get; set; } // Author is a parent for Blog
 
         public virtual ICollection<Post> Posts { get; set; } = new HashSet<Post>(); // Blog is a parent for Post
