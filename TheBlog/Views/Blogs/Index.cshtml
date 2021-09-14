@@ -37,35 +37,36 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Created)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Updated)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImageData)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContentType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BlogUser.Id)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var blog in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => blog.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => blog.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => blog.Created)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => blog.Updated)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => blog.ImageData)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => blog.ContentType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => blog.BlogUserId)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@blog.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@blog.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@blog.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
