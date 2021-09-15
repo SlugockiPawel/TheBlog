@@ -81,7 +81,7 @@ namespace TheBlog.Controllers
             {
                 return NotFound();
             }
-            ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", blog.BlogUserId);
+
             return View(blog);
         }
 
