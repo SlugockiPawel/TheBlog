@@ -11,9 +11,13 @@ using TheBlog.Enums;
 
 namespace TheBlog.Models
 {
+    using System.ComponentModel;
+
     public class Post
     {
         public int Id { get; set; }
+
+        [DisplayName("Blog Name")]
         public int BlogId { get; set; }
         public string BlogUserId { get; set; }
 
