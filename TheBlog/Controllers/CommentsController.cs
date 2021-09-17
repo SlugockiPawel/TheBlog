@@ -20,7 +20,7 @@ namespace TheBlog.Controllers
         }
 
         // GET: Comments
-        public async Task<IActionResult> OriginalIndex()
+        public async Task<IActionResult> Index()
         {
             var originalComments = await _context.Comments.ToListAsync();
             return View("Index", originalComments);
