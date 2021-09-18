@@ -20,11 +20,11 @@ namespace TheBlog.Controllers
         }
 
         // GET: Tags
-        public async Task<IActionResult> Index()
-        {
-            var applicationDbContext = _context.Tags.Include(t => t.BlogUser).Include(t => t.Post);
-            return View(await applicationDbContext.ToListAsync());
-        }
+        // public async Task<IActionResult> Index()
+        // {
+        //     var applicationDbContext = _context.Tags.Include(t => t.BlogUser).Include(t => t.Post);
+        //     return View(await applicationDbContext.ToListAsync());
+        // }
 
         // GET: Tags/Details/5
         public async Task<IActionResult> Details(int? id)
