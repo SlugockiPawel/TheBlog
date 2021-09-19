@@ -73,59 +73,59 @@ namespace TheBlog.Controllers
         // }
 
         // GET: Tags/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var tag = await _context.Tags.FindAsync(id);
-            if (tag == null)
-            {
-                return NotFound();
-            }
-            ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", tag.BlogUserId);
-            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Abstract", tag.PostId);
-            return View(tag);
-        }
+        // public async Task<IActionResult> Edit(int? id)
+        // {
+        //     if (id == null)
+        //     {
+        //         return NotFound();
+        //     }
+        //
+        //     var tag = await _context.Tags.FindAsync(id);
+        //     if (tag == null)
+        //     {
+        //         return NotFound();
+        //     }
+        //     ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", tag.BlogUserId);
+        //     ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Abstract", tag.PostId);
+        //     return View(tag);
+        // }
 
         // POST: Tags/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,PostId,BlogUserId,Text")] Tag tag)
-        {
-            if (id != tag.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(tag);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TagExists(tag.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", tag.BlogUserId);
-            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Abstract", tag.PostId);
-            return View(tag);
-        }
+        // [HttpPost]
+        // [ValidateAntiForgeryToken]
+        // public async Task<IActionResult> Edit(int id, [Bind("Id,PostId,BlogUserId,Text")] Tag tag)
+        // {
+        //     if (id != tag.Id)
+        //     {
+        //         return NotFound();
+        //     }
+        //
+        //     if (ModelState.IsValid)
+        //     {
+        //         try
+        //         {
+        //             _context.Update(tag);
+        //             await _context.SaveChangesAsync();
+        //         }
+        //         catch (DbUpdateConcurrencyException)
+        //         {
+        //             if (!TagExists(tag.Id))
+        //             {
+        //                 return NotFound();
+        //             }
+        //             else
+        //             {
+        //                 throw;
+        //             }
+        //         }
+        //         return RedirectToAction(nameof(Index));
+        //     }
+        //     ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", tag.BlogUserId);
+        //     ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Abstract", tag.PostId);
+        //     return View(tag);
+        // }
 
         // GET: Tags/Delete/5
         public async Task<IActionResult> Delete(int? id)
