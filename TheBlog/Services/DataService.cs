@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using TheBlog.Data;
 using TheBlog.Enums;
 using TheBlog.Models;
@@ -24,6 +25,9 @@ namespace TheBlog.Services
 
         public async Task ManageDataAsync() // wrapper method (method that calls other methods)
         {
+            // Create the DB from the Migrations
+            await _dbContext.Database.MigrateAsync();
+
             //Task 1: Seed a few Roles into the system
             await SeedRolesAsync();
 
