@@ -53,10 +53,24 @@ namespace TheBlog.Services
             };
 
             // Use the UserManager to create a new user that is defined by adminUser
-           await _userManager.CreateAsync(adminUser, "Abc&123!");
+            await _userManager.CreateAsync(adminUser, "Abc&123!");
 
-           // Add this new user to the Administrator role
-           await _userManager.AddToRoleAsync(adminUser, BlogRole.Administrator.ToString());
+            // Add this new user to the Administrator role
+            await _userManager.AddToRoleAsync(adminUser, BlogRole.Administrator.ToString());
+
+            // Add moderator user:
+            var modUser = new BlogUser()
+            {
+                Email = "pacia7@gmail.com",
+                UserName = "pacia7@gmail.com",
+                FirstName = "Paulina",
+                LastName = "Dzwonek",
+                PhoneNumber = "123-456-789",
+                EmailConfirmed = true,
+            };
+
+            await _userManager.CreateAsync(modUser, "Abc&123!");
+            await _userManager.AddToRoleAsync(modUser, BlogRole.Moderator.ToString());
         }
 
         private async Task SeedRolesAsync()
