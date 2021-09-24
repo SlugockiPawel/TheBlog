@@ -56,6 +56,8 @@ namespace TheBlog
             //Will populate an instance of EmailSettings with values from EmailSettings in appsettings.json
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
 
+            services.AddScoped<IBlogEmailSender, EmailService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
