@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Diagnostics;
 using TheBlog.Models;
 
 namespace TheBlog.Controllers
@@ -26,6 +27,13 @@ namespace TheBlog.Controllers
         public IActionResult Contact()
         {
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Contact(ContactMe model)
+        {
+            return View(model);
         }
 
         public IActionResult About()
