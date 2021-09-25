@@ -7,16 +7,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Diagnostics;
 using TheBlog.Models;
+using TheBlog.Services;
+using TheBlog.ViewModels;
 
 namespace TheBlog.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IBlogEmailSender _blogEmailSender;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IBlogEmailSender blogEmailSender)
         {
             _logger = logger;
+            _blogEmailSender = blogEmailSender;
         }
 
         public IActionResult Index()
@@ -33,6 +37,10 @@ namespace TheBlog.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Contact(ContactMe model)
         {
+            // send contact me email
+
+
+
             return View(model);
         }
 
