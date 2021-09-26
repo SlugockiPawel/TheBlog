@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
 namespace TheBlog.Services
@@ -15,9 +16,10 @@ namespace TheBlog.Services
             throw new System.NotImplementedException();
         }
 
-        public string DecodeImage(byte[] data, string type)
+        public string DecodeImage(byte[] data, string type) // out of the database
         {
-            throw new System.NotImplementedException();
+            if (data is null || type is null) return null;
+            return $"data:image/{type};base64,{Convert.ToBase64String(data)}";
         }
 
         public string ContentType(IFormFile file)
