@@ -58,6 +58,9 @@ namespace TheBlog
 
             services.AddScoped<IBlogEmailSender, EmailService>();
 
+            // Register ImageService
+            services.AddScoped<IImageService, BasicImageService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
