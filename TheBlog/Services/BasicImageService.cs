@@ -37,7 +37,7 @@ namespace TheBlog.Services
 
         public int Size(IFormFile file)
         {
-            throw new System.NotImplementedException();
+            return Convert.ToInt32(file?.Length);
         }
     }
 }
