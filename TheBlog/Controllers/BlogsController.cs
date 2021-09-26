@@ -68,6 +68,12 @@ namespace TheBlog.Controllers
         {
             if (ModelState.IsValid)
             {
+                blog.Created = DateTime.UtcNow;
+                blog.BlogUserId = _userManager.GetUserId(User);
+
+                blog.ImageData = await _imageService.EncodeImageAsync(blog.Image);
+                blog.ContentType = _imageService.ContentType(blog.Image);
+
                 _context.Add(blog);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
