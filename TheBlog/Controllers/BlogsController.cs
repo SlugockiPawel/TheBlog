@@ -53,6 +53,7 @@ namespace TheBlog.Controllers
         }
 
         // GET: Blogs/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
