@@ -1,19 +1,27 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace TheBlog.Services
 {
     public class BasicImageService : IImageService
     {
-        public Task<byte[]> EncodeImageAsync(IFormFile file)
+        public async Task<byte[]> EncodeImageAsync(IFormFile file)
         {
-            throw new System.NotImplementedException();
+            if (file is null) return null;
+
+            //ms => memory stream
+            await using var ms = new MemoryStream();
+            await file.CopyToAsync(ms);
+            return ms.ToArray();
         }
 
-        public Task<byte[]> EncodeImageAsync(string fileName)
+        public async Task<byte[]> EncodeImageAsync(string fileName)
         {
-            throw new System.NotImplementedException();
+            var file = $"{Directory.GetCurrentDirectory()}/wwwroot/assets/img/{fileName}";
+            return await File.ReadAllBytesAsync(file);
         }
 
         public string DecodeImage(byte[] data, string type) // out of the database
