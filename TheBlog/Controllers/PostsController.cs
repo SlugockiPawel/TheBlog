@@ -7,16 +7,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TheBlog.Data;
 using TheBlog.Models;
+using TheBlog.Services;
 
 namespace TheBlog.Controllers
 {
     public class PostsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly ISlugService _slugService;
 
-        public PostsController(ApplicationDbContext context)
+        public PostsController(ApplicationDbContext context, ISlugService slugService)
         {
             _context = context;
+            _slugService = slugService;
         }
 
         // GET: Posts
@@ -58,11 +61,24 @@ namespace TheBlog.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BlogId,Title,Abstract,Content,ReadyStatus,Image")] Post post)
+        public async Task<IActionResult> Create([Bind("BlogId,Title,Abstract,Content,ReadyStatus,Image")] Post post, List<String> tagValues)
         {
             if (ModelState.IsValid)
             {
                 post.Created = DateTime.UtcNow;
+
+                // Create a slug and check if unique
+                var slug = _slugService.UrlFriendly(post.Title);
+
+                if (!_slugService.IsUnique(slug))
+                {
+                    // Add a model state error and return user back to Create view
+                    ModelState.AddModelError("Title", "Title provided cannot be used as it is already in the database. Try again with a different Post Title");
+                    ViewData["TagValues"] = String.Join(",", tagValues);
+                    return View(post);
+                }
+
+                post.Slug = slug;
 
                 _context.Add(post);
                 await _context.SaveChangesAsync();
