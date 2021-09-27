@@ -61,6 +61,9 @@ namespace TheBlog
             // Register ImageService
             services.AddScoped<IImageService, BasicImageService>();
 
+            // Register SlugService
+            services.AddScoped<ISlugService, BasicSlugService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
