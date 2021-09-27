@@ -20,7 +20,9 @@ namespace TheBlog.Services
 
         public bool IsUnique(string slug)
         {
-            throw new System.NotImplementedException();
+            return !_dbContext.Posts.Any(p => p.Slug == slug);
+        }
+
         }
     }
 }
