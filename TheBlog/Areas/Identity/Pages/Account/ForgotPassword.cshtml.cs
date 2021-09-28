@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using TheBlog.Models;
+using TheBlog.Services;
 
 namespace TheBlog.Areas.Identity.Pages.Account
 {
@@ -18,9 +19,9 @@ namespace TheBlog.Areas.Identity.Pages.Account
     public class ForgotPasswordModel : PageModel
     {
         private readonly UserManager<BlogUser> _userManager;
-        private readonly IEmailSender _emailSender;
+        private readonly IBlogEmailSender _emailSender;
 
-        public ForgotPasswordModel(UserManager<BlogUser> userManager, IEmailSender emailSender)
+        public ForgotPasswordModel(UserManager<BlogUser> userManager, IBlogEmailSender emailSender)
         {
             _userManager = userManager;
             _emailSender = emailSender;
