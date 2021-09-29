@@ -140,9 +140,12 @@ namespace TheBlog.Controllers
                     // }
 
                     var currentDbBlog = await _context.Blogs.AsNoTracking().FirstOrDefaultAsync(b => b.Id == id);
+                    blog.Updated = DateTime.UtcNow;
 
                     if (newImage is not null)
                     {
+
+
                         blog.ImageData = await _imageService.EncodeImageAsync(newImage);
                         blog.ContentType = newImage.ContentType;
                     }
