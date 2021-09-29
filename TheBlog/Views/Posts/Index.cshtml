@@ -1,4 +1,6 @@
-﻿@model IEnumerable<TheBlog.Models.Post>
+﻿@inject IImageService _imageService;
+@using TheBlog.Services
+@model IEnumerable<TheBlog.Models.Post>
 
 @{
     ViewData["Title"] = "Index";
@@ -11,37 +13,32 @@
 </p>
 <table class="table">
     <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Abstract)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Created)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ReadyStatus)
-            </th>
-            <th></th>
-        </tr>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Image)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Abstract)
+        </th>
+
+        <th></th>
+    </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
                 <td>
+                    <img class="img-fluid" src="@_imageService.DecodeImage(item.ImageData, item.ContentType)" alt="@item.Title image file"/>
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Title)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Abstract)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Created)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ReadyStatus)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
