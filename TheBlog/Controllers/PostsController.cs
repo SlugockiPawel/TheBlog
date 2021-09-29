@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -15,11 +17,13 @@ namespace TheBlog.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly ISlugService _slugService;
+        private readonly IImageService _imageService;
 
-        public PostsController(ApplicationDbContext context, ISlugService slugService)
+        public PostsController(ApplicationDbContext context, ISlugService slugService, IImageService imageService)
         {
             _context = context;
             _slugService = slugService;
+            _imageService = imageService;
         }
 
         // GET: Posts
@@ -61,11 +65,14 @@ namespace TheBlog.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BlogId,Title,Abstract,Content,ReadyStatus,Image")] Post post, List<String> tagValues)
+        public async Task<IActionResult> Create([Bind("BlogId,Title,Abstract,Content,ReadyStatus,Image")] Post post,
+            List<String> tagValues)
         {
             if (ModelState.IsValid)
             {
                 post.Created = DateTime.UtcNow;
+                post.ImageData = await _imageService.EncodeImageAsync(post.Image);
+                post.ContentType = _imageService.ContentType(post.Image);
 
                 // Create a slug and check if unique
                 var slug = _slugService.UrlFriendly(post.Title);
@@ -73,7 +80,8 @@ namespace TheBlog.Controllers
                 if (!_slugService.IsUnique(slug))
                 {
                     // Add a model state error and return user back to Create view
-                    ModelState.AddModelError("Title", "Title provided cannot be used as it is already in the database. Try again with a different Post Title");
+                    ModelState.AddModelError("Title",
+                        "Title provided cannot be used as it is already in the database. Try again with a different Post Title");
                     ViewData["TagValues"] = String.Join(",", tagValues);
                     return View(post);
                 }
@@ -84,6 +92,7 @@ namespace TheBlog.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["BlogId"] = new SelectList(_context.Blogs, "Id", "Description", post.BlogId);
             return View(post);
         }
@@ -101,6 +110,7 @@ namespace TheBlog.Controllers
             {
                 return NotFound();
             }
+
             ViewData["BlogId"] = new SelectList(_context.Blogs, "Id", "Name", post.BlogId);
             return View(post);
         }
@@ -110,7 +120,8 @@ namespace TheBlog.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,BlogId,Title,Abstract,Content,ReadyStatus,Image")] Post post)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,BlogId,Title,Abstract,Content,ReadyStatus")] Post post,
+            IFormFile newImage)
         {
             if (id != post.Id)
             {
@@ -122,6 +133,18 @@ namespace TheBlog.Controllers
                 try
                 {
                     post.Updated = DateTime.UtcNow;
+
+                    var currentDbPost = await _context.Posts.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
+                    if (newImage is not null)
+                    {
+                        post.ImageData = await _imageService.EncodeImageAsync(newImage);
+                        post.ContentType = newImage.ContentType;
+                    }
+                    else
+                    {
+                        post.ImageData = currentDbPost.ImageData;
+                        post.ContentType = currentDbPost.ContentType;
+                    }
 
                     _context.Update(post);
                     await _context.SaveChangesAsync();
@@ -137,8 +160,10 @@ namespace TheBlog.Controllers
                         throw;
                     }
                 }
+
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["BlogId"] = new SelectList(_context.Blogs, "Id", "Description", post.BlogId);
             ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", post.BlogUserId);
             return View(post);
