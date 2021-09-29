@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -107,7 +108,7 @@ namespace TheBlog.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Image")] Blog blog)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description")] Blog blog, IFormFile newImage)
         {
             if (id != blog.Id)
             {
@@ -118,6 +119,39 @@ namespace TheBlog.Controllers
             {
                 try
                 {
+                    // alt way
+                    // var newBlog = await _context.Blogs.FindAsync(blog.Id);
+                    //
+                    // newBlog.Updated = DateTime.UtcNow;
+                    //
+                    // if (newBlog.Name != blog.Name)
+                    // {
+                    //     newBlog.Name = blog.Name;
+                    // }
+                    //
+                    // if (newBlog.Description != blog.Description)
+                    // {
+                    //     newBlog.Description = blog.Description;
+                    // }
+                    //
+                    // if (newImage is not null)
+                    // {
+                    //     newBlog.ImageData = await _imageService.EncodeImageAsync(newImage);
+                    // }
+
+                    var currentDbBlog = await _context.Blogs.AsNoTracking().FirstOrDefaultAsync(b => b.Id == id);
+
+                    if (newImage is not null)
+                    {
+                        blog.ImageData = await _imageService.EncodeImageAsync(newImage);
+                        blog.ContentType = newImage.ContentType;
+                    }
+                    else
+                    {
+                        blog.ImageData = currentDbBlog.ImageData;
+                        blog.ContentType = currentDbBlog.ContentType;
+                    }
+
                     _context.Update(blog);
                     await _context.SaveChangesAsync();
                 }
@@ -136,6 +170,7 @@ namespace TheBlog.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
+            ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", blog.BlogUserId);
             return View(blog);
         }
 
