@@ -19,7 +19,8 @@ namespace TheBlog.Controllers
         private readonly IImageService _imageService;
         private readonly UserManager<BlogUser> _userManager;
 
-        public BlogsController(ApplicationDbContext context, IImageService imageService, UserManager<BlogUser> userManager)
+        public BlogsController(ApplicationDbContext context, IImageService imageService,
+            UserManager<BlogUser> userManager)
         {
             _context = context;
             _imageService = imageService;
@@ -71,13 +72,15 @@ namespace TheBlog.Controllers
                 blog.Created = DateTime.UtcNow;
                 blog.BlogUserId = _userManager.GetUserId(User);
 
-                blog.ImageData = await _imageService.EncodeImageAsync(blog.Image);
+                blog.ImageData = await _imageService.EncodeImageAsync(blog.Image); //IFormFile to byte[]
                 blog.ContentType = _imageService.ContentType(blog.Image);
 
                 _context.Add(blog);
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", blog.BlogUserId);
             return View(blog);
         }
@@ -129,6 +132,7 @@ namespace TheBlog.Controllers
                         throw;
                     }
                 }
+
                 return RedirectToAction(nameof(Index));
             }
 
