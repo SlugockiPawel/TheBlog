@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using TheBlog.Models;
+using TheBlog.Services;
 
 namespace TheBlog.Areas.Identity.Pages.Account.Manage
 {
@@ -14,16 +16,20 @@ namespace TheBlog.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<BlogUser> _userManager;
         private readonly SignInManager<BlogUser> _signInManager;
+        private readonly IImageService _imageService;
 
         public IndexModel(
             UserManager<BlogUser> userManager,
-            SignInManager<BlogUser> signInManager)
+            SignInManager<BlogUser> signInManager, IImageService imageService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _imageService = imageService;
         }
 
         public string Username { get; set; }
+
+        public string CurrentImage { get; set; }
 
         [TempData]
         public string StatusMessage { get; set; }
@@ -36,6 +42,8 @@ namespace TheBlog.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            public IFormFile Image { get; set; }
         }
 
         private async Task LoadAsync(BlogUser user)
