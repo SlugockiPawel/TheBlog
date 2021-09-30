@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -14,6 +15,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using TheBlog.Models;
 using TheBlog.Services;
@@ -25,24 +27,29 @@ namespace TheBlog.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<BlogUser> _signInManager;
         private readonly UserManager<BlogUser> _userManager;
+
         private readonly ILogger<RegisterModel> _logger;
+
         // private readonly IEmailSender _emailSender;
         private readonly IBlogEmailSender _emailSender;
+        private readonly IImageService _imageService;
+        private readonly IConfiguration _configuration;
 
         public RegisterModel(
             UserManager<BlogUser> userManager,
             SignInManager<BlogUser> signInManager,
             ILogger<RegisterModel> logger,
-            IBlogEmailSender emailSender)
+            IBlogEmailSender emailSender, IImageService imageService, IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _imageService = imageService;
+            _configuration = configuration;
         }
 
-        [BindProperty]
-        public InputModel Input { get; set; }
+        [BindProperty] public InputModel Input { get; set; }
 
         public string ReturnUrl { get; set; }
 
@@ -68,7 +75,8 @@ namespace TheBlog.Areas.Identity.Pages.Account
             public string Email { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.",
+                MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
@@ -93,10 +101,13 @@ namespace TheBlog.Areas.Identity.Pages.Account
             {
                 var user = new BlogUser
                 {
-                    UserName = Input.Email, 
-                    Email = Input.Email,
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
+                    UserName = Input.Email,
+                    Email = Input.Email,
+                    ImageData = (await _imageService.EncodeImageAsync(Input.ImageFile)) ??
+                                await _imageService.EncodeImageAsync(_configuration["DefaultUserImage"]),
+                    ContentType = Input.ImageFile is null ? Path.GetExtension(_configuration["DefaultUserImage"]) : Input.ImageFile.ContentType,
                 };
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
@@ -117,7 +128,8 @@ namespace TheBlog.Areas.Identity.Pages.Account
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                        return RedirectToPage("RegisterConfirmation",
+                            new { email = Input.Email, returnUrl = returnUrl });
                     }
                     else
                     {
@@ -125,6 +137,7 @@ namespace TheBlog.Areas.Identity.Pages.Account
                         return LocalRedirect(returnUrl);
                     }
                 }
+
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
