@@ -52,6 +52,7 @@ namespace TheBlog.Areas.Identity.Pages.Account.Manage
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
             Username = userName;
+            CurrentImage = _imageService.DecodeImage(user.ImageData, user.ContentType);
 
             Input = new InputModel
             {
@@ -94,6 +95,14 @@ namespace TheBlog.Areas.Identity.Pages.Account.Manage
                     StatusMessage = "Unexpected error when trying to set phone number.";
                     return RedirectToPage();
                 }
+            }
+
+            //Only if user selected new image, a program will update their profile
+            if (Input.Image is not null)
+            {
+                user.ImageData = await _imageService.EncodeImageAsync(Input.Image);
+                user.ContentType = Input.Image.ContentType;
+                await _userManager.UpdateAsync(user); // save changes to the database
             }
 
             await _signInManager.RefreshSignInAsync(user);
