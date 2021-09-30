@@ -8,6 +8,7 @@ using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -49,6 +50,8 @@ namespace TheBlog.Areas.Identity.Pages.Account
 
         public class InputModel
         {
+            [DisplayName("Custom Image")] public IFormFile ImageFile { get; set; }
+
             [Required]
             [StringLength(50, ErrorMessage = "The {0} must be between {2} and {1} characters long.", MinimumLength = 2)]
             [DisplayName("First Name")]
