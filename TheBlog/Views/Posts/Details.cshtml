@@ -5,20 +5,40 @@
 }
 
 <!-- Post Content-->
-        <article class="mb-4">
-            <div class="container px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-md-10 col-lg-8 col-xl-7">
-                       @Html.Raw(Model.Content);
-                    </div>
-                </div>
+<article class="mb-4">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                @Html.Raw(Model.Content)
             </div>
-        </article>
-        
+        </div>
+    </div>
+</article>
+
+
+<hr/>
+
+<article>
+    <div class="row">
+        <div class="col text-center h3 font-weight-bold">
+            Custom Post Tags
+        </div>
+    </div>
+    <div class="row">
+        <div class="col text-center">
+            @foreach (var tag in Model.Tags)
+            {
+                <a class="btn btn-warning btn-outline-dark border-radius-10" asp-action="TagIndex" asp-route-tag="@tag.Text.ToLower()">#@tag.Text</a> //TagIndex?
+            }
+        </div>
+    </div>
+</article>
+
+
+<hr/>
 
 @* Displaying Comments related to this post *@
 @* Display the image of the Comment's author *@
-
 
 
 <div>
