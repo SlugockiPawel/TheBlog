@@ -60,12 +60,8 @@
                         <select class="form-select" name="TagValues" id="TagList" multiple></select>
                     </div>
                 </div>
-                <label asp-for="Content" class="col-form-label"></label>
-                <textarea asp-for="Content" class="form-control"></textarea>
-                <span asp-validation-for="Content" class="text-danger"></span>
+                
             </div>
-
-
             <div class="col-form-label">
                 <label asp-for="ReadyStatus" class="col-form-label"></label>
                 <select asp-for="ReadyStatus" asp-items="@Html.GetEnumSelectList<ReadyStatus>()" class="form-control"></select>
