@@ -69,11 +69,16 @@ namespace TheBlog.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("BlogId,Title,Abstract,Content,ReadyStatus,Image")] Post post,
-            List<String> tagValues)
+            List<string> tagValues)
         {
             if (ModelState.IsValid)
             {
                 post.Created = DateTime.UtcNow;
+
+                var authorId = _userManager.GetUserId(User);
+                post.BlogUserId = authorId;
+
+                // use imageService to store incoming user specified image
                 post.ImageData = await _imageService.EncodeImageAsync(post.Image);
                 post.ContentType = _imageService.ContentType(post.Image);
 
@@ -85,7 +90,8 @@ namespace TheBlog.Controllers
                     // Add a model state error and return user back to Create view
                     ModelState.AddModelError("Title",
                         "Title provided cannot be used as it is already in the database. Try again with a different Post Title");
-                    ViewData["TagValues"] = String.Join(",", tagValues);
+
+                    ViewData["TagValues"] = string.Join(",", tagValues);
                     return View(post);
                 }
 
@@ -93,6 +99,20 @@ namespace TheBlog.Controllers
 
                 _context.Add(post);
                 await _context.SaveChangesAsync();
+
+                // add list of Tags to the post
+                foreach (var tagText in tagValues)
+                {
+                    _context.Add(new Tag()
+                    {
+                        BlogUserId = authorId,
+                        PostId = post.Id,
+                        Text = tagText,
+                    });
+                }
+
+                await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
 
