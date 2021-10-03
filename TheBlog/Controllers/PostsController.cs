@@ -21,7 +21,8 @@ namespace TheBlog.Controllers
         private readonly IImageService _imageService;
         private readonly UserManager<BlogUser> _userManager;
 
-        public PostsController(ApplicationDbContext context, ISlugService slugService, IImageService imageService, UserManager<BlogUser> userManager)
+        public PostsController(ApplicationDbContext context, ISlugService slugService, IImageService imageService,
+            UserManager<BlogUser> userManager)
         {
             _context = context;
             _slugService = slugService;
@@ -47,7 +48,7 @@ namespace TheBlog.Controllers
             var post = await _context.Posts
                 .Include(p => p.Blog)
                 .Include(p => p.BlogUser)
-                .Include(p=> p.Tags)
+                .Include(p => p.Tags)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (post == null)
             {
@@ -150,7 +151,7 @@ namespace TheBlog.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,BlogId,Title,Abstract,Content,ReadyStatus")] Post post,
-            IFormFile newImage)
+            IFormFile newImage, List<string> tagValues) //name of the select list is tagValues => it has to match!
         {
             if (id != post.Id)
             {
@@ -163,7 +164,11 @@ namespace TheBlog.Controllers
                 {
                     post.Updated = DateTime.UtcNow;
 
-                    var currentDbPost = await _context.Posts.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
+                    var currentDbPost = await _context.Posts
+                        .Include(p => p.Tags)
+                        .AsNoTracking()
+                        .FirstOrDefaultAsync(p => p.Id == id);
+
                     if (newImage is not null)
                     {
                         post.ImageData = await _imageService.EncodeImageAsync(newImage);
@@ -174,8 +179,31 @@ namespace TheBlog.Controllers
                         post.ImageData = currentDbPost.ImageData;
                         post.ContentType = currentDbPost.ContentType;
                     }
-
+                  
                     _context.Update(post);
+                    await _context.SaveChangesAsync();
+
+                    _context.Entry(post).State = EntityState.Detached;
+
+                    
+
+                    //Remove all Tags previously associated with this Post
+                    
+                     _context.Tags.RemoveRange(currentDbPost.Tags);
+                    
+
+                    //Add new tags to the post from the Edit form
+                    foreach (var tagText in tagValues)
+                    {
+                        _context.Tags.Add(new Tag()
+                        {
+                            PostId = post.Id,
+                            BlogUserId = currentDbPost.BlogUserId,
+                            Text = tagText,
+                        });
+                    }
+
+                    // _context.Update(post);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
