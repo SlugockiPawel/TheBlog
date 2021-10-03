@@ -88,9 +88,13 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     
     <script>
+        let tagValues = '@ViewData["TagValues"]';
+
         //Default font size but not for placeholder...
         $('#Content').summernote({
             placeholder: "Post Body"
         });
     </script>
+    
+    <script src="~/js/custom.js"></script>
 }
