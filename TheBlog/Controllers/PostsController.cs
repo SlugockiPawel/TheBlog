@@ -139,6 +139,8 @@ namespace TheBlog.Controllers
             }
 
             ViewData["BlogId"] = new SelectList(_context.Blogs, "Id", "Name", post.BlogId);
+            ViewData["TagValues"] = string.Join(",", post.Tags.Select(t => t.Text));
+
             return View(post);
         }
 
