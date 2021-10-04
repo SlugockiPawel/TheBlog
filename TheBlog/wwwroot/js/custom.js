@@ -24,13 +24,21 @@ function AddTag() {
 
 function DeleteTag() {
     let tagCount = 1;
+    const tagList = document.getElementById("TagList");
+
+    if (!tagList) return false;
+
+    if (tagList.selectedIndex === -1) {
+        swalWithDarkButton.fire({
+            html: `<span class='fw-bolder'>CHOOSE A TAG BEFORE DELETING</span>`
+        });
+        return true;
+    }
+
 
     while (tagCount > 0) {
-        const tagList = document.getElementById("TagList");
-        const selectedIndex = tagList.selectedIndex;
-
-        if (selectedIndex >= 0) {
-            tagList.options[selectedIndex] = null;
+        if (tagList.selectedIndex >= 0) {
+            tagList.options[tagList.selectedIndex] = null;
             --tagCount;
         } else {
             tagCount = 0;
