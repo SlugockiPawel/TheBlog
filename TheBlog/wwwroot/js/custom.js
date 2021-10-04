@@ -3,8 +3,20 @@
 function AddTag() {
     const tagEntry = document.getElementById("TagEntry");
 
-    const newOption = new Option(tagEntry.value, tagEntry.value);
-    document.getElementById("TagList").options[index++] = newOption;
+    //search for error (validate tagEntry)
+    const searchResult = search(tagEntry.value);
+    if (searchResult !== null) {
+        //trigger sweet alert
+
+        swalWithDarkButton.fire({
+            html: `<span class='fw-bolder'>${searchResult.toUpperCase()}</span>`
+        });
+
+    } else {
+        const newOption = new Option(tagEntry.value, tagEntry.value);
+        document.getElementById("TagList").options[index++] = newOption;
+    }
+
 
     tagEntry.value = "";
     return true;
@@ -46,7 +58,7 @@ if (tagValues !== "") {
 function ReplaceTag(tag, index) {
     const newOption = new Option(tag, tag);
     document.getElementById("TagList").options[index] = newOption;
-}}
+}
 
 //The search function will detect either an aempty or a duplicate Tag(return error string if detected)
 function search(str) {
@@ -65,6 +77,7 @@ function search(str) {
 
     return null;
 }
+
 const swalWithDarkButton = Swal.mixin({
     customClass: {
         confirmButton: 'btn btn-danger btn-outline-dark border-radius-10'
