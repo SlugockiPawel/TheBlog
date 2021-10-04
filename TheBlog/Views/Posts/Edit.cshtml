@@ -14,23 +14,23 @@
         <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="BlogId" class="control-label"></label>
+            <div class="col-form-label">
+                <label asp-for="BlogId" class="col-form-label"></label>
                 <select asp-for="BlogId" class="form-control" asp-items="ViewBag.BlogId"></select>
                 <span asp-validation-for="BlogId" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
+            <div class="col-form-label">
+                <label asp-for="Title" class="col-form-label"></label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Abstract" class="control-label"></label>
+            <div class="col-form-label">
+                <label asp-for="Abstract" class="col-form-label"></label>
                 <textarea asp-for="Abstract" class="form-control"></textarea>
                 <span asp-validation-for="Abstract" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Content" class="control-label"></label>
+            <div class="col-form-label">
+                <label asp-for="Content" class="col-form-label"></label>
                 <textarea asp-for="Content" class="form-control"></textarea>
                 <span asp-validation-for="Content" class="text-danger"></span>
             </div>
@@ -63,17 +63,17 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Image" class="control-label"></label>
+            <div class="col-form-label">
+                <label asp-for="Image" class="col-form-label"></label>
                 <input type="file" name="newImage" class="form-control" />
                 <span asp-validation-for="Image" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ReadyStatus" class="control-label"></label>
+            <div class="col-form-label">
+                <label asp-for="ReadyStatus" class="col-form-label"></label>
                 <select asp-for="ReadyStatus" asp-items="@Html.GetEnumSelectList<ReadyStatus>()" class="form-control"></select>
                 <span asp-validation-for="ReadyStatus" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="col-form-label">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
