@@ -65,3 +65,12 @@ function search(str) {
 
     return null;
 }
+const swalWithDarkButton = Swal.mixin({
+    customClass: {
+        confirmButton: 'btn btn-danger btn-outline-dark border-radius-10'
+    },
+    icon: 'error',
+//    imageUrl: '/assets/img/post-sample-image.jpg',
+    timer: 4000,
+    buttonsStyling: false
+});
