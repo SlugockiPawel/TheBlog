@@ -46,4 +46,22 @@ if (tagValues !== "") {
 function ReplaceTag(tag, index) {
     const newOption = new Option(tag, tag);
     document.getElementById("TagList").options[index] = newOption;
+}}
+
+//The search function will detect either an aempty or a duplicate Tag(return error string if detected)
+function search(str) {
+    if (str === '') {
+        return "Empty tags are not permitted";
+    }
+
+    var tags = document.getElementById('TagList');
+    if (tags) {
+        const options = tags.options;
+        for (let i = 0; i < options.length; i++) {
+            if (options[i].value === str)
+                return `Duplicate tag: #${str} is not permitted`;
+        }
+    }
+
+    return null;
 }
