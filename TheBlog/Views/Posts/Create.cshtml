@@ -60,7 +60,7 @@
                         <select class="form-select" name="TagValues" id="TagList" multiple></select>
                     </div>
                 </div>
-                
+
             </div>
             <div class="col-form-label">
                 <label asp-for="ReadyStatus" class="col-form-label"></label>
@@ -85,12 +85,15 @@
 
 @section Scripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
-    
-    <script src="~/js/custom.js"></script>
+
     <script>
+        const tagValues = '@ViewData["TagValues"]';
+
         //Default font size but not for placeholder...
         $('#Content').summernote({
             placeholder: "Post Body"
         });
     </script>
+
+    <script src="~/js/custom.js"></script>
 }
