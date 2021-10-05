@@ -62,6 +62,7 @@ namespace TheBlog.Controllers
         public IActionResult Create()
         {
             ViewData["BlogId"] = new SelectList(_context.Blogs, "Id", "Name");
+            ViewData["BlogUserId"] = new SelectList(_context.Blogs, "Id", "Id");
             return View();
         }
 
@@ -86,13 +87,26 @@ namespace TheBlog.Controllers
 
                 // Create a slug and check if unique
                 var slug = _slugService.UrlFriendly(post.Title);
+                var slugValidationError = false;
+
+                if (string.IsNullOrWhiteSpace(slug))
+                {
+                    slugValidationError = true;
+                    // Add a model state error and return user back to Create view
+                    ModelState.AddModelError("Title",
+                        "Title cannot be empty. Try again with a different Post Title");
+                }
 
                 if (!_slugService.IsUnique(slug))
                 {
+                    slugValidationError = true;
                     // Add a model state error and return user back to Create view
                     ModelState.AddModelError("Title",
                         "Title provided cannot be used as it is already in the database. Try again with a different Post Title");
+                }
 
+                if (slugValidationError)
+                {
                     ViewData["TagValues"] = string.Join(",", tagValues);
                     return View(post);
                 }
@@ -179,18 +193,17 @@ namespace TheBlog.Controllers
                         post.ImageData = currentDbPost.ImageData;
                         post.ContentType = currentDbPost.ContentType;
                     }
-                  
+
                     _context.Update(post);
                     await _context.SaveChangesAsync();
 
                     _context.Entry(post).State = EntityState.Detached;
 
-                    
 
                     //Remove all Tags previously associated with this Post
-                    
-                     _context.Tags.RemoveRange(currentDbPost.Tags);
-                    
+
+                    _context.Tags.RemoveRange(currentDbPost.Tags);
+
 
                     //Add new tags to the post from the Edit form
                     foreach (var tagText in tagValues)
