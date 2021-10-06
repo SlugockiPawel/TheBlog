@@ -108,6 +108,7 @@ namespace TheBlog.Controllers
                 if (slugValidationError)
                 {
                     ViewData["TagValues"] = string.Join(",", tagValues);
+                    ViewData["BlogId"] = new SelectList(_context.Blogs, "Id", "Name", post.BlogId);
                     return View(post);
                 }
 
@@ -154,8 +155,8 @@ namespace TheBlog.Controllers
             }
 
             ViewData["BlogId"] = new SelectList(_context.Blogs, "Id", "Name", post.BlogId);
-            ViewData["TagValues"] = string.Join(",", post.Tags.Select(t => t.Text));
-
+            var tagsToDisplay = post.Tags.Select(t => t.Text);
+            ViewData["TagValues"] = string.Join(",", tagsToDisplay);
             return View(post);
         }
 
@@ -182,6 +183,23 @@ namespace TheBlog.Controllers
                         .Include(p => p.Tags)
                         .AsNoTracking()
                         .FirstOrDefaultAsync(p => p.Id == id);
+
+                    var newSlug = _slugService.UrlFriendly(post.Title);
+                    if (newSlug != currentDbPost.Slug)
+                    {
+                        if (_slugService.IsUnique(newSlug))
+                        {
+                            post.Slug = newSlug;
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("Title", "Title provided cannot be used as it is already in the database. Try again with a different Post Title");
+                            var tagsToDisplay = currentDbPost.Tags.Select(t => t.Text);
+                            ViewData["TagValues"] = string.Join(",", tagsToDisplay);
+                            ViewData["BlogId"] = new SelectList(_context.Blogs, "Id", "Name", post.BlogId);
+                            return View(post);
+                        }
+                    }
 
                     if (newImage is not null)
                     {
