@@ -6,6 +6,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Diagnostics;
+using Microsoft.EntityFrameworkCore;
+using TheBlog.Data;
 using TheBlog.Models;
 using TheBlog.Services;
 using TheBlog.ViewModels;
@@ -16,16 +18,20 @@ namespace TheBlog.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IBlogEmailSender _emailSender;
+        private readonly ApplicationDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger, IBlogEmailSender emailSender)
+        public HomeController(ILogger<HomeController> logger, IBlogEmailSender emailSender, ApplicationDbContext context)
         {
             _logger = logger;
             _emailSender = emailSender;
+            _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var blogs = await _context.Blogs.ToListAsync();
+
+            return View(blogs);
         }
 
         public IActionResult Contact()
