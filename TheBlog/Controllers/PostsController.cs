@@ -192,6 +192,7 @@ namespace TheBlog.Controllers
                 try
                 {
                     post.Updated = DateTime.UtcNow;
+                    post.BlogUserId = _userManager.GetUserId(User);
 
                     var currentDbPost = await _context.Posts
                         .Include(p => p.Tags)
