@@ -29,7 +29,9 @@ namespace TheBlog.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var blogs = await _context.Blogs.ToListAsync();
+            var blogs = await _context.Blogs
+                .Include(b => b.BlogUser)
+                .ToListAsync();
 
             return View(blogs);
         }
