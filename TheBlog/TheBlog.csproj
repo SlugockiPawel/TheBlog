@@ -21,6 +21,7 @@
     <PackageReference Include="MimeKit" Version="2.15.1" />
     <PackageReference Include="Npgsql" Version="5.0.7" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.7" />
+    <PackageReference Include="X.PagedList" Version="8.1.0" />
   </ItemGroup>
 
 </Project>
