@@ -73,6 +73,19 @@ namespace TheBlog.Controllers
                 blog.Created = DateTime.UtcNow;
                 blog.BlogUserId = _userManager.GetUserId(User);
 
+                // --- hard code the only user that can create blogs (for now)
+
+                blog.BlogUser = new BlogUser()
+                {
+                    Email = User.Identity.Name,
+                    FirstName = "Pawel",
+                    LastName = "Slugocki",
+                };
+
+                blog.BlogUser.Blogs.Add(blog);
+
+                // ---
+
                 blog.ImageData = await _imageService.EncodeImageAsync(blog.Image); //IFormFile to byte[]
                 blog.ContentType = _imageService.ContentType(blog.Image);
 
@@ -144,8 +157,6 @@ namespace TheBlog.Controllers
 
                     if (newImage is not null)
                     {
-
-
                         blog.ImageData = await _imageService.EncodeImageAsync(newImage);
                         blog.ContentType = newImage.ContentType;
                     }
