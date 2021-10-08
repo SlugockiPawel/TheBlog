@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using TheBlog.Data;
+using TheBlog.Enums;
 using TheBlog.Models;
 using TheBlog.Services;
 using TheBlog.ViewModels;
+using X.PagedList;
 
 namespace TheBlog.Controllers
 {
@@ -27,11 +29,18 @@ namespace TheBlog.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
+            var pageNumber = page ?? 1;
+            var pageSize = 5;
+
+            // get only the blogs that has at least one ProductionReady post, order them by Created date,
+            // include BlogUser and convert to PagedList (X.PagedList package)
             var blogs = await _context.Blogs
                 .Include(b => b.BlogUser)
-                .ToListAsync();
+                .Where(b => b.Posts.Any(p => p.ReadyStatus == ReadyStatus.ProductionReady))
+                .OrderByDescending(b => b.Created)
+                .ToPagedListAsync(pageNumber,pageSize);
 
             return View(blogs);
         }
