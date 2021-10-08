@@ -9,8 +9,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TheBlog.Data;
+using TheBlog.Enums;
 using TheBlog.Models;
 using TheBlog.Services;
+using X.PagedList;
 
 namespace TheBlog.Controllers
 {
@@ -38,16 +40,21 @@ namespace TheBlog.Controllers
         }
 
         //BlogPostIndex
-        public async Task<IActionResult> BlogPostIndex(int? id)
+        public async Task<IActionResult> BlogPostIndex(int? id, int? page)
         {
             if (id is null)
             {
                 return NotFound();
             }
+            var pageNumber = page ?? 1;
+            var pageSize = 5;
 
-            var posts = await _context.Posts.Where(p => p.Id == id).ToListAsync();
+            var posts = await _context.Posts
+                .Where(p => p.BlogId == id && p.ReadyStatus == ReadyStatus.ProductionReady)
+                .OrderByDescending(p => p.Created)
+                .ToPagedListAsync(pageNumber, pageSize);
 
-            return View("Index", posts);
+            return View(posts);
         }
 
         // GET: Posts/Details/5
