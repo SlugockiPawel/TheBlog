@@ -1,5 +1,8 @@
 ﻿@using TheBlog.Models
-@model IEnumerable<Blog>
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
+@model IPagedList<Blog>
 
 @{
     ViewData["Title"] = "Home Page";
@@ -28,5 +31,23 @@
                 <a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a>
             </div>
         </div>
+    </div>
+</div>
+
+@* Paging Controls here *@
+<div class="row">
+    <div class="col h3">
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page}),
+        new PagedListRenderOptions
+        {
+            LiElementClasses = new string[] {"page-item"},
+            PageClasses = new string[] {"page-link"},
+        })
     </div>
 </div>
