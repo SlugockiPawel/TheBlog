@@ -22,14 +22,16 @@ namespace TheBlog.Controllers
         private readonly ISlugService _slugService;
         private readonly IImageService _imageService;
         private readonly UserManager<BlogUser> _userManager;
+        private readonly BlogSearchService _blogSearchService;
 
         public PostsController(ApplicationDbContext context, ISlugService slugService, IImageService imageService,
-            UserManager<BlogUser> userManager)
+            UserManager<BlogUser> userManager, BlogSearchService blogSearchService)
         {
             _context = context;
             _slugService = slugService;
             _imageService = imageService;
             _userManager = userManager;
+            _blogSearchService = blogSearchService;
         }
 
         //GET: Search Posts
