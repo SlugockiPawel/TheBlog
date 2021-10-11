@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +14,12 @@ namespace TheBlog.Controllers
     public class CommentsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<BlogUser> _userManager;
 
-        public CommentsController(ApplicationDbContext context)
+        public CommentsController(ApplicationDbContext context, UserManager<BlogUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Comments
