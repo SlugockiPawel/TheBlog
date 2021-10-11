@@ -85,8 +85,10 @@ namespace TheBlog.Controllers
 
             var post = await _context.Posts
                 .Include(p => p.Blog)
-                .Include(p => p.BlogUser)
+                .Include(p => p.BlogUser) // this BlogUser is an author of the Post (below is for comment)
                 .Include(p => p.Tags)
+                .Include(p => p.Comments)
+                .ThenInclude( c => c.BlogUser) // will query above Comments only
                 .FirstOrDefaultAsync(m => m.Slug == slug);
             if (post == null)
             {
