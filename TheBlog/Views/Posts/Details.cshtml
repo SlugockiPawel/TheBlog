@@ -55,7 +55,7 @@
     }
     else
     {
-        <a class="btn col-12 btn-dark btn-sm" asp-area="Identity" asp-page="/Account/Login">LOG IN TO ADD COMMENTS</a>
+        <a class="btn col-12 btn-dark btn-sm" asp-area="Identity" asp-page="/Account/Login" asp-route-ReturnUrl="~/Posts/Details?slug=@Model.Slug">LOG IN TO ADD COMMENTS</a>
     }
 </div>
 
