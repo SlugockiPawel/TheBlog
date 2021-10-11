@@ -1,4 +1,6 @@
-﻿@model TheBlog.Models.Post
+﻿@using TheBlog.Services
+@model TheBlog.Models.Post
+@inject IImageService _imageService
 
 @{
     ViewData["Title"] = "Details";
@@ -59,7 +61,22 @@
     }
 </div>
 
-@* Display the image of the Comment's author *@
+<hr />/>
+@* List comments under a post *@
+
+<span class="col-12 btn btn-dark">@Model.Comments.Count COMMENT(S)</span>
+
+@foreach (var comment in Model.Comments)
+{
+    <div class="media media-border p-0 mb-2 bg-light">
+        <img class="me-3 mt-3 rounded-circle" style="width:60px" src="@_imageService.DecodeImage(Model.BlogUser.ImageData, Model.BlogUser.ContentType)">
+        <div class=media-body>
+            <h4>@comment.BlogUser.FullName</h4>
+            <small><i>Posted on @comment.Created.ToLongDateString()</i></small>
+            <p>@comment.Body</p>
+        </div>
+    </div>
+}
 
 
 <div>
