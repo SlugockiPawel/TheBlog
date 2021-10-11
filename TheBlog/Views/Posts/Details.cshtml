@@ -61,19 +61,34 @@
     }
 </div>
 
-<hr />/>
+<hr />
 @* List comments under a post *@
 
 <span class="col-12 btn btn-dark">@Model.Comments.Count COMMENT(S)</span>
 
 @foreach (var comment in Model.Comments)
 {
-    <div class="media media-border p-0 mb-2 bg-light">
-        <img class="me-3 mt-3 rounded-circle" style="width:60px" src="@_imageService.DecodeImage(Model.BlogUser.ImageData, Model.BlogUser.ContentType)">
+ @*   <div class="row media media-border p-0 mb-2 bg-light">
+
+        <img class="me-3 mt-3 rounded-circle" style="width: 60px" src="@_imageService.DecodeImage(Model.BlogUser.ImageData, Model.BlogUser.ContentType)">
         <div class=media-body>
             <h4>@comment.BlogUser.FullName</h4>
             <small><i>Posted on @comment.Created.ToLongDateString()</i></small>
             <p>@comment.Body</p>
+        </div>
+    </div>*@
+
+    <div class="row media media-border p-0 mb-2 bg-light">
+        <div class="col-1">
+            <img class="me-3 mt-3 img-fluid rounded-circle" style="min-width: 80px" src="@_imageService.DecodeImage(Model.BlogUser.ImageData, Model.BlogUser.ContentType)" alt="@Model.BlogUser image">
+        </div>
+        
+        <div class="col-11">
+            <div class=media-body>
+                <h4>@comment.BlogUser.FullName</h4>
+                <small><i>Posted on @comment.Created.ToLongDateString()</i></small>
+                <p>@comment.Body</p>
+            </div>
         </div>
     </div>
 }
