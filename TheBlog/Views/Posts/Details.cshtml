@@ -88,7 +88,7 @@
         
         <div class="col-11">
             <div class=media-body>
-                <h4>@comment.BlogUser.FullName</h4>
+                <h4 id=@($"commentNumber_{comment.Id}")>@comment.BlogUser.FullName</h4>
                 <small><i>Posted on @comment.Created.ToLongDateString()</i></small>
                 <p>@comment.Body</p>
                 
