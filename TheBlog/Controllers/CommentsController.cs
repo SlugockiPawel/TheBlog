@@ -136,6 +136,47 @@ namespace TheBlog.Controllers
             return View(comment);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Moderate(int id, [Bind("Id,Body,ModeratedBody,ModerationType")] Comment comment)
+        {
+            if (id != comment.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                var newComment = await _context.Comments
+                    .Include(c => c.Post)
+                    .FirstOrDefaultAsync(c => c.Id == comment.Id);
+
+                try
+                {
+                    newComment.ModeratedBody = comment.ModeratedBody;
+                    newComment.ModerationType = comment.ModerationType;
+                    newComment.Moderated = DateTime.UtcNow;
+                    newComment.ModeratorId = _userManager.GetUserId(User);
+
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!CommentExists(comment.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction("Details", "Posts", new {slug = newComment.Post.Slug}, $"commentNumber_{comment.Id}"); // in View, there is an id for every comment <h4> so after editing, View will stop right there
+            }
+
+            return View("Edit",comment);
+        }
+
         // GET: Comments/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
