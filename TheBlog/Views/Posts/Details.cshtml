@@ -46,6 +46,7 @@
     {
         <form asp-controller="Comments" asp-action="Create" method="post">
             @Html.Hidden("PostId", Model.Id)
+            @Html.Hidden("PostSlug", Model.Slug)
             
             <div class="col-form-label">
                 <label class="h2 col-form-label fw-bold">Add Comment</label>

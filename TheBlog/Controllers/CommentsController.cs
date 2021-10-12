@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TheBlog.Data;
 using TheBlog.Models;
+using TheBlog.Services;
 
 namespace TheBlog.Controllers
 {
@@ -56,15 +57,17 @@ namespace TheBlog.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PostId,Body")] Comment comment)
+        public async Task<IActionResult> Create([Bind("PostId,Body")] Comment comment, string postSlug)
         {
             if (ModelState.IsValid)
             {
+                
                 comment.BlogUserId = _userManager.GetUserId(User);
                 comment.Created = DateTime.UtcNow;
                 _context.Add(comment);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                // return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Posts", new {slug = postSlug});
             }
 
             return View(comment);
