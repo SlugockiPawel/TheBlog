@@ -97,6 +97,27 @@
                     <hr/>
                     <button data-bs-toggle="modal" data-bs-target="#editModal_@comment.Id" class="btn btn-dark float-end fw-bold">EDIT</button>
                 }
+                
+                @* Render Moderate and Delete buttons *@
+                
+                @if (User.IsInRole(BlogRole.Moderator.ToString()) && comment.Deleted is null)
+                {
+                    <hr/>
+                    <div class="row">
+                        <div class="col-2">
+                            <button data-bs-toggle="modal" data-bs-target="#moderateModal_@comment.Id" class="btn btn-dark float-end fw-bold">MODERATE</button>
+                        </div>
+                        <div class="col-2">
+                            <form asp-controller="Comments" asp-action="Delete">
+                                @Html.Hidden("Id", comment.Id)
+                                @Html.Hidden("Slug", comment.Post.Slug)
+                                
+                                <button class="btn alert-dark fw-bold col-12">DELETE</button>
+                            </form>
+                        </div>
+                    </div>
+                }
+
             </div>
         </div>
     </div>
