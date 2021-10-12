@@ -1,6 +1,8 @@
 ﻿@using TheBlog.Services
+@using Microsoft.AspNetCore.Identity
 @model TheBlog.Models.Post
 @inject IImageService _imageService
+@inject UserManager<BlogUser> _userManager
 
 @{
     ViewData["Title"] = "Details";
@@ -65,7 +67,7 @@
 <hr />
 @* List comments under a post *@
 
-<span class="col-12 btn btn-dark">@Model.Comments.Count COMMENT(S)</span>
+<span id="commentSection" class="col-12 btn btn-dark">@Model.Comments.Count COMMENT(S)</span>
 
 @foreach (var comment in Model.Comments)
 {
@@ -89,13 +91,50 @@
                 <h4>@comment.BlogUser.FullName</h4>
                 <small><i>Posted on @comment.Created.ToLongDateString()</i></small>
                 <p>@comment.Body</p>
+                
+                @if (comment.Moderated is null && comment.Deleted is null && comment.BlogUserId == _userManager.GetUserId(User))
+                {
+                    <hr/>
+                    <button data-bs-toggle="modal" data-bs-target="#editModal" class="btn btn-dark float-end fw-bold">EDIT</button>
+                }
+            </div>
+        </div>
+    </div>
+
+
+    @* Modals *@
+
+    <div class="modal" id="editModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Editing Comment...</h4>
+
+                </div>
+            
+                @* Modal Body *@
+            
+                <div class="modal-body">
+                    <form asp-action="Edit" asp-controller="Comments">
+                        @Html.Hidden("Id", comment.Id)
+                    
+                        <div class="form-group">
+                            <textarea name="Body" class="form-control" required="@comment.Body"></textarea>
+                        </div>
+                        
+                        <button class="btn btn-dark fw-bold border-success">SUBMIT</button>
+                    </form>
+                </div>
+                
+                @* Modal footer *@
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark fw-bold" data-bs-dismiss="modal">CLOSE</button>
+                </div>
+
             </div>
         </div>
     </div>
 }
 
 
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
