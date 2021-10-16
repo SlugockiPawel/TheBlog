@@ -35,8 +35,8 @@ namespace TheBlog
             // Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseNpgsql(
-                    Configuration.GetConnectionString("PostgresConnection")));
+                options.UseNpgsql(ConnectionService.GetConnectionString(Configuration)));
+                    // Configuration.GetConnectionString("PostgresConnection")));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
