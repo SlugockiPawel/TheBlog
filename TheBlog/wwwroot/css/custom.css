@@ -1,13 +1,228 @@
-﻿.border-radius-10 {
-    line-height: .5;
-    border-radius: 10px;
+﻿:root {
+    --primary-color: #151515;
+    --secondary-color: #717171;
+    --lighter-color: #a1a1a1;
+    --darker-color: #464646;
+    --additional-color: #e1e1e1;
+    --bg-color: #f7f7f7;
+    --white-color: #ffffff;
+    --title-font: 'Montserrat',  sans-serif;
+    --text-font: 'Hind',  sans-serif;
+    --opacity-high: 80%;
+    --opacity-medium: 55%;
 }
 
-option {
-    font-weight: bolder;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--title-font);
 }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--title-font);
+    color: var(--primary-color);
+}
+
+p {
+    font-family: var(--text-font);
+    color: var(--secondary-color);
+    font-size: 1rem;
+}
+
+a {
+    text-decoration: none;
+    color: var(--lighter-color);
+}
+
+li { list-style: none; }
+
+i { color: var(--primary-color); }
+
+textarea { height: 150px !important; }
+
+.bg-light-custom { background-color: var(--bg-color); }
+
+.form-floating > textarea,
+.form-floating > input,
+.form-floating > label {
+    background: var(--bg-color);
+    border: none;
+    font-family: var(--text-font);
+    color: var(--secondary-color);
+}
+
+.form-floating > textarea:focus,
+.form-floating > input:focus,
+.form-floating > label:focus {
+    background-color: var(--bg-color);
+    color: var(--secondary-color)
+}
+
+.fa-search, .fa-times { cursor: pointer; }
+
+.shadow-bottom { box-shadow: 0 4px 8px -5px var(--lighter-color); }
+
+.widget-title {
+    font-size: 1rem;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.post-author-date {
+    font-family: var(--text-font);
+    font-size: 0.80rem;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.post-link {
+    font-family: var(--text-font);
+    font-size: 0.88rem;
+    text-transform: uppercase;
+}
+
+.post-link:hover {
+    color: var(--secondary-color);
+    font-weight: 550;
+    border-bottom: 2.0px solid var(--secondary-color);
+    opacity: var(--opacity-high);
+}
+
+.categories {
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    background-color: var(--bg-color);
+    margin: 0.3rem auto;
+    padding: 1rem 1.3rem;
+}
+
+.category-link {
+    color: var(--primary-color);
+    font-size: 0.8rem;
+}
+
+.categories:hover, .tagcloud a:hover {
+    background-color: var(--primary-color);
+    opacity: var(--opacity-high);
+    color: #151515;
+    transition: 400ms ease-in;
+}
+
+.categories:hover > .category-link,
+.tagcloud a:hover { color: var(--white-color); }
+
+.follow-icons {
+    font-size: 1.3rem;
+    background-color: var(--bg-color);
+    margin: 0.3rem auto;
+    padding: 1rem 1.3rem;
+}
+
+.follow-icons > li > a { margin: auto 20px; }
+
+.tagcloud a {
+    background-color: #f7f7f7;
+    display: inline-block;
+    color: #717171;
+    font-family: var(--text-font);
+    letter-spacing: 0.225px;
+    line-height: 1.73;
+    margin: 0 2px 10px;
+    padding: 9px 25px 5px;
+    text-decoration: none;
+    text-transform: capitalize;
+}
+
+.footer-social {
+    text-transform: uppercase;
+    margin: auto 0.3rem;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.fab:hover {
+    opacity: var(--opacity-medium);
+    transition: 600ms;
+}
+
+.footer-copyright {
+    font-family: var(--text-font);
+    color: var(--lighter-color);
+    font-size: 0.85rem;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0.195px;
+}
+
+.post-title {
+    font-family: var(--title-font);
+    font-size: 1.7rem;
+    font-weight: bold;
+}
+
+.container-narrow { max-width: 1200px; }
+
+.border-partial {
+    display: block; /* This will put the pseudo element on its own line. */
+    margin: 10px auto; /* This will center the border. */
+    width: 2rem; /* Change this to whatever width you want. */
+    padding-top: 10px; /* This creates some space between the element and the border. */
+    border-top: 2px solid var(--additional-color);
+    letter-spacing: 0.18px; /* This creates the border. Replace black with whatever color you want. */
+}
+
+.on-top { z-index: 1021 !important; }
+
+.mobileUserDropdown {
+    width: 100%;
+    margin: 0;
+    top: 99% !important;
+    border: none;
+    border-radius: 0;
+}
+
+.search-box {
+    display: none;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 248px;
+}
+
+.form-floating > label { background-color: transparent; }
+
+.form-button {
+    text-transform: uppercase;
+    padding: 0.6rem 2.5rem;
+    background-color: var(--primary-color);
+    border: none;
+    opacity: var(--opacity-high);
+}
+
+.form-button:focus,
+.form-button:hover {
+    box-shadow: inset 0px 0px 2px 0px rgb(255 0 150 / 0%);
+    -webkit-box-shadow: inset 0px 0px 2px 0px var(--darker-color);
+    color: var(--primary-color);
+    background-color: var(--bg-color);
+    border: 1px solid var(--lighter-color);
+    transition: 800ms ease;
+}
+
 
 div.swal2-container.swal2-center.swal2-backdrop-show > div {
     outline: 4px solid black;
     /* border: 2px solid #ff993b; */
+}
+
+@media screen and (min-width: 769px) {
+    .btn-search { padding: 0; }
+
+    #searchBox { top: 56px; }
 }
