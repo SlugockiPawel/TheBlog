@@ -89,7 +89,7 @@ textarea { height: 150px !important; }
 
 .post-link:hover {
     color: var(--secondary-color);
-    font-weight: 550;
+    font-weight: 500;
     border-bottom: 2.0px solid var(--secondary-color);
     opacity: var(--opacity-high);
 }
