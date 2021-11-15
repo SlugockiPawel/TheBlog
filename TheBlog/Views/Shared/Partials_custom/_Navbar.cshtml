@@ -25,11 +25,10 @@
                         @if (User.IsInRole("Administrator") || User.IsInRole("Moderator"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link px-lg-3 py-3 py-lg-4" asp-controller="Blogs" asp-action="Create">Create Blog</a>
+                                <a class="nav-link" asp-controller="Blogs" asp-action="Create">Create Blog</a>
                             </li>
                         }
                     </ul>
-                    <partial name="_LoginPartial"/>
                 </div>
                 <div class="row py-1 d-md-none">
                     <div class="col-6 d-flex px-0">
