@@ -1,0 +1,80 @@
+﻿<nav id="navBar" class="navbar navbar-expand-md navbar-light sticky-top bg-white container-fluid shadow-bottom">
+    <div class="container container-narrow">
+        <a class="navbar-brand d-md-none d-block" asp-controller="Home" asp-action="Index">LOGO</a>
+        <button id="togglerIcon" class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span>
+                <i class="fas fa-bars" title="Menu"></i>
+            </span>
+        </button>
+        <div class="collapse navbar-collapse " id="navbarNavDropdown">
+            <div class="container container-narrow">
+                <div class="row py-0 ">
+                    <ul class="navbar-nav d-flex justify-content-center ">
+                        <li class="nav-item ">
+                            <a class="nav-link active" aria-current="page" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " asp-controller="Home" asp-action="About">About Me</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="Contact">Contact</a>
+                        </li>
+
+                        @if (User.IsInRole("Administrator") || User.IsInRole("Moderator"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link px-lg-3 py-3 py-lg-4" asp-controller="Blogs" asp-action="Create">Create Blog</a>
+                            </li>
+                        }
+                    </ul>
+                    <partial name="_LoginPartial"/>
+                </div>
+                <div class="row py-1 d-md-none">
+                    <div class="col-6 d-flex px-0">
+                        <a class="" href="">
+                            <i class="fab fa-linkedin-in " aria-hidden="true" title="Linked In"></i>
+                        </a>
+                        <a href="">
+                            <i class="fab fa-github mx-2" aria-hidden="true" title="Github"></i>
+                        </a>
+                        <a href="">
+                            <i class="fab fa-slack-hash" aria-hidden="true" title="Portfolio Page"></i>
+                        </a>
+                    </div>
+                    <div class="col-6 d-flex flex-row-reverse  align-items-center ">
+                        <a href="" class=" " href="" role="button" id="userDropDownMobile" data-bs-toggle="dropdown"
+                           data-bs-display="static" aria-expanded="false">
+                            <i class="fas fa-user" title="Manage User"></i>
+                        </a>
+                        <ul class=" dropdown-menu dropdown-menu-end mobileUserDropdown text-center border-top"
+                            aria-labelledby="userDropDownMobile">
+                            <li>
+                                <a class="dropdown-item" href="#">SignIn</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">SignUp</a>
+                            </li>
+                        </ul>
+                        <i id="searchIconMobile" class="fas fa-search me-2" title="Search"></i>
+                    </div>
+                </div>
+                <div id="searchBox" class="container-fluid  bg-light-custom search-box">
+                    <div class="container container-narrow">
+                        <div class="row ">
+                            <form class="form-floating d-flex">
+                                <input type="text" class="form-control bg-light-custom border-0 p-0 shadow-none" id="floatingInput"
+                                       placeholder="Search...">
+                                <label for="floatingInput">Search</label>
+                                <button type="submit" class="btn btn-search">
+                                    <i class="fas fa-search" title="Submit Search"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
