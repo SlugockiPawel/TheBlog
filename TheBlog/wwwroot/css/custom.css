@@ -192,7 +192,6 @@ textarea { height: 150px !important; }
     position: absolute;
     width: 100%;
     left: 0;
-    top: 248px;
 }
 
 .form-floating > label { background-color: transparent; }
@@ -222,6 +221,4 @@ div.swal2-container.swal2-center.swal2-backdrop-show > div {
 
 @media screen and (min-width: 769px) {
     .btn-search { padding: 0; }
-
-    #searchBox { top: 56px; }
 }
