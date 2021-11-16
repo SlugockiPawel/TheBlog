@@ -207,7 +207,6 @@ textarea { height: 150px !important; }
 
 .form-button:focus,
 .form-button:hover {
-    box-shadow: inset 0px 0px 2px 0px rgb(255 0 150 / 0%);
     -webkit-box-shadow: inset 0px 0px 2px 0px var(--darker-color);
     color: var(--primary-color);
     background-color: var(--bg-color);
