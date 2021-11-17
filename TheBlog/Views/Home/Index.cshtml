@@ -8,31 +8,87 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="container">
-    <div class="row gx-4 gx-lg-5 justify-content-center">
-        <div class="col-md-10 col-lg-8 col-xl-7">
-            <!-- Post preview-->
-            @foreach (var blog in Model)
-            {
-                <div class="post-preview">
-                    <a asp-controller="Posts" asp-action="BlogPostIndex" asp-route-id="@blog.Id">
-                        <h2 class="post-title">@blog.Name</h2>
-                        <h3 class="post-subtitle">@blog.Description</h3>
-                    </a>
-                    <p class="post-meta">
-                        Authored by
-                        <a href="#!">@blog.BlogUser.FullName</a>
-                        on @blog.Created.ToLongDateString()
-                    </p>
+
+<main class="mt-5">
+    <section class="container-fluid">
+        <div class="container container-narrow">
+            <div class="row gx-5">
+                <!-- post list -->
+                <div class="col-12 col-md-8">
+                    <!-- post -->
+                    
+                    <!-- Post preview-->
+                    @foreach (var blog in Model)
+                    {
+                        <article class="row mb-5">
+                            <div class="col-12 text-center">
+                                <img class="img-fluid mb-4" width="100%" src="assets/images/blog-1-col-1.jpg"> @*"@_imageService.DecodeImage(item.ImageData, item.ContentType)" alt="@item.Title image file" *@
+                                <a class="post-link" href="">
+                                    Lifestyle
+                                </a>
+                                <a href="">
+                                    <h3 class="post-title mt-2">Trendy Summer Fashion</h3>
+                                </a>
+                                <div class="border-partial"></div>
+                                <p class="text-center post-author-date ">
+                                    Pawel Slugocki, March 17,2017
+                                </p>
+                                <p class="px-2">
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea officia dolorem ad incidunt nostrum pariatur cumque consequuntur at delectus ex obcaecati ut veritatis non, esse, error dolor. Consectetur, laudantium quae.
+                                    Culpa hic nemo laborum id est repellat, facere corporis quasi inventore quibusdam eligendi esse iste repudiandae optio consectetur enim, possimus dignissimos cumque fugit officiis! Labore saepe repellendus incidunt quas quis.
+                                </p>
+                                <a class="post-link" href="">
+                                    Read More
+                                </a>
+                            </div>
+                        </article>
+
+                        <hr class="mb-5">
+                        
+                            <a asp-controller="Posts" asp-action="BlogPostIndex" asp-route-id="@blog.Id">
+                                <h2 class="post-title">@blog.Name</h2>
+                                <h3 class="post-subtitle">@blog.Description</h3>
+                            </a>
+                            <p class="post-meta">
+                                Authored by
+                                <a href="#!">@blog.BlogUser.FullName</a>
+                                on @blog.Created.ToLongDateString()
+                            </p>
+                        
+                    }
+
+                    <!-- pagination -->
+                    <div class="col-12 text-center mt-sm-5">
+                        <h3 class="mb-4">PAGINATION</h3>
+                    </div>
                 </div>
-            }
-            <!-- Pager-->
-            <div class="d-flex justify-content-end mb-4">
-                <a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a>
+                <!-- side bar -->
+                <aside class="col-12 col-md-4 px-md-3 px-4">
+                    <partial name="Partials_custom/_Side_panel"/>
+                </aside>
             </div>
         </div>
-    </div>
-</div>
+    </section>
+</main>
+
+
+@* <!-- Post preview--> *@
+@* @foreach (var blog in Model) *@
+@* { *@
+@*     <div class="post-preview"> *@
+@*         <a asp-controller="Posts" asp-action="BlogPostIndex" asp-route-id="@blog.Id"> *@
+@*             <h2 class="post-title">@blog.Name</h2> *@
+@*             <h3 class="post-subtitle">@blog.Description</h3> *@
+@*         </a> *@
+@*         <p class="post-meta"> *@
+@*             Authored by *@
+@*             <a href="#!">@blog.BlogUser.FullName</a> *@
+@*             on @blog.Created.ToLongDateString() *@
+@*         </p> *@
+@*     </div> *@
+@* } *@
+
+
 
 @* Paging Controls here *@
 <div class="container-narrow">
@@ -44,11 +100,11 @@
 
     <div class="row">
         <div class="col">
-            @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page}),
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }),
                 new PagedListRenderOptions
                 {
-                    LiElementClasses = new string[] {"page-item"},
-                    PageClasses = new string[] {"page-link"},
+                    LiElementClasses = new string[] { "page-item" },
+                    PageClasses = new string[] { "page-link" },
                 })
         </div>
     </div>
