@@ -6,8 +6,8 @@
     --additional-color: #e1e1e1;
     --bg-color: #f7f7f7;
     --white-color: #ffffff;
-    --title-font: 'Montserrat',  sans-serif;
-    --text-font: 'Hind',  sans-serif;
+    --title-font: 'Montserrat',   sans-serif;
+    --text-font: 'Hind',   sans-serif;
     --opacity-high: 80%;
     --opacity-medium: 55%;
 }
@@ -34,6 +34,14 @@ p {
     color: var(--secondary-color);
     font-size: 1rem;
 }
+
+.form-control-custom {
+    font-family: var(--text-font);
+    color: var(--secondary-color);
+    font-size: 1rem;
+}
+
+.form-control-custom:focus { border: 2px solid var(--secondary-color); }
 
 a {
     text-decoration: none;
@@ -63,6 +71,8 @@ textarea { height: 150px !important; }
     background-color: var(--bg-color);
     color: var(--secondary-color)
 }
+
+
 
 .fa-search, .fa-times { cursor: pointer; }
 
