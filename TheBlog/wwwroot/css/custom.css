@@ -204,6 +204,11 @@ textarea { height: 150px !important; }
     left: 0;
 }
 
+.checkbox {
+    font-family: var(--text-font);
+    color: var(--secondary-color);
+}
+
 .form-floating > label { background-color: transparent; }
 
 .form-button {
