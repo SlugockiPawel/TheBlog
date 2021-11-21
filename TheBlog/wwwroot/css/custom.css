@@ -211,6 +211,10 @@ textarea { height: 150px !important; }
 
 .form-floating > label { background-color: transparent; }
 
+.btn {
+    margin-top: 3px;
+}
+
 .form-button {
     text-transform: uppercase;
     padding: 0.6rem 2.5rem;
