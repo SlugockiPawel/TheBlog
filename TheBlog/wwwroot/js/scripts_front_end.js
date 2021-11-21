@@ -56,7 +56,7 @@ function slideNavBar() {
 
         hideElement(navBar);
 
-        $("#navBar").slideDown(900);
+        $("#navBar").slideDown(700);
     }
 
     lastScrollTop = st <= 0 ? 0 : st;
