@@ -4,53 +4,74 @@
     ViewData["Title"] = "Contact";
 }
 
-<div class="container">
-    <div class="row gx-4 gx-lg-5 justify-content-center">
-        <div class="col-md-10 col-lg-8 col-xl-7">
-            <p>Want to get in touch? Fill out the form below to send me a message and I will get back to you as soon as possible!</p>
-            <div class="my-5">
-                <form asp-controller="Home" asp-action="Contact">
-                    <div asp-validation-summary="All" class="text-danger"></div>
-                    <div class="form-floating">
-                        <input asp-for="Name" class="form-control" type="text" placeholder="Enter your name..."/>
-                        <label asp-for="Name">Name</label>
-                        <span asp-validation-for="Name" class="text-danger"></span>
-                    </div>
-                    <div class="form-floating">
-                        <input asp-for="Email" class="form-control" type="email" placeholder="Enter your email..."/>
-                        <label asp-for="Email">Email address</label>
-                        <span asp-validation-for="Email" class="text-danger"></span>
-                    </div>
-                    <div class="form-floating">
-                        <input asp-for="Phone" class="form-control" type="tel" placeholder="Enter your phone number..."/>
-                        <label asp-for="Phone">Phone Number</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input asp-for="Subject" class="form-control" type="text" placeholder="Enter a message subject..."/>
-                        <label asp-for="Subject">Subject</label>
-                        <span asp-validation-for="Subject" class="text-danger"></span>
-                    </div>
-                    <div class="form-floating">
-                        <textarea asp-for="Message" class="form-control"></textarea>
-                        <span asp-validation-for="Message" class="text-danger"></span>
-                    </div>
-                    <br/>
-                    <div id="success"></div>
-                    <button class="btn btn-primary text-uppercase" id="sendMessageButton" type="submit">Send</button>
-                </form>
-            </div>
+<main class="container container-narrow mt-5">
+    <div class="row mt-5">
+            
+        <div class="col-12 mb-4  text-center">
+            <img src="/assets/images/contact.png" width="100%" alt="">
+        </div>
+
+        <div class="col-12 text-center">
+            <h3 class="post-title">Contact Me</h3>
+        </div>
+        <div class="border-partial"></div>
+        <div class="col-12 mb-4">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi, praesentium? Nihil quibusdam beatae nam a aliquam nulla, aspernatur praesentium explicabo repellat consequuntur delectus illum commodi quod. Vel sint sed nemo?
+            Voluptatum eveatem accusamus in quae aliquam id veniam ab explicabo vitae, similique magni. Earum doloremque ratione eaque.ci illum veniam fugit? Numquam rem est voluptas, quisquam error architecto quos quis sed praesentium hic ex, impedit eligendi alias consequatur quibusdam non natus illo vitae voluptatum nesciunt magni!</p>
         </div>
     </div>
-</div>
+   
+    <form asp-controller="Home" asp-action="Contact" class="row gy-2 gx-2">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="col-md-6 col-12 order-1">
+            <div class="form-floating ">
+                <input asp-for="Name" class="form-control shadow-none" type="text" placeholder="Enter your name..."/>
+                <label asp-for="Name">Name</label>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-12 order-2">
+            <div class="form-floating">
+                <input asp-for="Email" class="form-control shadow-none" type="email" placeholder="Enter your email..."/>
+                <label asp-for="Email">Email address</label>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-12 order-md-3 order-4">
+            <div class="form-floating">
+                <input asp-for="Subject" class="form-control shadow-none" type="text" placeholder="Enter a message subject..."/>
+                <label asp-for="Subject">Subject</label>
+                <span asp-validation-for="Subject" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-12 order-md-4 order-3">
+            <div class="form-floating">
+                <input asp-for="Phone" class="form-control shadow-none" type="tel" placeholder="Enter your phone number..."/>
+                <label asp-for="Phone">Phone Number</label>
+            </div>
+        </div>
+
+        <div class="col-12 mb-2 order-5">
+            <div class="form-floating">
+                <textarea asp-for="Message" class="form-control input-custom shadow-none" type="text" placeholder="Enter a message..."></textarea>
+                <label asp-for="Message">Message</label>
+                <span asp-validation-for="Message" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-12 text-end order-5">
+            <div id="success"></div>
+                <button class="btn btn-primary form-button shadow-none" id="sendMessageButton" type="submit">Send</button>
+            </div>
+    </form>
+</main>
 
 
 @section Scripts{
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
-    <script>
-        //Default font size but not for placeholder...
-        $('#Message').summernote({
-            placeholder: "Message"
-        });
-    </script>
+  
 }
