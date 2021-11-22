@@ -11,6 +11,11 @@ using TheBlog.Services;
 
 namespace TheBlog
 {
+    /*  TO DO LIST:
+     *  TODO implement Home/Index logic to display: Post list (sorted by date)
+     *  TODO implement Home/Index logic to display posts by category and by tag
+     *  TODO authorize access to /Blogs and /Posts routes (only admin and moderator)
+     */
     public class Program
     {
         public static async Task Main(string[] args)
