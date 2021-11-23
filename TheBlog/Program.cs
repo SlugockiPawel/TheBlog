@@ -12,9 +12,17 @@ using TheBlog.Services;
 namespace TheBlog
 {
     /*  TO DO LIST:
+     *  TODO TagIndex implementation
+     *
+     *  TODO Render correct NotFound page (currently it is blank)
      *  TODO implement Home/Index logic to display: Post list (sorted by date)
      *  TODO implement Home/Index logic to display posts by category and by tag
      *  TODO authorize access to /Blogs and /Posts routes (only admin and moderator)
+     *  TODO in Blogs controller there is a BlogUser hard coded, change it
+     *
+     *
+     * TODO MIGRATE TO .NET6
+     * TODO DistinctBy() in .NET6 => use for getting distinct Tags
      */
     public class Program
     {
