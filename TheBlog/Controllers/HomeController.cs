@@ -22,7 +22,8 @@ namespace TheBlog.Controllers
         private readonly IBlogEmailSender _emailSender;
         private readonly ApplicationDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger, IBlogEmailSender emailSender, ApplicationDbContext context)
+        public HomeController(ILogger<HomeController> logger, IBlogEmailSender emailSender,
+            ApplicationDbContext context)
         {
             _logger = logger;
             _emailSender = emailSender;
@@ -40,7 +41,25 @@ namespace TheBlog.Controllers
                 .Include(b => b.BlogUser)
                 .Where(b => b.Posts.Any(p => p.ReadyStatus == ReadyStatus.ProductionReady))
                 .OrderByDescending(b => b.Created)
-                .ToPagedListAsync(pageNumber,pageSize);
+                .ToPagedListAsync(pageNumber, pageSize);
+
+            var distinctTags = await _context.Tags
+                .Where(t => t.Post.ReadyStatus == ReadyStatus.ProductionReady)
+                .OrderByDescending(t => t.Post.Created)
+                .AsEnumerable()
+                .Take(25)
+                .AsEnumerable()
+                .GroupBy(t => t.Text)
+                .Select(g => g.First())
+                .ToListAsync();
+
+
+            ViewData["DistinctTags"] = distinctTags;
+
+            var categories = await _context.Blogs
+                .Where(c => c.Posts.Any(p => p.ReadyStatus == ReadyStatus.ProductionReady))
+                .OrderBy(c => c.Name)
+                .ToListAsync();
 
             return View(blogs);
         }
