@@ -33,7 +33,7 @@
         <div class="col text-center">
             @foreach (var tag in Model.Tags)
             {
-                <a class="btn btn-warning btn-outline-dark border-radius-10" asp-action="TagIndex" asp-route-tag="@tag.Text.ToLower()">#@tag.Text</a> //TagIndex?
+                <a class="btn btn-warning btn-outline-dark" asp-action="TagIndex" asp-route-tag="@tag.Text.ToLower()">#@tag.Text</a> //TagIndex?
             }
         </div>
     </div>
