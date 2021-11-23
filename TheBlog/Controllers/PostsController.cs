@@ -47,7 +47,21 @@ namespace TheBlog.Controllers
             return View(await posts.ToPagedListAsync(pageNumber, pageSize));
 ;        }
 
-
+        // GET: Posts by Tag
+         public async Task<IActionResult> TagIndex(int? page, string tagText)
+         {
+             ViewData["TagText"] = tagText; // when we go from page 1 to page 2, we will maintain tagText
+        
+             var pageNumber = page ?? 1;
+             var pageSize = 5;
+        
+             var posts = await _context.Posts
+                 .OrderByDescending(p => p.Created)
+                 .ToPagedListAsync(pageNumber, pageSize);
+        
+             return View("TagIndex")
+             ;
+         }
 
         // GET: Posts
         public async Task<IActionResult> Index()
