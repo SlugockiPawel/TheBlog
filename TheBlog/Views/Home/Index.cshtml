@@ -2,6 +2,8 @@
 @using X.PagedList
 @using X.PagedList.Mvc.Core
 @using X.PagedList.Web.Common
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@using System.Collections
 @model IPagedList<Blog>
 
 @{
@@ -10,6 +12,7 @@
 
 <partial name="Partials_custom/_Header_img"/>
 
+
 <main class="mt-5">
     <section class="container-fluid">
         <div class="container container-narrow">
@@ -17,7 +20,7 @@
                 <!-- post list -->
                 <div class="col-12 col-md-8">
                     <!-- post -->
-                    
+
                     <!-- Post preview-->
                     @foreach (var blog in Model)
                     {
@@ -25,7 +28,7 @@
                             <div class="col-12 text-center">
                                 <img class="img-fluid mb-4" width="100%" src="assets/images/blog-1-col-1.jpg"> @*"@_imageService.DecodeImage(item.ImageData, item.ContentType)" alt="@item.Title image file" *@
                                 <a class="post-link" href="">
-                                    Lifestyle
+                                    Lifestyle @blog.
                                 </a>
                                 <a href="">
                                     <h3 class="post-title mt-2">Trendy Summer Fashion</h3>
@@ -45,27 +48,41 @@
                         </article>
 
                         <hr class="mb-5">
-                        
-                            <a asp-controller="Posts" asp-action="BlogPostIndex" asp-route-id="@blog.Id">
-                                <h2 class="post-title">@blog.Name</h2>
-                                <h3 class="post-subtitle">@blog.Description</h3>
-                            </a>
-                            <p class="post-meta">
-                                Authored by
-                                <a href="#!">@blog.BlogUser.FullName</a>
-                                on @blog.Created.ToLongDateString()
-                            </p>
-                        
+
+                        <a asp-controller="Posts" asp-action="BlogPostIndex" asp-route-id="@blog.Id">
+                            <h2 class="post-title">@blog.Name</h2>
+                            <h3 class="post-subtitle">@blog.Description</h3>
+                        </a>
+                        <p class="post-meta">
+                            Authored by
+                            <a href="#!">@blog.BlogUser.FullName</a>
+                            on @blog.Created.ToLongDateString()
+                        </p>
                     }
+
 
                     <!-- pagination -->
                     <div class="col-12 text-center mt-sm-5">
-                        <h3 class="mb-4">PAGINATION</h3>
+                        @* Paging Controls here *@
+                        <div class="col-12 h3">
+                            <span>Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount</span>
+                        </div>
+
+                        <div class="col-12 d-flex justify-content-center">
+                            @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }),
+                                new PagedListRenderOptions
+                                {
+                                    // UlElementClasses = new string[] {"text-center"},
+                                    LiElementClasses = new string[] { "page-item" },
+                                    PageClasses = new string[] { "page-link" },
+                                })
+                        </div>
                     </div>
                 </div>
+
                 <!-- side bar -->
                 <aside class="col-12 col-md-4 px-md-3 px-4">
-                    <partial name="Partials_custom/_Side_panel"/>
+                    <partial name="Partials_custom/_Side_panel" view-data="ViewData"></partial>
                 </aside>
             </div>
         </div>
@@ -88,25 +105,3 @@
 @*         </p> *@
 @*     </div> *@
 @* } *@
-
-
-
-@* Paging Controls here *@
-<div class="container-narrow">
-    <div class="row">
-        <div class="col h3">
-            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col">
-            @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }),
-                new PagedListRenderOptions
-                {
-                    LiElementClasses = new string[] { "page-item" },
-                    PageClasses = new string[] { "page-link" },
-                })
-        </div>
-    </div>
-</div>
