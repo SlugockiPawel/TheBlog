@@ -12,7 +12,10 @@ using TheBlog.Services;
 namespace TheBlog
 {
     /*  TO DO LIST:
-     *  TODO TagIndex implementation
+     *  TODO add Post Detail view with comments
+     *  TODO implement category click on post to list all posts with this category logic
+     *
+     * TODO TagIndex implementation
      *
      *  TODO Render correct NotFound page (currently it is blank)
      *  TODO implement Home/Index logic to display: Post list (sorted by date)
