@@ -156,6 +156,7 @@ namespace TheBlog.Controllers
                     var currentDbBlog = await _context.Blogs.AsNoTracking().FirstOrDefaultAsync(b => b.Id == id);
                     blog.Updated = DateTime.UtcNow;
                     blog.BlogUserId = _userManager.GetUserId(User);
+                    blog.Created = currentDbBlog.Created;
 
                     if (newImage is not null)
                     {

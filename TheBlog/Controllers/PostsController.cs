@@ -59,8 +59,7 @@ namespace TheBlog.Controllers
                  .OrderByDescending(p => p.Created)
                  .ToPagedListAsync(pageNumber, pageSize);
         
-             return View("TagIndex")
-             ;
+             return View();
          }
 
         // GET: Posts
@@ -231,13 +230,17 @@ namespace TheBlog.Controllers
             {
                 try
                 {
-                    post.Updated = DateTime.UtcNow;
-                    post.BlogUserId = _userManager.GetUserId(User);
+                   
 
                     var currentDbPost = await _context.Posts
                         .Include(p => p.Tags)
                         .AsNoTracking()
                         .FirstOrDefaultAsync(p => p.Id == id);
+
+                    post.Created = currentDbPost.Created;
+                    post.Updated = DateTime.UtcNow;
+                    post.BlogUserId = _userManager.GetUserId(User);
+                    post.Slug = currentDbPost.Slug;
 
                     var newSlug = _slugService.UrlFriendly(post.Title);
                     if (newSlug != currentDbPost.Slug)
