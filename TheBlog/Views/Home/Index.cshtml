@@ -4,14 +4,15 @@
 @using X.PagedList.Web.Common
 @using Microsoft.EntityFrameworkCore.Metadata.Internal
 @using System.Collections
-@model IPagedList<Blog>
+@using TheBlog.Services
+@inject IImageService _imageService
+@model IPagedList<Post>
 
 @{
     ViewData["Title"] = "Home Page";
 }
 
 <partial name="Partials_custom/_Header_img"/>
-
 
 <main class="mt-5">
     <section class="container-fluid">
@@ -22,44 +23,32 @@
                     <!-- post -->
 
                     <!-- Post preview-->
-                    @foreach (var blog in Model)
+                    @foreach (var post in Model)
                     {
                         <article class="row mb-5">
                             <div class="col-12 text-center">
-                                <img class="img-fluid mb-4" width="100%" src="assets/images/blog-1-col-1.jpg"> @*"@_imageService.DecodeImage(item.ImageData, item.ContentType)" alt="@item.Title image file" *@
+                                <img class="img-fluid mb-4" width="100%" src="@_imageService.DecodeImage(post.ImageData, post.ContentType)" alt="@post.Title image file">
                                 <a class="post-link" href="">
-                                    Lifestyle @blog.
+                                    @post.Blog.Name
                                 </a>
-                                <a href="">
-                                    <h3 class="post-title mt-2">Trendy Summer Fashion</h3>
+                                <a asp-controller="Posts" asp-action="Details" asp-route-slug="@post.Slug">
+                                    <h3 class="post-title mt-2">@post.Title</h3>
                                 </a>
                                 <div class="border-partial"></div>
                                 <p class="text-center post-author-date ">
-                                    Pawel Slugocki, March 17,2017
+                                    @post.BlogUser.FullName, @post.Created.ToLongDateString()
                                 </p>
                                 <p class="px-2">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea officia dolorem ad incidunt nostrum pariatur cumque consequuntur at delectus ex obcaecati ut veritatis non, esse, error dolor. Consectetur, laudantium quae.
-                                    Culpa hic nemo laborum id est repellat, facere corporis quasi inventore quibusdam eligendi esse iste repudiandae optio consectetur enim, possimus dignissimos cumque fugit officiis! Labore saepe repellendus incidunt quas quis.
+                                    @post.Abstract
                                 </p>
-                                <a class="post-link" href="">
+                                <a class="post-link" asp-controller="Posts" asp-action="Details" asp-route-slug="@post.Slug">
                                     Read More
                                 </a>
                             </div>
                         </article>
 
                         <hr class="mb-5">
-
-                        <a asp-controller="Posts" asp-action="BlogPostIndex" asp-route-id="@blog.Id">
-                            <h2 class="post-title">@blog.Name</h2>
-                            <h3 class="post-subtitle">@blog.Description</h3>
-                        </a>
-                        <p class="post-meta">
-                            Authored by
-                            <a href="#!">@blog.BlogUser.FullName</a>
-                            on @blog.Created.ToLongDateString()
-                        </p>
                     }
-
 
                     <!-- pagination -->
                     <div class="col-12 text-center mt-sm-5">
@@ -88,20 +77,3 @@
         </div>
     </section>
 </main>
-
-
-@* <!-- Post preview--> *@
-@* @foreach (var blog in Model) *@
-@* { *@
-@*     <div class="post-preview"> *@
-@*         <a asp-controller="Posts" asp-action="BlogPostIndex" asp-route-id="@blog.Id"> *@
-@*             <h2 class="post-title">@blog.Name</h2> *@
-@*             <h3 class="post-subtitle">@blog.Description</h3> *@
-@*         </a> *@
-@*         <p class="post-meta"> *@
-@*             Authored by *@
-@*             <a href="#!">@blog.BlogUser.FullName</a> *@
-@*             on @blog.Created.ToLongDateString() *@
-@*         </p> *@
-@*     </div> *@
-@* } *@
