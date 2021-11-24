@@ -37,10 +37,17 @@ namespace TheBlog.Controllers
 
             // get only the blogs that has at least one ProductionReady post, order them by Created date,
             // include BlogUser and convert to PagedList (X.PagedList package)
-            var blogs = await _context.Blogs
-                .Include(b => b.BlogUser)
-                .Where(b => b.Posts.Any(p => p.ReadyStatus == ReadyStatus.ProductionReady))
-                .OrderByDescending(b => b.Created)
+            // var blogs = await _context.Blogs
+            //     .Include(b => b.BlogUser)
+            //     .Where(b => b.Posts.Any(p => p.ReadyStatus == ReadyStatus.ProductionReady))
+            //     .OrderByDescending(b => b.Created)
+            //     .ToPagedListAsync(pageNumber, pageSize);
+
+            var posts = await _context.Posts
+                .Include(p => p.BlogUser)
+                .Include(p => p.Blog)
+                .Where(p => p.ReadyStatus == ReadyStatus.ProductionReady)
+                .OrderByDescending(p => p.Created)
                 .ToPagedListAsync(pageNumber, pageSize);
 
             var distinctTags = await _context.Tags
@@ -61,7 +68,7 @@ namespace TheBlog.Controllers
                 .OrderBy(c => c.Name)
                 .ToListAsync();
 
-            return View(blogs);
+            return View(posts);
         }
 
         public IActionResult Contact()
