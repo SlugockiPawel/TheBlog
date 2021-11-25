@@ -33,7 +33,7 @@
             </div>
             <div class="col-form-label">
                 <label asp-for="Content" class="col-form-label"></label>
-                <textarea asp-for="Content" class="form-control"></textarea>
+                <textarea id="Content" asp-for="Content" class="form-control"></textarea>
                 <span asp-validation-for="Content" class="text-danger"></span>
             </div>
 
@@ -88,15 +88,27 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    
-    <script>
-        let tagValues = '@ViewData["TagValues"]';
 
-        //Default font size but not for placeholder...
-        $('#Content').summernote({
-            placeholder: "Post Body"
-        });
-    </script>
     
     <script src="~/js/custom.js"></script>
+    
+    <script src="https://cdn.tiny.cloud/1/tv28afnlksy5pcdujc7cm4wux2bz90plbuh7aokmcy43jx7z/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea#Content',
+            plugins: 'print preview paste importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help quickbars emoticons Advanced List Autoresize BBCode Character Map Code Sample Full Page Full Screen Horizontal Rule Image Tools Import CSS Insert Date/Time Legacy Output Nonbreaking Space Page Break Quick Toolbars Search and Replace Spell Checker Tab Focus Text Pattern Table of Contents Visual Blocks Visual Characters Word Count ',
+            imagetools_cors_hosts: ['picsum.photos'],
+            menubar: 'file edit view insert format tools table help',
+            toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl',
+            toolbar_sticky: true,
+            autosave_ask_before_unload: true,
+            autosave_interval: '30s',
+            autosave_prefix: '{path}{query}-{id}-',
+            autosave_restore_when_empty: false,
+            autosave_retention: '2m',
+            image_advtab: true,
+            toolbar_mode: 'sliding',
+        });
+    </script>
+
 }

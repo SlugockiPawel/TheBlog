@@ -25,12 +25,7 @@
     <!-- Bootstrap and custom css -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.custom.min.css" />
     <link rel="stylesheet" href="~/css/custom.css" asp-append-version="true" />
-   
-    
-    @* summernote *@
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+
     
     @* Sweet Alert 2 plug in *@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -58,8 +53,6 @@
 <!-- Core theme JS-->
 <script src="~/js/scripts.js"></script>
 <script src="~/js/scripts_front_end.js"></script>
-
-@* <link rel="stylesheet" href="~/lib/jquery/dist/jquery.js" /> *@
 
 
 @await RenderSectionAsync("Scripts", required: false)
