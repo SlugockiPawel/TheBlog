@@ -16,6 +16,7 @@
             <h5 class="">Use a local account or another service to log in</h5>
         </div>
         <div class="border-partial"></div>
+        <div asp-validation-summary="All" class="text-danger text-center"></div>
     </div>
 
     <div class="row">
@@ -37,7 +38,6 @@
                     </div>
                 </div>
 
-
                 <div class="col-12">
                     <div class="input-group">
                         <div class="form-check ">
@@ -48,7 +48,6 @@
                         </div>
                     </div>
                 </div>
-
 
                 <div class="col-12">
                     <div id="success"></div>
@@ -66,10 +65,8 @@
                         <a class="post-link" id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
                     </p>
                 </div>
-
             </form>
         </div>
-
         <div class="col-md-4 col-12 mt-md-0 mt-5">
             <section>
                 <h4>Use another service to log in.</h4>
@@ -101,7 +98,6 @@
             </section>
         </div>
     </div>
-
 </main>
 
 
