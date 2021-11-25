@@ -7,59 +7,61 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<div class="container container-narrow">
+    <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Created)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Updated)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ImageData)
-        </th>
-
-
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var blog in Model)
-    {
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => blog.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => blog.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => blog.Created)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => blog.Updated)
-            </td>
-            <td>
-                <img class="img-fluid" width="200px" src="@_imageService.DecodeImage(blog.ImageData, blog.ContentType)" alt="@blog.Name image file"/>
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@blog.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@blog.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@blog.Id">Delete</a>
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Created)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Updated)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageData)
+            </th>
+
+
+            <th></th>
         </tr>
-    }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        @foreach (var blog in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => blog.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => blog.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => blog.Created)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => blog.Updated)
+                </td>
+                <td>
+                    <img class="img-fluid" width="200px" src="@_imageService.DecodeImage(blog.ImageData, blog.ContentType)" alt="@blog.Name image file"/>
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@blog.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@blog.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@blog.Id">Delete</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

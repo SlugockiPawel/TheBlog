@@ -8,48 +8,50 @@
 @inject IImageService _imageService
 @model IPagedList<Post>
 
-<div class="row">
-    @foreach (var post in Model)
-    {
-        <div class="col-sm-2 col-lg-4 mt-3">
-            <div class="card border-dark">
-                <div class="card-body text-center">
-                    <div class="bg-warning">
-                        <hr class="card-hr"/>
-                        <h5 class="card-title">@post.Title</h5>
-                        <hr class="card-hr"/>
-                    </div>
-                    <div>
-                        <p class="card-text">@post.Abstract</p>
-                    </div>
+<div class="container container-narrow">
+    <div class="row">
+        @foreach (var post in Model)
+        {
+            <div class="col-sm-2 col-lg-4 mt-3">
+                <div class="card border-dark">
+                    <div class="card-body text-center">
+                        <div class="bg-warning">
+                            <hr class="card-hr"/>
+                            <h5 class="card-title">@post.Title</h5>
+                            <hr class="card-hr"/>
+                        </div>
+                        <div>
+                            <p class="card-text">@post.Abstract</p>
+                        </div>
 
-                    <br/>
-                    <div class="text-center">
-                        <a class="btn btn-dark btn-sm col-12 mb-2" asp-action="Details" asp-controller="Posts" asp-route-slug="@post.Slug">Read More</a>
-                    </div>
+                        <br/>
+                        <div class="text-center">
+                            <a class="btn btn-dark btn-sm col-12 mb-2" asp-action="Details" asp-controller="Posts" asp-route-slug="@post.Slug">Read More</a>
+                        </div>
 
+                    </div>
+                    <img class="card-img-bottom" src="@_imageService.DecodeImage(post.ImageData, post.ContentType)"/>
                 </div>
-                <img class="card-img-bottom" src="@_imageService.DecodeImage(post.ImageData, post.ContentType)"/>
+
             </div>
-
-        </div>
-    }
-</div>
-
-<hr/>
-
-<div class="row">
-    <div class="col h3">
-        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+        }
     </div>
-</div>
-<div class="row">
-    <div class="col">
-        @Html.PagedListPager(Model, page => Url.Action("SearchIndex", new { page = page, searchTerm = ViewData["SearchTerm"] }),
-            new PagedListRenderOptions
-            {
-                LiElementClasses = new string[] {"page-item"},
-                PageClasses = new string[] {"page-link"},
-            })
+
+    <hr/>
+
+    <div class="row">
+        <div class="col h3">
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            @Html.PagedListPager(Model, page => Url.Action("SearchIndex", new { page = page, searchTerm = ViewData["SearchTerm"] }),
+                new PagedListRenderOptions
+                {
+                    LiElementClasses = new string[] {"page-item"},
+                    PageClasses = new string[] {"page-link"},
+                })
+        </div>
     </div>
 </div>
