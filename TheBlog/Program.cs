@@ -14,8 +14,10 @@ namespace TheBlog
     /*  TO DO LIST:
      *  TODO add Post Detail view with comments
      *  TODO implement category click on post to list all posts with this category logic
+     *  TODO login pages w container-narrow
      *
-     * TODO TagIndex implementation
+     *  TODO Comments/Details not working
+     *  TODO TagIndex implementation
      *
      *  TODO Render correct NotFound page (currently it is blank)
      *  TODO implement Home/Index logic to display: Post list (sorted by date)
