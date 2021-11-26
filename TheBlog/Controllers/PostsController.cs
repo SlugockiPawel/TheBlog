@@ -103,6 +103,24 @@ namespace TheBlog.Controllers
                 .Include(p => p.Comments)
                 .ThenInclude( c => c.BlogUser) // will query above Comments only
                 .FirstOrDefaultAsync(m => m.Slug == slug);
+
+            var distinctTags = await _context.Tags
+                .Where(t => t.Post.ReadyStatus == ReadyStatus.ProductionReady)
+                .OrderByDescending(t => t.Post.Created)
+                .AsEnumerable()
+                .Take(25)
+                .AsEnumerable()
+                .GroupBy(t => t.Text)
+                .Select(g => g.First())
+                .ToListAsync();
+
+            ViewData["DistinctTags"] = distinctTags;
+
+            var categories = await _context.Blogs
+                .Where(c => c.Posts.Any(p => p.ReadyStatus == ReadyStatus.ProductionReady))
+                .OrderBy(c => c.Name)
+                .ToListAsync();
+
             if (post == null)
             {
                 return NotFound();
