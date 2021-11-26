@@ -13,8 +13,11 @@ namespace TheBlog
 {
     /*  TO DO LIST:
      *  TODO add Post Detail view with comments
-     *  TODO implement category click on post to list all posts with this category logic
-     *  TODO login pages w container-narrow
+     * TODO refactor getting tags to work as a service as it will be used in multiply places
+     * TODO implement category click on post to list all posts with this category logic
+     *  TODO refactor getting categories to work as a service as it will be used in multiply places
+     *  
+     *
      *
      *  TODO Comments/Details not working
      *  TODO TagIndex implementation
