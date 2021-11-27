@@ -1,0 +1,92 @@
+﻿@using TheBlog.Services
+@using Microsoft.AspNetCore.Identity
+@using TheBlog.Enums
+
+@model TheBlog.Models.Comment
+@inject IImageService _imageService
+@inject UserManager<BlogUser> _userManager  
+
+@* Modals *@
+
+      @*  Edit Modal*@
+
+        <div class="modal" id=@($"editModal_{Model.Id}")>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Editing Model...</h4>
+
+                    </div>
+
+                    @* Modal Body *@
+
+                    <div class="modal-body">
+                        <form asp-action="Edit" asp-controller="Comments">
+                            @Html.Hidden("Id", Model.Id)
+
+                            <div class="form-group">
+                                <textarea name="Body" class="form-control" required="@Model.Body"></textarea>
+                            </div>
+
+                            <button class="btn btn-dark fw-bold border-success">SUBMIT</button>
+                        </form>
+                    </div>
+
+                    @* Modal footer *@
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-dark fw-bold" data-bs-dismiss="modal">CLOSE</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+       @* Moderate Modal*@
+
+        <div class="modal" id=@($"moderateModal_{Model.Id}")>
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    @* Modal Header *@
+                    <div class="modal-header">
+                        <h4 class="modal-title">Moderating Model</h4>
+
+                    </div>
+
+                    @* Modal Body *@
+                    <div class="modal-body">
+                        <form asp-controller="Comments" asp-action="Moderate">
+                            @Html.Hidden("Id", Model.Id)
+                            @Html.Hidden("Body", Model.Body)
+
+                            <div class="form-group">
+                                <label class="control-label">Original Model</label>
+                                <textarea disabled class="form-control" style="resize: none">@Model.Body</textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">Moderated Model</label>
+                                <textarea class="form-control" name="ModeratedBody" >@Model.ModeratedBody</textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">Moderation Reason</label>
+                                <select class="form-control" name="ModerationType" asp-for="@Model.ModerationType" asp-items="@Html.GetEnumSelectList<ModerationType>()"></select>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col">
+                                        <button class="btn btn-dark col-12 border-success fw-bold" type="submit">SUBMIT</button>
+                                    </div>
+                                    <div class="col">
+                                        <button type="button" class="btn btn-dark fw-bold col-12" data-bs-dismiss="modal">CLOSE</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>

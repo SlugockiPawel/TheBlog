@@ -1,0 +1,73 @@
+﻿@using TheBlog.Services
+@using Microsoft.AspNetCore.Identity
+@using TheBlog.Enums
+
+@model TheBlog.Models.Comment
+@inject IImageService _imageService
+@inject UserManager<BlogUser> _userManager
+
+<div class="row media media-border p-0 mb-2 bg-light">
+    <div class="col-1">
+        <img class="me-3 mt-3 img-fluid rounded-circle" style="min-width: 80px" src="@_imageService.DecodeImage(Model.BlogUser.ImageData, Model.BlogUser.ContentType)" alt="@Model.BlogUser image">
+    </div>
+
+    <div class="col-11">
+        <div class="media-body">
+            <h4 id=@($"ModelNumber_{Model.Id}")>@Model.BlogUser.FullName</h4>
+
+            @if (Model.Moderated is not null)
+            {
+                <small>
+                    <i>
+                        <span class="small">
+                            <span class="fw-bold">
+                                Moderated <span class="text-danger fst-italic">(@Model.ModerationType.ToString().ToLower())</span>
+                            </span>
+                            : @Model.Moderated?.ToLongDateString()
+                        </span>
+                    </i>
+                </small>
+                <p>@Model.ModeratedBody</p>
+            }
+            else
+            {
+                <small>
+                    <i>
+                        <span class="small fst-italic">Posted : @Model.Created.ToLongDateString()</span>
+                    </i>
+                </small>
+                <p>@Model.Body</p>
+            }
+
+            @* Render Edit Button *@
+
+            @if (Model.Moderated is null && Model.Deleted is null && Model.BlogUserId == _userManager.GetUserId(User))
+            {
+                <hr/>
+                <button data-bs-toggle="modal" data-bs-target="#editModal_@Model.Id" class="btn btn-dark float-end fw-bold">EDIT</button>
+            }
+
+            @* Render Moderate and Delete buttons *@
+
+            @if (User.IsInRole(BlogRole.Moderator.ToString()) && Model.Deleted is null)
+            {
+                <hr/>
+                <div class="row">
+                    <div class="col-2">
+                        <button data-bs-toggle="modal" data-bs-target="#moderateModal_@Model.Id" class="btn btn-dark float-end fw-bold">MODERATE</button>
+                    </div>
+                    <div class="col-2">
+                        <form asp-controller="Comments" asp-action="Delete">
+                            @Html.Hidden("Id", Model.Id)
+                            @Html.Hidden("Slug", Model.Post.Slug)
+
+                            <button class="btn alert-dark fw-bold col-12">DELETE</button>
+                        </form>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
