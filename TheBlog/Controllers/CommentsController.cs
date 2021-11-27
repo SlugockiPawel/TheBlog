@@ -67,7 +67,7 @@ namespace TheBlog.Controllers
                 _context.Add(comment);
                 await _context.SaveChangesAsync();
                 // return RedirectToAction(nameof(Index));
-                return RedirectToAction("Details", "Posts", new {slug = postSlug});
+                return RedirectToAction("Details", "Posts", new {slug = postSlug}, $"commentSection");
             }
 
             return View(comment);
@@ -128,7 +128,8 @@ namespace TheBlog.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("Details", "Posts", new {slug = newComment.Post.Slug}, $"commentNumber_{comment.Id}"); // in View, there is an id for every comment <h4> so after editing, View will stop right there
+                return RedirectToAction("Details", "Posts", new {slug = newComment.Post.Slug}, $"commentSection"); // in View, there is an id for every comment <h4> so after editing, View will stop right there
+                // return RedirectToAction("Details", "Posts", new {slug = newComment.Post.Slug}, $"commentNumber_{comment.Id}"); // in View, there is an id for every comment <h4> so after editing, View will stop right there
             }
             // ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", comment.BlogUserId);
             // ViewData["ModeratorId"] = new SelectList(_context.Users, "Id", "Id", comment.ModeratorId);
@@ -171,7 +172,8 @@ namespace TheBlog.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("Details", "Posts", new {slug = newComment.Post.Slug}, $"commentNumber_{comment.Id}"); // in View, there is an id for every comment <h4> so after editing, View will stop right there
+                return RedirectToAction("Details", "Posts", new {slug = newComment.Post.Slug}, $"commentSection"); // in View, there is an id for every comment <h4> so after editing, View will stop right there
+                // return RedirectToAction("Details", "Posts", new {slug = newComment.Post.Slug}, $"commentNumber_{comment.Id}"); // in View, there is an id for every comment <h4> so after editing, View will stop right there
             }
 
             return View("Edit",comment);
