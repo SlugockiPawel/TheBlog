@@ -20,8 +20,8 @@
 
                     <!-- Post preview-->
 
-                    <article class="row mb-5">
-                        <div class="col-12 text-center">
+                    <article class="row mb-0">
+                        <div class="col-12 text-center mb-0">
                             <img class="img-fluid mb-4" width="100%" src="@_imageService.DecodeImage(@Model.ImageData, @Model.ContentType)" alt="@Model.Title image file">
                             <a class="post-link" href="">
                                 @Model.Blog.Name
@@ -37,9 +37,19 @@
                                 @Html.Raw(Model.Content)
                             </p>
                         </div>
-                    </article>
+                        <div class="col-12 mt-5">
+                            @foreach (var tag in Model.Tags)
+                            {
+                                <a class="post-link me-4" asp-action="TagIndex" asp-route-tag="@tag.Text.ToLower()">#@tag.Text</a> //TagIndex?
+                            }
+                        </div>
 
-                    <hr class="mb-5">
+                       
+                      
+                    </article>
+                    
+                   
+                    <hr class="mb-5 mt-3">
 
 
                 </div>
@@ -56,26 +66,6 @@
 <div class="container container-narrow">
 
 
-<hr/>
-
-<article>
-    <div class="row">
-        <div class="col text-center h3 fw-bolder">
-            Custom Post Tags
-        </div>
-    </div>
-    <div class="row">
-        <div class="col text-center">
-            @foreach (var tag in Model.Tags)
-            {
-                <a class="btn btn-warning btn-outline-dark" asp-action="TagIndex" asp-route-tag="@tag.Text.ToLower()">#@tag.Text</a> //TagIndex?
-            }
-        </div>
-    </div>
-</article>
-
-
-<hr/>
 
 @* Displaying Comments related to this post *@
 
