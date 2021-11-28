@@ -10,6 +10,7 @@
     --text-font: 'Hind',   sans-serif;
     --opacity-high: 80%;
     --opacity-medium: 55%;
+    --avatar-size: 7rem;
 }
 
 * {
@@ -80,6 +81,19 @@ div.validation-summary-errors > ul {
 .fa-search, .fa-times { cursor: pointer; }
 
 .shadow-bottom { box-shadow: 0 4px 8px -5px var(--lighter-color); }
+
+.avatar {
+    width: var(--avatar-size);
+    height: var(--avatar-size);
+    -webkit-border-radius: var(--avatar-size);
+    -webkit-background-clip: padding-box;
+    -moz-border-radius: var(--avatar-size);
+    -moz-background-clip: padding;
+    border-radius: 50%;
+    background-clip: padding-box;
+    background-size: cover;
+    background-position: center center;
+}
 
 .widget-title {
     font-size: 1rem;
