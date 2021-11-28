@@ -6,68 +6,82 @@
 @inject IImageService _imageService
 @inject UserManager<BlogUser> _userManager
 
-<div class="row media media-border p-0 mb-2 bg-light">
-    <div class="col-1">
-        <img class="me-3 mt-3 img-fluid rounded-circle" style="min-width: 80px" src="@_imageService.DecodeImage(Model.BlogUser.ImageData, Model.BlogUser.ContentType)" alt="@Model.BlogUser image">
-    </div>
 
-    <div class="col-11">
-        <div class="media-body">
-            <h4 id=@($"ModelNumber_{Model.Id}")>@Model.BlogUser.FullName</h4>
-
-            @if (Model.Moderated is not null)
-            {
-                <small>
-                    <i>
-                        <span class="small">
-                            <span class="fw-bold">
-                                Moderated <span class="text-danger fst-italic">(@Model.ModerationType.ToString().ToLower())</span>
-                            </span>
-                            : @Model.Moderated?.ToLongDateString()
+<div class="mb-5">
+    <div class="row">
+        <div class="col-md-3 d-flex align-items-start justify-content-center  ">
+            <img src="@_imageService.DecodeImage(Model.BlogUser.ImageData, Model.BlogUser.ContentType)" style="max-width: 120px" class="avatar" alt="@Model.BlogUser image">
+        </div>
+        <div class="col-md-9">
+            <div class="col-12">
+                <h5 class="fw-light" id=@($"ModelNumber_{Model.Id}")>@Model.BlogUser.FullName</h5>
+            
+                @* display post//moderate/update time  *@
+                @if (Model.Moderated is not null)
+                {
+                    <p class="post-author-date">
+                        <span class="fw-bold">
+                            Moderated <span class="text-danger fst-italic">(@Model.ModerationType.ToString().ToLower())</span>
                         </span>
-                    </i>
-                </small>
-                <p>@Model.ModeratedBody</p>
-            }
-            else
-            {
-                <small>
-                    <i>
-                        <span class="small fst-italic">Posted : @Model.Created.ToLongDateString()</span>
-                    </i>
-                </small>
-                <p>@Model.Body</p>
-            }
+                        : @Model.Moderated?.ToLongDateString()
+                    </p>
+                    <p class="text-break">@Model.ModeratedBody</p>
+                }
+                else
+                {
+                    <p class="post-author-date">@Model.Created.ToLongDateString()</p>
+                    <p class="text-break">@Model.Body</p>
+                }
 
-            @* Render Edit Button *@
+            
+            
+                @if (Model.Updated is not null)
+                {
+                    <p class="post-author-date">
+                        Last update: @Model.Updated?.ToLongDateString()
+                    </p>
+                }
+            </div>
+            
+            <div class="row d-flex">
+                <div class="col-3">
+                    @* Render Edit Button *@
 
-            @if (Model.Moderated is null && Model.Deleted is null && Model.BlogUserId == _userManager.GetUserId(User))
-            {
-                <hr/>
-                <button data-bs-toggle="modal" data-bs-target="#editModal_@Model.Id" class="btn btn-dark float-end fw-bold">EDIT</button>
-            }
+                    @if (Model.Moderated is null && Model.Deleted is null && Model.BlogUserId == _userManager.GetUserId(User))
+                    {
+               
+                        <button data-bs-toggle="modal" data-bs-target="#editModal_@Model.Id" class="btn btn-sm btn-primary form-button  ">EDIT</button>
+                    }
 
-            @* Render Moderate and Delete buttons *@
+               
+                </div>
+                <div class="col-9">
+                    @* Render Moderate and Delete buttons *@
 
-            @if (User.IsInRole(BlogRole.Moderator.ToString()) && Model.Deleted is null)
-            {
-                <hr/>
-                <div class="row">
-                    <div class="col-2">
+                    @if (User.IsInRole(BlogRole.Moderator.ToString()) && Model.Deleted is null)
+                    {
+                
+                    
                         <button data-bs-toggle="modal" data-bs-target="#moderateModal_@Model.Id" class="btn btn-dark float-end fw-bold">MODERATE</button>
-                    </div>
-                    <div class="col-2">
+                        
                         <form asp-controller="Comments" asp-action="Delete">
                             @Html.Hidden("Id", Model.Id)
                             @Html.Hidden("Slug", Model.Post.Slug)
 
-                            <button class="btn alert-dark fw-bold col-12">DELETE</button>
+                            <button class="btn alert-dark fw-bold ">DELETE</button>
                         </form>
-                    </div>
+                   
+                    }
                 </div>
-            }
+            </div>
+            
 
         </div>
     </div>
 </div>
+<div class="border-partial mb-5"></div>
+
+
+
+        
 
