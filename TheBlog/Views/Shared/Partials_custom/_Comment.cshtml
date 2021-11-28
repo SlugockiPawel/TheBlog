@@ -8,8 +8,8 @@
 
 
 <div class="mb-5">
-    <div class="row">
-        <div class="col-md-3 d-flex align-items-start justify-content-center  ">
+    <div class="row m-0 p-0">
+        <div class="col-md-3 d-flex align-items-start justify-content-center border-end ">
             <img src="@_imageService.DecodeImage(Model.BlogUser.ImageData, Model.BlogUser.ContentType)" style="max-width: 120px" class="avatar" alt="@Model.BlogUser image">
         </div>
         <div class="col-md-9">
@@ -50,26 +50,26 @@
                     @if (Model.Moderated is null && Model.Deleted is null && Model.BlogUserId == _userManager.GetUserId(User))
                     {
                
-                        <button data-bs-toggle="modal" data-bs-target="#editModal_@Model.Id" class="btn btn-sm btn-primary form-button  ">EDIT</button>
+                        <button data-bs-toggle="modal" data-bs-target="#editModal_@Model.Id" class="btn btn-sm btn-primary form-button py-2 px-3">EDIT</button>
                     }
 
                
                 </div>
-                <div class="col-9">
+                <div class="col-sm-9 col-12 d-flex flex-row-reverse justify-content-between">
                     @* Render Moderate and Delete buttons *@
 
                     @if (User.IsInRole(BlogRole.Moderator.ToString()) && Model.Deleted is null)
                     {
-                
-                    
-                        <button data-bs-toggle="modal" data-bs-target="#moderateModal_@Model.Id" class="btn btn-dark float-end fw-bold">MODERATE</button>
-                        
                         <form asp-controller="Comments" asp-action="Delete">
                             @Html.Hidden("Id", Model.Id)
                             @Html.Hidden("Slug", Model.Post.Slug)
 
-                            <button class="btn alert-dark fw-bold ">DELETE</button>
+                            <button class="btn btn-sm btn-danger  py-2 px-3">DELETE</button>
                         </form>
+                    
+                        <button data-bs-toggle="modal" data-bs-target="#moderateModal_@Model.Id" class="btn btn-sm btn-outline-primary  py-2 px-3">MODERATE</button>
+                        
+                       
                    
                     }
                 </div>
