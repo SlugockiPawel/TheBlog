@@ -62,17 +62,7 @@ namespace TheBlog.Controllers
                  .OrderByDescending(p => p.Created)
                  .ToPagedListAsync(pageNumber, pageSize);
 
-             var distinctTags = await _context.Tags
-                 .Where(t => t.Post.ReadyStatus == ReadyStatus.ProductionReady)
-                 .OrderByDescending(t => t.Post.Created)
-                 .AsEnumerable()
-                 .Take(25)
-                 .AsEnumerable()
-                 .GroupBy(t => t.Text)
-                 .Select(g => g.First())
-                 .ToListAsync();
-
-             ViewData["DistinctTags"] = distinctTags;
+             ViewData["DistinctTags"] = await _blogSearchService.GetDistinctTags(15);
 
              var categories = await _context.Blogs
                  .Where(c => c.Posts.Any(p => p.ReadyStatus == ReadyStatus.ProductionReady))
@@ -131,17 +121,7 @@ namespace TheBlog.Controllers
                 .ThenInclude( c => c.BlogUser) // will query above Comments only
                 .FirstOrDefaultAsync(m => m.Slug == slug);
 
-            var distinctTags = await _context.Tags
-                .Where(t => t.Post.ReadyStatus == ReadyStatus.ProductionReady)
-                .OrderByDescending(t => t.Post.Created)
-                .AsEnumerable()
-                .Take(25)
-                .AsEnumerable()
-                .GroupBy(t => t.Text)
-                .Select(g => g.First())
-                .ToListAsync();
-
-            ViewData["DistinctTags"] = distinctTags;
+            ViewData["DistinctTags"] = await _blogSearchService.GetDistinctTags(15);
 
             var categories = await _context.Blogs
                 .Where(c => c.Posts.Any(p => p.ReadyStatus == ReadyStatus.ProductionReady))

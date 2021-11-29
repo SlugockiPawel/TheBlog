@@ -21,13 +21,15 @@ namespace TheBlog.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IBlogEmailSender _emailSender;
         private readonly ApplicationDbContext _context;
+        private readonly BlogSearchService _blogSearchService;
 
         public HomeController(ILogger<HomeController> logger, IBlogEmailSender emailSender,
-            ApplicationDbContext context)
+            ApplicationDbContext context, BlogSearchService blogSearchService)
         {
             _logger = logger;
             _emailSender = emailSender;
             _context = context;
+            _blogSearchService = blogSearchService;
         }
 
         public async Task<IActionResult> Index(int? page)
@@ -50,18 +52,7 @@ namespace TheBlog.Controllers
                 .OrderByDescending(p => p.Created)
                 .ToPagedListAsync(pageNumber, pageSize);
 
-            var distinctTags = await _context.Tags
-                .Where(t => t.Post.ReadyStatus == ReadyStatus.ProductionReady)
-                .OrderByDescending(t => t.Post.Created)
-                .AsEnumerable()
-                .Take(25)
-                .AsEnumerable()
-                .GroupBy(t => t.Text)
-                .Select(g => g.First())
-                .ToListAsync();
-
-
-            ViewData["DistinctTags"] = distinctTags;
+            ViewData["DistinctTags"] = await _blogSearchService.GetDistinctTags(15);
 
             var categories = await _context.Blogs
                 .Where(c => c.Posts.Any(p => p.ReadyStatus == ReadyStatus.ProductionReady))
