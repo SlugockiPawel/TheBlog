@@ -50,7 +50,7 @@
                     @if (Model.Moderated is null && Model.Deleted is null && Model.BlogUserId == _userManager.GetUserId(User))
                     {
                
-                        <button data-bs-toggle="modal" data-bs-target="#editModal_@Model.Id" class="btn btn-sm btn-primary form-button py-2 px-3">EDIT</button>
+                        <a href="" data-bs-toggle="modal" data-bs-target="#editModal_@Model.Id" class="post-link fw-bolder">EDIT</a>
                     }
 
                
