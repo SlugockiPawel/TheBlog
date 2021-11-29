@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using TheBlog.Data;
 using TheBlog.Enums;
 using TheBlog.Models;
@@ -56,10 +57,34 @@ namespace TheBlog.Controllers
              var pageSize = 5;
         
              var posts = await _context.Posts
+                 .Include(p => p.BlogUser)
+                 .Where(p => p.Tags.Any(t => t.Text.ToLower() == tagText))
                  .OrderByDescending(p => p.Created)
                  .ToPagedListAsync(pageNumber, pageSize);
-        
-             return View();
+
+             var distinctTags = await _context.Tags
+                 .Where(t => t.Post.ReadyStatus == ReadyStatus.ProductionReady)
+                 .OrderByDescending(t => t.Post.Created)
+                 .AsEnumerable()
+                 .Take(25)
+                 .AsEnumerable()
+                 .GroupBy(t => t.Text)
+                 .Select(g => g.First())
+                 .ToListAsync();
+
+             ViewData["DistinctTags"] = distinctTags;
+
+             var categories = await _context.Blogs
+                 .Where(c => c.Posts.Any(p => p.ReadyStatus == ReadyStatus.ProductionReady))
+                 .OrderBy(c => c.Name)
+                 .ToListAsync();
+
+             if (posts == null)
+             {
+                 return NotFound();
+             }
+
+             return View(posts);
          }
 
         // GET: Posts
@@ -83,6 +108,8 @@ namespace TheBlog.Controllers
                 .Where(p => p.BlogId == id && p.ReadyStatus == ReadyStatus.ProductionReady)
                 .OrderByDescending(p => p.Created)
                 .ToPagedListAsync(pageNumber, pageSize);
+
+
 
             return View(posts);
         }
