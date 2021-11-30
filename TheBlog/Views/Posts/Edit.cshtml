@@ -8,90 +8,86 @@
 <div class="container container-narrow">
     <h1>Edit</h1>
 
-<h4>Post</h4>
+    <h4>Post</h4>
 
-<div class="row">
-    <div class="col-md-10">
-        <hr />
-        <form asp-action="Edit" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id"/>
-            <div class="col-form-label">
-                <label asp-for="BlogId" class="col-form-label"></label>
-                <select asp-for="BlogId" class="form-control" asp-items="ViewBag.BlogId"></select>
-                <span asp-validation-for="BlogId" class="text-danger"></span>
-            </div>
-            <div class="col-form-label">
-                <label asp-for="Title" class="col-form-label"></label>
-                <input asp-for="Title" class="form-control"/>
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="col-form-label">
-                <label asp-for="Abstract" class="col-form-label"></label>
-                <textarea asp-for="Abstract" class="form-control"></textarea>
-                <span asp-validation-for="Abstract" class="text-danger"></span>
-            </div>
-            <div class="col-form-label">
-                <label asp-for="Content" class="col-form-label"></label>
-                <textarea id="Content" asp-for="Content" class="form-control"></textarea>
-                <span asp-validation-for="Content" class="text-danger"></span>
-            </div>
-
-
-            <div class="col-form-label">
-                <div class="row">
-                    <div class="col-12">
-                        <label class="col-form-label">Manage Tags</label>
-                    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <hr/>
+            <form asp-action="Edit" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id"/>
+                <div class="col-form-label">
+                    <label asp-for="BlogId" class="col-form-label"></label>
+                    <select asp-for="BlogId" class="form-control" asp-items="ViewBag.BlogId"></select>
+                    <span asp-validation-for="BlogId" class="text-danger"></span>
                 </div>
-                <div class="row">
-                    <div class="col-md-6 col-12 mb-2">
-                        <input type="text" class="form-control" id="TagEntry"/>
-                        <div class="d-flex justify-content-between p-0 mt-1">
-                            <div class="col-6 pe-2">
-                                <button onclick="AddTag()" name="Add" type="button" class="w-100 d-block btn btn-dark">Add</button>
-                            </div>
-                            <div class="col-6 ps-2 ">
-                                <button onclick="DeleteTag()" name="Delete" type="button" class="w-100 btn btn-dark">Delete</button>
-                            </div>
+                <div class="col-form-label">
+                    <label asp-for="Title" class="col-form-label"></label>
+                    <input asp-for="Title" class="form-control"/>
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="col-form-label">
+                    <label asp-for="Abstract" class="col-form-label"></label>
+                    <textarea asp-for="Abstract" class="form-control"></textarea>
+                    <span asp-validation-for="Abstract" class="text-danger"></span>
+                </div>
+                <div class="col-form-label">
+                    <label asp-for="Content" class="col-form-label"></label>
+                    <textarea id="Content" asp-for="Content" class="form-control"></textarea>
+                    <span asp-validation-for="Content" class="text-danger"></span>
+                </div>
+
+
+                <div class="col-form-label">
+                    <div class="row">
+                        <div class="col-12">
+                            <label class="col-form-label">Manage Tags</label>
                         </div>
                     </div>
-                    <div class="col-md-6 col-12">
-                        <select class="form-select" name="TagValues" id="TagList" multiple></select>
+                    <div class="row">
+                        <div class="col-md-6 col-12 mb-2">
+                            <input type="text" class="form-control" id="TagEntry"/>
+                            <div class="d-flex justify-content-between p-0 mt-1">
+                                <div class="col-6 pe-2">
+                                    <button onclick="AddTag()" name="Add" type="button" class="w-100 d-block btn btn-dark">Add</button>
+                                </div>
+                                <div class="col-6 ps-2 ">
+                                    <button onclick="DeleteTag()" name="Delete" type="button" class="w-100 btn btn-dark">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <select class="form-select" name="TagValues" id="TagList" multiple></select>
+                        </div>
                     </div>
                 </div>
-            </div>
 
 
+                <div class="col-form-label">
+                    <label asp-for="Image" class="col-form-label"></label>
+                    <input type="file" name="newImage" class="form-control"/>
+                    <span asp-validation-for="Image" class="text-danger"></span>
+                </div>
+                <div class="col-form-label">
+                    <label asp-for="ReadyStatus" class="col-form-label"></label>
+                    <select asp-for="ReadyStatus" asp-items="@Html.GetEnumSelectList<ReadyStatus>()" class="form-control"></select>
+                    <span asp-validation-for="ReadyStatus" class="text-danger"></span>
+                </div>
+                <div class="col-form-label">
+                    <input type="submit" value="Save" class="btn btn-primary"/>
+                </div>
+            </form>
+        </div>
+    </div>
 
-            <div class="col-form-label">
-                <label asp-for="Image" class="col-form-label"></label>
-                <input type="file" name="newImage" class="form-control"/>
-                <span asp-validation-for="Image" class="text-danger"></span>
-            </div>
-            <div class="col-form-label">
-                <label asp-for="ReadyStatus" class="col-form-label"></label>
-                <select asp-for="ReadyStatus" asp-items="@Html.GetEnumSelectList<ReadyStatus>()" class="form-control"></select>
-                <span asp-validation-for="ReadyStatus" class="text-danger"></span>
-            </div>
-            <div class="col-form-label">
-                <input type="submit" value="Save" class="btn btn-primary"/>
-            </div>
-        </form>
+    <div>
+        <a asp-action="Index">Back to List</a>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 
-    
-    <script src="~/js/custom.js"></script>
-    
     <script src="https://cdn.tiny.cloud/1/tv28afnlksy5pcdujc7cm4wux2bz90plbuh7aokmcy43jx7z/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 
     <script>
