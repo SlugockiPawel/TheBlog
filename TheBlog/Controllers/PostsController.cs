@@ -46,36 +46,33 @@ namespace TheBlog.Controllers
             var posts = _blogSearchService.Search(searchTerm);
 
             return View(await posts.ToPagedListAsync(pageNumber, pageSize));
-;        }
+            ;
+        }
 
         // GET: Posts by Tag
-         public async Task<IActionResult> TagIndex(int? page, string tagText)
-         {
-             ViewData["TagText"] = tagText; // when we go from page 1 to page 2, we will maintain tagText
-        
-             var pageNumber = page ?? 1;
-             var pageSize = 5;
-        
-             var posts = await _context.Posts
-                 .Include(p => p.BlogUser)
-                 .Where(p => p.Tags.Any(t => t.Text.ToLower() == tagText))
-                 .OrderByDescending(p => p.Created)
-                 .ToPagedListAsync(pageNumber, pageSize);
+        public async Task<IActionResult> TagIndex(int? page, string tagText)
+        {
+            ViewData["TagText"] = tagText; // when we go from page 1 to page 2, we will maintain tagText
 
-             ViewData["DistinctTags"] = await _blogSearchService.GetDistinctTags(15);
+            var pageNumber = page ?? 1;
+            var pageSize = 5;
 
-             var categories = await _context.Blogs
-                 .Where(c => c.Posts.Any(p => p.ReadyStatus == ReadyStatus.ProductionReady))
-                 .OrderBy(c => c.Name)
-                 .ToListAsync();
+            var posts = await _context.Posts
+                .Include(p => p.BlogUser)
+                .Where(p => p.Tags.Any(t => t.Text.ToLower() == tagText) && p.ReadyStatus == ReadyStatus.ProductionReady)
+                .OrderByDescending(p => p.Created)
+                .ToPagedListAsync(pageNumber, pageSize);
 
-             if (posts == null)
-             {
-                 return NotFound();
-             }
+            if (posts == null)
+            {
+                return NotFound();
+            }
 
-             return View(posts);
-         }
+            ViewData["DistinctTags"] = await _blogSearchService.GetDistinctTags(15);
+            ViewData["Categories"] = await _blogSearchService.GetDistinctCategories();
+
+            return View(posts);
+        }
 
         // GET: Posts
         public async Task<IActionResult> Index()
@@ -91,6 +88,7 @@ namespace TheBlog.Controllers
             {
                 return NotFound();
             }
+
             var pageNumber = page ?? 1;
             var pageSize = 5;
 
@@ -98,7 +96,6 @@ namespace TheBlog.Controllers
                 .Where(p => p.BlogId == id && p.ReadyStatus == ReadyStatus.ProductionReady)
                 .OrderByDescending(p => p.Created)
                 .ToPagedListAsync(pageNumber, pageSize);
-
 
 
             return View(posts);
@@ -118,20 +115,16 @@ namespace TheBlog.Controllers
                 .Include(p => p.BlogUser) // this BlogUser is an author of the Post (below is for comment)
                 .Include(p => p.Tags)
                 .Include(p => p.Comments)
-                .ThenInclude( c => c.BlogUser) // will query above Comments only
+                .ThenInclude(c => c.BlogUser) // will query above Comments only
                 .FirstOrDefaultAsync(m => m.Slug == slug);
-
-            ViewData["DistinctTags"] = await _blogSearchService.GetDistinctTags(15);
-
-            var categories = await _context.Blogs
-                .Where(c => c.Posts.Any(p => p.ReadyStatus == ReadyStatus.ProductionReady))
-                .OrderBy(c => c.Name)
-                .ToListAsync();
 
             if (post == null)
             {
                 return NotFound();
             }
+
+            ViewData["DistinctTags"] = await _blogSearchService.GetDistinctTags(15);
+            ViewData["Categories"] = await _blogSearchService.GetDistinctCategories();
 
             return View(post);
         }
@@ -255,8 +248,6 @@ namespace TheBlog.Controllers
             {
                 try
                 {
-                   
-
                     var currentDbPost = await _context.Posts
                         .Include(p => p.Tags)
                         .AsNoTracking()
@@ -276,7 +267,8 @@ namespace TheBlog.Controllers
                         }
                         else
                         {
-                            ModelState.AddModelError("Title", "Title provided cannot be used as it is already in the database. Try again with a different Post Title");
+                            ModelState.AddModelError("Title",
+                                "Title provided cannot be used as it is already in the database. Try again with a different Post Title");
                             var tagsToDisplay = currentDbPost.Tags.Select(t => t.Text);
                             ViewData["TagValues"] = string.Join(",", tagsToDisplay);
                             ViewData["BlogId"] = new SelectList(_context.Blogs, "Id", "Name", post.BlogId);
