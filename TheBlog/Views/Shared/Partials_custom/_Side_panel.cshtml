@@ -27,21 +27,13 @@
         <div class="col-12 border-partial"></div>
         <div class="col-12">
             <ul class="ps-0 bg-white ">
-                <li class="categories">
-                    <a class="category-link" href="">Security In IT</a>
-                </li>
-                <li class="categories">
-                    <a class="category-link" href="">Blog Project</a>
-                </li>
-                <li class="categories">
-                    <a class="category-link" href="">Bug Trucker Project</a>
-                </li>
-                <li class="categories">
-                    <a class="category-link" href="">.NET MVC</a>
-                </li>
-                <li class="categories">
-                    <a class="category-link" href="">.NET WEB API</a>
-                </li>
+                @foreach (var category in ViewData["Categories"] as IList<Blog>)
+                {
+                    <li class="categories">
+                        <a class="category-link" asp-controller="Blogs" asp-action="CategoryIndex" asp-route-categoryName="@category.Name.ToLower()">@category.Name</a>
+                    </li>
+                }
+
             </ul>
         </div>
     </div>
