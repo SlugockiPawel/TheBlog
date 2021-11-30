@@ -88,14 +88,11 @@
         const tagValues = '@ViewData["TagValues"]';
     </script>
 
-
-    <script src="~/js/custom.js"></script>
-
     <script src="https://cdn.tiny.cloud/1/tv28afnlksy5pcdujc7cm4wux2bz90plbuh7aokmcy43jx7z/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         tinymce.init({
             selector: 'textarea#Content',
-            content_css:"../css/custom.css",
+            content_css: "../css/custom.css",
             plugins: 'print preview paste formatpainter code importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help quickbars emoticons Advanced List Autoresize BBCode Character Map Code Sample Full Page Full Screen Horizontal Rule Image Tools Import CSS Insert Date/Time Legacy Output Nonbreaking Space Page Break Quick Toolbars Search and Replace Spell Checker Tab Focus Text Pattern Table of Contents Visual Blocks Visual Characters Word Count ',
             imagetools_cors_hosts: ['picsum.photos'],
             menubar: 'file edit view insert format tools table help',
@@ -111,4 +108,5 @@
         });
     </script>
 
+    <script src="~/js/custom.js"></script>
 }
