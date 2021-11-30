@@ -53,5 +53,13 @@ namespace TheBlog.Services
                 .Select(g => g.First())
                 .ToListAsync();
         }
+
+        public async Task<IList<Blog>> GetDistinctCategories()
+        {
+            return await _context.Blogs
+                .Where(c => c.Posts.Any(p => p.ReadyStatus == ReadyStatus.ProductionReady))
+                .OrderBy(c => c.Name)
+                .ToListAsync();
+        }
     }
 }
