@@ -42,11 +42,17 @@ namespace TheBlog.Controllers
 
             var pageNumber = page ?? 1;
             var pageSize = 5;
-
             var posts = _blogSearchService.Search(searchTerm);
 
+            if (posts == null)
+            {
+                return NotFound();
+            }
+
+            ViewData["DistinctTags"] = await _blogSearchService.GetDistinctTags(15);
+            ViewData["Categories"] = await _blogSearchService.GetDistinctCategories();
+
             return View(await posts.ToPagedListAsync(pageNumber, pageSize));
-            ;
         }
 
         // GET: Posts by Tag
