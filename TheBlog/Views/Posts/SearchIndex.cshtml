@@ -1,57 +1,77 @@
 ﻿@using TheBlog.Models
-@using TheBlog.Services
-@using TheBlog.Enums
 @using X.PagedList
 @using X.PagedList.Mvc.Core
 @using X.PagedList.Web.Common
-
+@using TheBlog.Services
 @inject IImageService _imageService
 @model IPagedList<Post>
 
-<div class="container container-narrow">
-    <div class="row">
-        @foreach (var post in Model)
-        {
-            <div class="col-sm-2 col-lg-4 mt-3">
-                <div class="card border-dark">
-                    <div class="card-body text-center">
-                        <div class="bg-warning">
-                            <hr class="card-hr"/>
-                            <h5 class="card-title">@post.Title</h5>
-                            <hr class="card-hr"/>
-                        </div>
-                        <div>
-                            <p class="card-text">@post.Abstract</p>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@* <partial name="Partials_custom/_Header_img"/> *@
+
+<main class="mt-5">
+    <section class="container-fluid">
+        <div class="container container-narrow">
+            <div class="row gx-5">
+                <!-- post list -->
+                <div class="col-12 col-md-8">
+                    <!-- post -->
+
+                    <!-- Post preview-->
+                    @foreach (var post in Model)
+                    {
+                        <article class="row mb-5">
+                            <div class="col-12 text-center">
+                                <img class="img-fluid mb-4" width="100%" src="@_imageService.DecodeImage(post.ImageData, post.ContentType)" alt="@post.Title image file">
+                                <a class="post-link" asp-controller="Blogs" asp-action="CategoryIndex" asp-route-categoryName="@post.Blog.Name.ToLower()">
+                                    @post.Blog.Name
+                                </a>
+                                <a asp-controller="Posts" asp-action="Details" asp-route-slug="@post.Slug">
+                                    <h3 class="post-title mt-2">@post.Title</h3>
+                                </a>
+                                <div class="border-partial"></div>
+                                <p class="text-center post-author-date ">
+                                    @post.BlogUser.FullName, @post.Created.ToLongDateString()
+                                </p>
+                                <p class="px-2">
+                                    @post.Abstract
+                                </p>
+                                <a class="post-link" asp-controller="Posts" asp-action="Details" asp-route-slug="@post.Slug">
+                                    Read More
+                                </a>
+                            </div>
+                        </article>
+
+                        <hr class="mb-5">
+                    }
+
+                    <!-- pagination -->
+                    <div class="col-12 text-center mt-sm-5">
+                        @* Paging Controls here *@
+                        <div class="col-12 h3">
+                            <span>Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount</span>
                         </div>
 
-                        <br/>
-                        <div class="text-center">
-                            <a class="btn btn-dark btn-sm col-12 mb-2" asp-action="Details" asp-controller="Posts" asp-route-slug="@post.Slug">Read More</a>
+                        <div class="col-12 d-flex justify-content-center">
+                            @Html.PagedListPager(Model, page => Url.Action("SearchIndex", new { page = page, searchTerm = ViewData["SearchTerm"]}),
+                               
+                                new PagedListRenderOptions
+                                {
+                                    LiElementClasses = new string[] { "page-item" },
+                                    PageClasses = new string[] { "page-link" },
+                                })
                         </div>
-
                     </div>
-                    <img class="card-img-bottom" src="@_imageService.DecodeImage(post.ImageData, post.ContentType)"/>
                 </div>
 
+                <!-- side bar -->
+                <aside class="col-12 col-md-4 px-md-3 px-4">
+                    <partial name="Partials_custom/_Side_panel" view-data="ViewData"></partial>
+                </aside>
             </div>
-        }
-    </div>
-
-    <hr/>
-
-    <div class="row">
-        <div class="col h3">
-            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
         </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            @Html.PagedListPager(Model, page => Url.Action("SearchIndex", new { page = page, searchTerm = ViewData["SearchTerm"] }),
-                new PagedListRenderOptions
-                {
-                    LiElementClasses = new string[] {"page-item"},
-                    PageClasses = new string[] {"page-link"},
-                })
-        </div>
-    </div>
-</div>
+    </section>
+</main>
