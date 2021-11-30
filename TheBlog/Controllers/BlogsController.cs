@@ -12,6 +12,7 @@ using TheBlog.Data;
 using TheBlog.Enums;
 using TheBlog.Models;
 using TheBlog.Services;
+using X.PagedList;
 
 namespace TheBlog.Controllers
 {
@@ -20,13 +21,15 @@ namespace TheBlog.Controllers
         private readonly ApplicationDbContext _context;
         private readonly IImageService _imageService;
         private readonly UserManager<BlogUser> _userManager;
+        private readonly BlogSearchService _blogSearchService;
 
         public BlogsController(ApplicationDbContext context, IImageService imageService,
-            UserManager<BlogUser> userManager)
+            UserManager<BlogUser> userManager, BlogSearchService blogSearchService)
         {
             _context = context;
             _imageService = imageService;
             _userManager = userManager;
+            _blogSearchService = blogSearchService;
         }
 
         // GET: Blogs
@@ -34,6 +37,31 @@ namespace TheBlog.Controllers
         {
             var applicationDbContext = _context.Blogs.Include(b => b.BlogUser);
             return View(await applicationDbContext.ToListAsync());
+        }
+
+        // GET: Posts by Category
+        public async Task<IActionResult> CategoryIndex(int? page, string categoryName)
+        {
+            ViewData["CategoryName"] = categoryName; // when we go from page 1 to page 2, we will maintain tagText
+
+            var pageNumber = page ?? 1;
+            var pageSize = 5;
+
+            var posts = await _context.Posts
+                .Include(p => p.BlogUser)
+                .Where(p => p.Blog.Name.ToLower() == categoryName && p.ReadyStatus == ReadyStatus.ProductionReady)
+                .OrderByDescending(p => p.Created)
+                .ToPagedListAsync(pageNumber, pageSize);
+
+            if (posts == null)
+            {
+                return NotFound();
+            }
+
+            ViewData["DistinctTags"] = await _blogSearchService.GetDistinctTags(15);
+            ViewData["Categories"] = await _blogSearchService.GetDistinctCategories();
+
+            return View(posts);
         }
 
         // GET: Blogs/Details/5
