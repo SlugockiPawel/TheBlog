@@ -12,12 +12,12 @@ using TheBlog.Services;
 namespace TheBlog
 {
     /*  TO DO LIST:
-     * TODO TagIndex implementation
-     * TODO implement category click on post to list all posts with this category logic
+     *
+     * TODO during Post edit - tags disappear
      * TODO refactor getting tags to work as a service as it will be used in multiply places
      *  TODO refactor getting categories to work as a service as it will be used in multiply places
      * TODO if comment >500 characters, Create Comment page is displayed
-     *  
+     *  TODO check BlogPostIndex usage
      *
      *
      *  TODO Comments/Details not working
