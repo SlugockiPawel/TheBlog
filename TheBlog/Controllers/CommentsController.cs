@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TheBlog.Data;
@@ -210,5 +214,15 @@ namespace TheBlog.Controllers
         {
             return _context.Comments.Any(e => e.Id == id);
         }
+        //
+        // [CanBeNull]
+        // private string GetModelStateErrorMessage()
+        // {
+        //     return ModelState.Where(
+        //         x => x.Value.Errors.Count > 0
+        //     ).Select(
+        //         x => new { x.Key, x.Value.Errors }
+        //     ).FirstOrDefault().Errors.First().ErrorMessage;
+        // }
     }
 }
