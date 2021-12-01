@@ -23,6 +23,7 @@ namespace TheBlog.Controllers
             _userManager = userManager;
 }
 
+        [Authorize(Roles = "Administrator, Moderator")]
         // GET: Comments
         public async Task<IActionResult> Index()
         {
@@ -58,6 +59,7 @@ namespace TheBlog.Controllers
         }
 
 
+        [Authorize(Roles = "Administrator, Moderator")]
         // GET: Comments/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -169,6 +171,7 @@ namespace TheBlog.Controllers
                 $"commentSection");
         }
 
+        [Authorize(Roles = "Administrator, Moderator")]
         // GET: Comments/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
