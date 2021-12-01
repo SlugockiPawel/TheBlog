@@ -85,7 +85,7 @@ namespace TheBlog.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Body")] Comment comment)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Body")] Comment comment, string postSlug)
         {
             if (id != comment.Id)
             {
@@ -128,7 +128,8 @@ namespace TheBlog.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Moderate(int id, [Bind("Id,Body,ModeratedBody,ModerationType")] Comment comment)
+        public async Task<IActionResult> Moderate(int id,
+            [Bind("Id,Body,ModeratedBody,ModerationType")] Comment comment, string postSlug)
         {
             if (id != comment.Id)
             {
