@@ -23,9 +23,10 @@
                     <div class="modal-body">
                         <form asp-action="Edit" asp-controller="Comments">
                             @Html.Hidden("Id", Model.Id)
+                            @Html.Hidden("PostSlug", Model.Post.Slug)
 
                             <div class="form-group">
-                                <textarea name="Body" class="form-control" required="@Model.Body"></textarea>
+                                <textarea name="Body" class="form-control" required="@Model.Body" maxlength="500"></textarea>
                             </div>
 
                             <button class="btn btn-dark fw-bold border-success">SUBMIT</button>
@@ -58,15 +59,16 @@
                         <form asp-controller="Comments" asp-action="Moderate">
                             @Html.Hidden("Id", Model.Id)
                             @Html.Hidden("Body", Model.Body)
+                            @Html.Hidden("PostSlug", Model.Post.Slug)
 
                             <div class="form-group">
                                 <label class="control-label">Original Model</label>
-                                <textarea disabled class="form-control" style="resize: none">@Model.Body</textarea>
+                                <textarea disabled class="form-control" style="resize: none" maxlength="500">@Model.Body</textarea>
                             </div>
 
                             <div class="form-group">
                                 <label class="control-label">Moderated Model</label>
-                                <textarea class="form-control" name="ModeratedBody" >@Model.ModeratedBody</textarea>
+                                <textarea class="form-control" name="ModeratedBody" maxlength="500" >@Model.ModeratedBody </textarea>
                             </div>
 
                             <div class="form-group">

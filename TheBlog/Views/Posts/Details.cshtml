@@ -1,6 +1,7 @@
 ﻿@using TheBlog.Services
 @using Microsoft.AspNetCore.Identity
 @using TheBlog.Enums
+@using System.Linq
 @model TheBlog.Models.Post
 @inject IImageService _imageService
 @inject UserManager<BlogUser> _userManager
@@ -75,9 +76,11 @@
                                 @Html.Hidden("PostSlug", Model.Slug)
 
                                 <div class="col-form-label">
-                                    <textarea name="body" class="form-control" rows="10"></textarea>
+                                    <textarea name="body" class="form-control" rows="10" maxlength="500"></textarea>
+                                    
+                                    <span class="mt-2 fw-bold text-danger">@TempData["CommentValidationErrorMsg"]</span>
                                 </div>
-
+                                
                                 <button type="submit" class="btn btn-primary form-button shadow-none">Post Comment</button>
                             </form>
                         }
