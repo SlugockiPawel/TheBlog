@@ -87,26 +87,6 @@ namespace TheBlog.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
-        //BlogPostIndex
-        public async Task<IActionResult> BlogPostIndex(int? id, int? page)
-        {
-            if (id is null)
-            {
-                return NotFound();
-            }
-
-            var pageNumber = page ?? 1;
-            var pageSize = 5;
-
-            var posts = await _context.Posts
-                .Where(p => p.BlogId == id && p.ReadyStatus == ReadyStatus.ProductionReady)
-                .OrderByDescending(p => p.Created)
-                .ToPagedListAsync(pageNumber, pageSize);
-
-
-            return View(posts);
-        }
-
         // GET: Posts/Details/5
         // public async Task<IActionResult> Details(int? id)
         public async Task<IActionResult> Details(string slug)
