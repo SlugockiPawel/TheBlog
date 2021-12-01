@@ -21,7 +21,7 @@ namespace TheBlog.Controllers
         {
             _context = context;
             _userManager = userManager;
-        }
+}
 
         // GET: Comments
         public async Task<IActionResult> Index()
@@ -45,17 +45,18 @@ namespace TheBlog.Controllers
         {
             if (ModelState.IsValid)
             {
-                
                 comment.BlogUserId = _userManager.GetUserId(User);
                 comment.Created = DateTime.UtcNow;
                 _context.Add(comment);
                 await _context.SaveChangesAsync();
                 // return RedirectToAction(nameof(Index));
-                return RedirectToAction("Details", "Posts", new {slug = postSlug}, $"commentSection");
+                return RedirectToAction("Details", "Posts", new { slug = postSlug }, $"commentSection");
             }
 
-            return View(comment);
+            return RedirectToAction("Details", "Posts", new { slug = postSlug },
+                $"commentSection");
         }
+
 
         // GET: Comments/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -70,6 +71,7 @@ namespace TheBlog.Controllers
             {
                 return NotFound();
             }
+
             ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", comment.BlogUserId);
             ViewData["ModeratorId"] = new SelectList(_context.Users, "Id", "Id", comment.ModeratorId);
             ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Abstract", comment.PostId);
@@ -112,13 +114,14 @@ namespace TheBlog.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("Details", "Posts", new {slug = newComment.Post.Slug}, $"commentSection"); // in View, there is an id for every comment <h4> so after editing, View will stop right there
+
+                return RedirectToAction("Details", "Posts", new { slug = newComment.Post.Slug },
+                    $"commentSection"); // in View, there is an id for every comment <h4> so after editing, View will stop right there
                 // return RedirectToAction("Details", "Posts", new {slug = newComment.Post.Slug}, $"commentNumber_{comment.Id}"); // in View, there is an id for every comment <h4> so after editing, View will stop right there
             }
-            // ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", comment.BlogUserId);
-            // ViewData["ModeratorId"] = new SelectList(_context.Users, "Id", "Id", comment.ModeratorId);
-            // ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Abstract", comment.PostId);
-            return View(comment);
+
+            return RedirectToAction("Details", "Posts", new { slug = postSlug},
+                $"commentSection");
         }
 
         [HttpPost]
@@ -156,11 +159,14 @@ namespace TheBlog.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("Details", "Posts", new {slug = newComment.Post.Slug}, $"commentSection"); // in View, there is an id for every comment <h4> so after editing, View will stop right there
+
+                return RedirectToAction("Details", "Posts", new { slug = newComment.Post.Slug },
+                    $"commentSection"); // in View, there is an id for every comment <h4> so after editing, View will stop right there
                 // return RedirectToAction("Details", "Posts", new {slug = newComment.Post.Slug}, $"commentNumber_{comment.Id}"); // in View, there is an id for every comment <h4> so after editing, View will stop right there
             }
 
-            return View("Edit",comment);
+            return RedirectToAction("Details", "Posts", new { slug = postSlug },
+                $"commentSection");
         }
 
         // GET: Comments/Delete/5
@@ -193,7 +199,7 @@ namespace TheBlog.Controllers
             _context.Comments.Remove(comment);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Details", "Posts", new {slug}, "commentSection");
+            return RedirectToAction("Details", "Posts", new { slug }, "commentSection");
         }
 
         private bool CommentExists(int id)
