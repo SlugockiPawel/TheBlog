@@ -13,12 +13,6 @@ namespace TheBlog
 {
     /*  TO DO LIST:
      *
-     * 
-     * TODO if comment >500 characters, Create Comment page is displayed
-     *
-     *  TODO Comments/Details not working
-     *  
-     *
      *  TODO Render correct NotFound page (currently it is blank)
      *  TODO implement Home/Index logic to display: Post list (sorted by date)
      *  TODO implement Home/Index logic to display posts by category and by tag
