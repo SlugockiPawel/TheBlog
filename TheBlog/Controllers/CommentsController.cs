@@ -36,22 +36,6 @@ namespace TheBlog.Controllers
             return View("Index", moderatedComments);
         }
 
-        // public async Task<IActionResult> DeletedIndex()
-        // {
-        //     var applicationDbContext = _context.Comments.Include(c => c.BlogUser).Include(c => c.Moderator).Include(c => c.Post);
-        //     return View("Index", await applicationDbContext.ToListAsync());
-        // }
-
-
-        // GET: Comments/Create
-        // public IActionResult Create()
-        // {
-        //     ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id");
-        //     ViewData["ModeratorId"] = new SelectList(_context.Users, "Id", "Id");
-        //     ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Abstract");
-        //     return View();
-        // }
-
         // POST: Comments/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
