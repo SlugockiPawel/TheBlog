@@ -13,10 +13,8 @@ namespace TheBlog
 {
     /*  TO DO LIST:
      *
-     *  TODO searchIndex same as TagIndex
+     * 
      * TODO if comment >500 characters, Create Comment page is displayed
-     *  TODO check BlogPostIndex usage
-     *
      *
      *  TODO Comments/Details not working
      *  
