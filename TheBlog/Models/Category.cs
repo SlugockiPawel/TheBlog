@@ -11,7 +11,7 @@ namespace TheBlog.Models
 {
     using System.ComponentModel;
 
-    public class Blog
+    public class Category
     {
         public int Id { get; set; }
         public string BlogUserId { get; set; }
