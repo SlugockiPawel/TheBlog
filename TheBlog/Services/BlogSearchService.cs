@@ -21,7 +21,7 @@ namespace TheBlog.Services
         public IQueryable<Post> Search(string searchTerm)
         {
             var posts = _context.Posts
-                .Include(p => p.Blog)
+                .Include(p => p.Category)
                 .Include(p => p.BlogUser)
                 .Where(p => p.ReadyStatus == ReadyStatus.ProductionReady).AsQueryable();
 
@@ -59,9 +59,9 @@ namespace TheBlog.Services
                 .ToListAsync();
         }
 
-        public async Task<IList<Blog>> GetDistinctCategories()
+        public async Task<IList<Category>> GetDistinctCategories()
         {
-            return await _context.Blogs
+            return await _context.Categories
                 .Where(c => c.Posts.Any(p => p.ReadyStatus == ReadyStatus.ProductionReady))
                 .OrderBy(c => c.Name)
                 .ToListAsync();

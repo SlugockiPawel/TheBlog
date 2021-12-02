@@ -34,7 +34,7 @@ namespace TheBlog.Models
         public string FullName => $"{FirstName} {LastName}";
 
         // Navigation properties
-        public virtual ICollection<Blog> Blogs { get; set; } = new HashSet<Blog>();
+        public virtual ICollection<Category> Categories { get; set; } = new HashSet<Category>();
         public virtual ICollection<Post> Posts { get; set; } = new HashSet<Post>();
     }
 }

@@ -83,7 +83,7 @@ namespace TheBlog.Controllers
         // GET: Posts
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Posts.Include(p => p.Blog).Include(p => p.BlogUser);
+            var applicationDbContext = _context.Posts.Include(p => p.Category).Include(p => p.BlogUser);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -97,7 +97,7 @@ namespace TheBlog.Controllers
             }
 
             var post = await _context.Posts
-                .Include(p => p.Blog)
+                .Include(p => p.Category)
                 .Include(p => p.BlogUser) // this BlogUser is an author of the Post (below is for comment)
                 .Include(p => p.Tags)
                 .Include(p => p.Comments)
@@ -118,8 +118,8 @@ namespace TheBlog.Controllers
         // GET: Posts/Create
         public IActionResult Create()
         {
-            ViewData["BlogId"] = new SelectList(_context.Blogs, "Id", "Name");
-            ViewData["BlogUserId"] = new SelectList(_context.Blogs, "Id", "Id");
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name");
+            ViewData["BlogUserId"] = new SelectList(_context.Categories, "Id", "Id");
             return View();
         }
 
@@ -128,7 +128,7 @@ namespace TheBlog.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BlogId,Title,Abstract,Content,ReadyStatus,Image")] Post post,
+        public async Task<IActionResult> Create([Bind("CategoryId,Title,Abstract,Content,ReadyStatus,Image")] Post post,
             List<string> tagValues)
         {
             if (ModelState.IsValid)
@@ -165,7 +165,7 @@ namespace TheBlog.Controllers
                 if (slugValidationError)
                 {
                     ViewData["TagValues"] = string.Join(",", tagValues);
-                    ViewData["BlogId"] = new SelectList(_context.Blogs, "Id", "Name", post.BlogId);
+                    ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", post.CategoryId);
                     return View(post);
                 }
 
@@ -190,7 +190,7 @@ namespace TheBlog.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["BlogId"] = new SelectList(_context.Blogs, "Id", "Description", post.BlogId);
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Description", post.CategoryId);
             return View(post);
         }
 
@@ -211,7 +211,7 @@ namespace TheBlog.Controllers
                 return NotFound();
             }
 
-            ViewData["BlogId"] = new SelectList(_context.Blogs, "Id", "Name", post.BlogId);
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", post.CategoryId);
             var tagsToDisplay = post.Tags.Select(t => t.Text);
             ViewData["TagValues"] = string.Join(",", tagsToDisplay);
             return View(post);
@@ -222,7 +222,7 @@ namespace TheBlog.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,BlogId,Title,Abstract,Content,ReadyStatus")] Post post,
+        public async Task<IActionResult> Edit(int id, [Bind("Id,CategoryId,Title,Abstract,Content,ReadyStatus")] Post post,
             IFormFile newImage, List<string> tagValues) //name of the select list is tagValues => it has to match!
         {
             if (id != post.Id)
@@ -257,7 +257,7 @@ namespace TheBlog.Controllers
                                 "Title provided cannot be used as it is already in the database. Try again with a different Post Title");
                             var tagsToDisplay = currentDbPost.Tags.Select(t => t.Text);
                             ViewData["TagValues"] = string.Join(",", tagsToDisplay);
-                            ViewData["BlogId"] = new SelectList(_context.Blogs, "Id", "Name", post.BlogId);
+                            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", post.CategoryId);
                             return View(post);
                         }
                     }
@@ -313,7 +313,7 @@ namespace TheBlog.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["BlogId"] = new SelectList(_context.Blogs, "Id", "Description", post.BlogId);
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Description", post.CategoryId);
             ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", post.BlogUserId);
             return View(post);
         }
@@ -327,7 +327,7 @@ namespace TheBlog.Controllers
             }
 
             var post = await _context.Posts
-                .Include(p => p.Blog)
+                .Include(p => p.Category)
                 .Include(p => p.BlogUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (post == null)

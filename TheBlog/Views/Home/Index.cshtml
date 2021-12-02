@@ -28,8 +28,8 @@
                         <article class="row mb-5">
                             <div class="col-12 text-center">
                                 <img class="img-fluid mb-4" width="100%" src="@_imageService.DecodeImage(post.ImageData, post.ContentType)" alt="@post.Title image file">
-                                <a class="post-link" asp-controller="Blogs" asp-action="CategoryIndex" asp-route-categoryName="@post.Blog.Name.ToLower()">
-                                    @post.Blog.Name
+                                <a class="post-link" asp-controller="Categories" asp-action="CategoryIndex" asp-route-categoryName="@post.Category.Name.ToLower()">
+                                    @post.Category.Name
                                 </a>
                                 <a asp-controller="Posts" asp-action="Details" asp-route-slug="@post.Slug">
                                     <h3 class="post-title mt-2">@post.Title</h3>

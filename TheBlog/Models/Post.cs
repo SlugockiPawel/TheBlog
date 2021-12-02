@@ -17,8 +17,8 @@ namespace TheBlog.Models
     {
         public int Id { get; set; }
 
-        [DisplayName("Blog Name")]
-        public int BlogId { get; set; }
+        [DisplayName("Category Name")]
+        public int CategoryId { get; set; }
         public string BlogUserId { get; set; }
 
         [Required]
@@ -52,7 +52,7 @@ namespace TheBlog.Models
 
 
         //Navigation Properties
-        public virtual Blog Blog { get; set; } // Blog is a parent for Post
+        public virtual Category Category { get; set; } // Category is a parent for Post
         public virtual BlogUser BlogUser { get; set; } // Author is a parent for Post
 
         public virtual ICollection<Tag> Tags { get; set; } = new HashSet<Tag>(); // Post is a parent for Tag

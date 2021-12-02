@@ -1,19 +1,18 @@
-﻿@model TheBlog.Models.Blog
+﻿@model TheBlog.Models.Category
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Create";
 }
 
 <div class="container container-narrow">
-    <h1>Edit</h1>
+    <h1>Create</h1>
 
     <h4>Blog</h4>
     <hr />
     <div class="row">
         <div class="col-md-4">
-            <form asp-action="Edit" enctype="multipart/form-data">
+            <form asp-action="Create" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="Id" />
 
                 <div class="form-group">
                     <label asp-for="Name" class="control-label"></label>
@@ -28,12 +27,12 @@
 
                 <div class="form-group">
                     <label asp-for="Image" class="control-label"></label>
-                    <input name="NewImage" type="file" class="form-control" accept=".jpg,.png,.gif,.jpeg" />
+                    <input type="file" asp-for="Image" class="form-control" accept=".jpg,.png,.gif,.jpeg" />
                     <span asp-validation-for="Image" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
-                    <input type="submit" value="Save" class="btn btn-primary" />
+                    <input type="submit" value="Create" class="btn btn-primary" />
                 </div>
             </form>
         </div>

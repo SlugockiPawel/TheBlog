@@ -16,14 +16,14 @@ using X.PagedList;
 
 namespace TheBlog.Controllers
 {
-    public class BlogsController : Controller
+    public class CategoriesController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly IImageService _imageService;
         private readonly UserManager<BlogUser> _userManager;
         private readonly BlogSearchService _blogSearchService;
 
-        public BlogsController(ApplicationDbContext context, IImageService imageService,
+        public CategoriesController(ApplicationDbContext context, IImageService imageService,
             UserManager<BlogUser> userManager, BlogSearchService blogSearchService)
         {
             _context = context;
@@ -35,7 +35,7 @@ namespace TheBlog.Controllers
         // GET: Blogs
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Blogs.Include(b => b.BlogUser);
+            var applicationDbContext = _context.Categories.Include(b => b.BlogUser);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -49,7 +49,7 @@ namespace TheBlog.Controllers
 
             var posts = await _context.Posts
                 .Include(p => p.BlogUser)
-                .Where(p => p.Blog.Name.ToLower() == categoryName && p.ReadyStatus == ReadyStatus.ProductionReady)
+                .Where(p => p.Category.Name.ToLower() == categoryName && p.ReadyStatus == ReadyStatus.ProductionReady)
                 .OrderByDescending(p => p.Created)
                 .ToPagedListAsync(pageNumber, pageSize);
 
@@ -72,7 +72,7 @@ namespace TheBlog.Controllers
                 return NotFound();
             }
 
-            var blog = await _context.Blogs
+            var blog = await _context.Categories
                 .Include(b => b.BlogUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (blog == null)
@@ -95,24 +95,24 @@ namespace TheBlog.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Description,Image")] Blog blog)
+        public async Task<IActionResult> Create([Bind("Name,Description,Image")] Category category)
         {
             if (ModelState.IsValid)
             {
-                blog.Created = DateTime.UtcNow;
-                blog.BlogUserId = _userManager.GetUserId(User);
+                category.Created = DateTime.UtcNow;
+                category.BlogUserId = _userManager.GetUserId(User);
 
-                blog.ImageData = await _imageService.EncodeImageAsync(blog.Image); //IFormFile to byte[]
-                blog.ContentType = _imageService.ContentType(blog.Image);
+                category.ImageData = await _imageService.EncodeImageAsync(category.Image); //IFormFile to byte[]
+                category.ContentType = _imageService.ContentType(category.Image);
 
-                _context.Add(blog);
+                _context.Add(category);
                 await _context.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", blog.BlogUserId);
-            return View(blog);
+            ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", category.BlogUserId);
+            return View(category);
         }
 
         // GET: Blogs/Edit/5
@@ -123,7 +123,7 @@ namespace TheBlog.Controllers
                 return NotFound();
             }
 
-            var blog = await _context.Blogs.FindAsync(id);
+            var blog = await _context.Categories.FindAsync(id);
             if (blog == null)
             {
                 return NotFound();
@@ -137,9 +137,9 @@ namespace TheBlog.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description")] Blog blog, IFormFile newImage)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description")] Category category, IFormFile newImage)
         {
-            if (id != blog.Id)
+            if (id != category.Id)
             {
                 return NotFound();
             }
@@ -168,28 +168,28 @@ namespace TheBlog.Controllers
                     //     newBlog.ImageData = await _imageService.EncodeImageAsync(newImage);
                     // }
 
-                    var currentDbBlog = await _context.Blogs.AsNoTracking().FirstOrDefaultAsync(b => b.Id == id);
-                    blog.Updated = DateTime.UtcNow;
-                    blog.BlogUserId = _userManager.GetUserId(User);
-                    blog.Created = currentDbBlog.Created;
+                    var currentDbBlog = await _context.Categories.AsNoTracking().FirstOrDefaultAsync(b => b.Id == id);
+                    category.Updated = DateTime.UtcNow;
+                    category.BlogUserId = _userManager.GetUserId(User);
+                    category.Created = currentDbBlog.Created;
 
                     if (newImage is not null)
                     {
-                        blog.ImageData = await _imageService.EncodeImageAsync(newImage);
-                        blog.ContentType = newImage.ContentType;
+                        category.ImageData = await _imageService.EncodeImageAsync(newImage);
+                        category.ContentType = newImage.ContentType;
                     }
                     else
                     {
-                        blog.ImageData = currentDbBlog.ImageData;
-                        blog.ContentType = currentDbBlog.ContentType;
+                        category.ImageData = currentDbBlog.ImageData;
+                        category.ContentType = currentDbBlog.ContentType;
                     }
 
-                    _context.Update(blog);
+                    _context.Update(category);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!BlogExists(blog.Id))
+                    if (!BlogExists(category.Id))
                     {
                         return NotFound();
                     }
@@ -202,8 +202,8 @@ namespace TheBlog.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", blog.BlogUserId);
-            return View(blog);
+            ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", category.BlogUserId);
+            return View(category);
         }
 
         // GET: Blogs/Delete/5
@@ -214,7 +214,7 @@ namespace TheBlog.Controllers
                 return NotFound();
             }
 
-            var blog = await _context.Blogs
+            var blog = await _context.Categories
                 .Include(b => b.BlogUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (blog == null)
@@ -230,15 +230,15 @@ namespace TheBlog.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var blog = await _context.Blogs.FindAsync(id);
-            _context.Blogs.Remove(blog);
+            var blog = await _context.Categories.FindAsync(id);
+            _context.Categories.Remove(blog);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool BlogExists(int id)
         {
-            return _context.Blogs.Any(e => e.Id == id);
+            return _context.Categories.Any(e => e.Id == id);
         }
     }
 }

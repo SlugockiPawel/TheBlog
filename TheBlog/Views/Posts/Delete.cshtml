@@ -67,17 +67,17 @@
             @Html.DisplayFor(model => model.ContentType)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Blog)
+            @Html.DisplayNameFor(model => model.Category)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Blog.Description)
-        </dd class>
+            @Html.DisplayFor(model => model.Category.Description)
+        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.BlogUser)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.BlogUser.Id)
-        </dd class>
+        </dd>
     </dl>
     
     <form asp-action="Delete">
