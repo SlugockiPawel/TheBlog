@@ -1,4 +1,6 @@
-﻿<nav id="navBar" class="navbar navbar-expand-md navbar-light sticky-top bg-white container-fluid shadow-bottom pb-0 mb-0">
+﻿@using TheBlog.Services
+
+<nav id="navBar" class="navbar navbar-expand-md navbar-light sticky-top bg-white container-fluid shadow-bottom pb-0 mb-0">
     <div class="container container-narrow">
         <a class="navbar-brand d-md-none d-block" asp-controller="Home" asp-action="Index">LOGO</a>
         <button id="togglerIcon" class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
@@ -12,23 +14,23 @@
             <div class="container container-narrow">
                 <div class="row py-0 ">
                     <ul class="navbar-nav d-flex justify-content-center ">
-                        <li class="nav-item ">
-                            <a class="nav-link active" aria-current="page" asp-controller="Home" asp-action="Index">Home</a>
+                        <li class="nav-item">
+                            <a class="nav-link @Html.IsActive("Home", "Index")" aria-current="page" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link " asp-controller="Home" asp-action="About">About Me</a>
+                            <a class="nav-link @Html.IsActive("Home", "About")" asp-controller="Home" asp-action="About">About Me</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Home" asp-action="Contact">Contact</a>
+                            <a class="nav-link @Html.IsActive("Home", "Contact")" asp-controller="Home" asp-action="Contact">Contact</a>
                         </li>
 
                         @if (User.IsInRole("Administrator") || User.IsInRole("Moderator"))
                         {
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Categories" asp-action="Index">Category List</a>
+                            <li class="nav-item ">
+                                <a class="nav-link @Html.IsActive("Categories", "Index")" asp-controller="Categories" asp-action="Index">Category List</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Posts" asp-action="Index">Post List</a>
+                            <li class="nav-item ">
+                                <a class="nav-link @Html.IsActive("Posts", "Index")" asp-controller="Posts" asp-action="Index">Post List</a>
                             </li>
                         }
                     </ul>

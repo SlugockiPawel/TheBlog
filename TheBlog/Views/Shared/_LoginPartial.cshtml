@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using TheBlog.Services
 @inject SignInManager<BlogUser> SignInManager
 @inject UserManager<BlogUser> UserManager
 
@@ -6,7 +7,7 @@
 @if (SignInManager.IsSignedIn(User))
 {
     <li>
-        <a  class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>
+        <a  class="dropdown-item @Html.IsActive("Account", "Manage")" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>
     </li>
     <li>
         <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
@@ -17,9 +18,9 @@
 else
 {
     <li>
-        <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">Register</a>
+        <a class="dropdown-item  @Html.IsActive("Account", "Register")" asp-area="Identity" asp-page="/Account/Register">Register</a>
     </li>
     <li>
-        <a class="dropdown-item " asp-area="Identity" asp-page="/Account/Login">Login</a>
+        <a class="dropdown-item @Html.IsActive("Account", "Login")" asp-area="Identity" asp-page="/Account/Login">Login</a>
     </li>
 }
