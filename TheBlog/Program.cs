@@ -13,7 +13,7 @@ namespace TheBlog
 {
     /*  TO DO LIST:
 
-     *   TODO MIGRATE TO .NET6
+     
      *   TODO DistinctBy() in .NET6 => use for getting distinct Tags
      *
      * TODO select correct active page in navbar
