@@ -12,15 +12,18 @@ using TheBlog.Services;
 namespace TheBlog
 {
     /*  TO DO LIST:
+
+     *   TODO MIGRATE TO .NET6
+     *   TODO DistinctBy() in .NET6 => use for getting distinct Tags
      *
-     *  TODO change Blog Model to Category Model
-     *
+     * TODO select correct active page in navbar
+     *  TODO Adjust Bootstrap scss file for buttons
      *  TODO Render correct NotFound page (currently it is blank)
-     *  TODO authorize access to /Blogs and /Posts routes (only admin and moderator)
+     *
+     *  
      *
      *
-     * TODO MIGRATE TO .NET6
-     * TODO DistinctBy() in .NET6 => use for getting distinct Tags
+
      */
     public class Program
     {
