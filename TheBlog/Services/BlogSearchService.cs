@@ -48,14 +48,13 @@ namespace TheBlog.Services
 
         public async Task<IList<Tag>> GetDistinctTags(int numberOfTags)
         {
+
             return await _context.Tags
                 .Where(t => t.Post.ReadyStatus == ReadyStatus.ProductionReady)
                 .OrderByDescending(t => t.Post.Created)
                 .AsEnumerable()
+                .DistinctBy(t => t.Text)
                 .Take(numberOfTags)
-                .AsEnumerable()
-                .GroupBy(t => t.Text)
-                .Select(g => g.First())
                 .ToListAsync();
         }
 
