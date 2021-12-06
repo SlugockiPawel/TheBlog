@@ -242,7 +242,7 @@ div.validation-summary-errors > ul {
 
 .form-button:focus,
 .form-button:hover {
-    -webkit-box-shadow: inset 0px 0px 2px 0px var(--darker-color);
+    /* -webkit-box-shadow: inset 0px 0px 2px 0px var(--darker-color); */
     color: var(--primary-color);
     background-color: var(--bg-color);
     border-color:  var(--lighter-color);
