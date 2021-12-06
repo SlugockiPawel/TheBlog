@@ -12,8 +12,6 @@ using TheBlog.Services;
 namespace TheBlog
 {
     /*  TO DO LIST:
-     * TODO select correct active page in navbar
-     *  TODO Adjust Bootstrap scss file for buttons
      *  TODO Render correct NotFound page (currently it is blank)
      */
     public class Program
