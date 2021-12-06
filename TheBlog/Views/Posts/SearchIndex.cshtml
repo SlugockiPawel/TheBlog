@@ -51,9 +51,9 @@
                     <!-- pagination -->
                     <div class="col-12 text-center mt-sm-5">
                         @* Paging Controls here *@
-                        <div class="col-12 h3">
-                            <span>Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount</span>
-                        </div>
+                        @* <div class="col-12 h3"> *@
+                        @*     <span>Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount</span> *@
+                        @* </div> *@
 
                         <div class="col-12 d-flex justify-content-center">
                             @Html.PagedListPager(Model, page => Url.Action("SearchIndex", new { page = page, searchTerm = ViewData["SearchTerm"]}),
