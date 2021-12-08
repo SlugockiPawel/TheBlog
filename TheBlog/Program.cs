@@ -12,7 +12,12 @@ using TheBlog.Services;
 namespace TheBlog
 {
     /*  TO DO LIST:
-     *  TODO Render correct NotFound page (currently it is blank)
+     *
+     *  TODO add 3rd party auth GOOGLE
+     *  TODO add delete comment for author (not only for moderator)
+     *  TODO cannot delete user when there are comments connected to it
+     *
+     *
      */
     public class Program
     {

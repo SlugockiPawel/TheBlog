@@ -49,6 +49,18 @@ namespace TheBlog
             services.AddControllersWithViews();
             services.AddRazorPages();
 
+            //google Auth
+            services.AddAuthentication()
+                .AddGoogle(options =>
+                {
+                    IConfigurationSection googleAuthNSection =
+                        Configuration.GetSection("Authentication:Google");
+
+                    options.ClientId = googleAuthNSection["ClientId"];
+                    options.ClientSecret = googleAuthNSection["ClientSecret"];
+                });
+
+
             // Register custom DataService class
             services.AddScoped<DataService>();
 
