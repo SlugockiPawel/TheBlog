@@ -53,17 +53,12 @@
 
                     @* Displaying Comments related to this post *@
 
-             
-
-                   
-
-
                     @foreach (var comment in Model.Comments)
                     {
                         <partial name="Partials_custom/_Comment" model="comment" view-data="ViewData"/>
                         <partial name="Partials_custom/_Modals" model="comment" view-data="ViewData"/>
                     }
-                    
+
                     @* Add comment *@
                     <div>
                         @if (User.Identity.IsAuthenticated)
@@ -77,10 +72,10 @@
 
                                 <div class="col-form-label">
                                     <textarea name="body" class="form-control" rows="10" maxlength="500"></textarea>
-                                    
+
                                     <span class="mt-2 fw-bold text-danger">@TempData["CommentValidationErrorMsg"]</span>
                                 </div>
-                                
+
                                 <button type="submit" class="btn btn-primary form-button shadow-none">Post Comment</button>
                             </form>
                         }

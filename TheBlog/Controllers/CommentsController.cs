@@ -176,7 +176,8 @@ namespace TheBlog.Controllers
                 $"commentSection");
         }
 
-        [Authorize(Roles = "Administrator, Moderator")]
+        
+        [Authorize]
         // GET: Comments/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -198,6 +199,7 @@ namespace TheBlog.Controllers
             return View(comment);
         }
 
+        [Authorize]
         // POST: Comments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
