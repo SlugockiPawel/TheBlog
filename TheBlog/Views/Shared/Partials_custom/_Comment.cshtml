@@ -15,7 +15,7 @@
         <div class="col-md-9">
             <div class="col-12">
                 <h5 class="fw-light" id=@($"ModelNumber_{Model.Id}")>@Model.BlogUser.FullName</h5>
-            
+
                 @* display post//moderate/update time  *@
                 @if (Model.Moderated is not null)
                 {
@@ -33,8 +33,8 @@
                     <p class="text-break">@Model.Body</p>
                 }
 
-            
-            
+
+
                 @if (Model.Updated is not null)
                 {
                     <p class="post-author-date">
@@ -42,18 +42,22 @@
                     </p>
                 }
             </div>
-            
+
             <div class="row d-flex">
                 <div class="col-3">
-                    @* Render Edit Button *@
+                    @* Render Edit and Delete Buttons *@
 
                     @if (Model.Moderated is null && Model.Deleted is null && Model.BlogUserId == _userManager.GetUserId(User))
                     {
-               
                         <a href="" data-bs-toggle="modal" data-bs-target="#editModal_@Model.Id" class="post-link fw-bolder">EDIT</a>
-                    }
 
-               
+                        <form asp-controller="Comments" asp-action="Delete">
+                            @Html.Hidden("Id", Model.Id)
+                            @Html.Hidden("Slug", Model.Post.Slug)
+
+                            <button class="post-link bg-transparent border-0 fw-bold">DELETE</button>
+                        </form>
+                    }
                 </div>
                 <div class="col-sm-9 col-12 d-flex flex-row-reverse justify-content-between">
                     @* Render Moderate and Delete buttons *@
@@ -66,22 +70,12 @@
 
                             <button class="btn btn-sm btn-danger  py-2 px-3">DELETE</button>
                         </form>
-                    
+
                         <button data-bs-toggle="modal" data-bs-target="#moderateModal_@Model.Id" class="btn btn-sm btn-outline-primary  py-2 px-3">MODERATE</button>
-                        
-                       
-                   
                     }
                 </div>
             </div>
-            
-
         </div>
     </div>
 </div>
 <div class="border-partial mb-5"></div>
-
-
-
-        
-
