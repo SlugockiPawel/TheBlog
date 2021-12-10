@@ -129,12 +129,9 @@ namespace TheBlog.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                var nameIdentity = info.Principal.Identity;
-                var nameClaims = info.Principal.Claims;
-                var nameIdentities = info.Principal.Identities;
-
                 var names = info.Principal.Identity?.Name?.Split(' ');
                 BlogUser user = new();
+
 
                 if (names is not null && names.Length > 1)
                 {
@@ -150,6 +147,7 @@ namespace TheBlog.Areas.Identity.Pages.Account
                 }
 
                 user.UserName = user.Email;
+                user.EmailConfirmed = true;
 
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
@@ -160,6 +158,13 @@ namespace TheBlog.Areas.Identity.Pages.Account
                         _logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
 
                         var userId = await _userManager.GetUserIdAsync(user);
+
+                        if (userId is not null)
+                        {
+                            await _signInManager.SignInAsync(user, isPersistent: false, info.LoginProvider);
+                            return LocalRedirect(returnUrl);
+                        }
+
                         var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                         code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                         var callbackUrl = Url.Page(
