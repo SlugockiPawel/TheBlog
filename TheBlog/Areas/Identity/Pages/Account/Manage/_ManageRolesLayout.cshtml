@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+
+    <title>@ViewData["Title"] - TheBlog</title>
+
+    <link rel="icon" type="image/x-icon" href="~/assets/favicon.ico"/>
+
+    <!-- font family -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@400;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- font awesome -->
+    <script src="https://kit.fontawesome.com/06c75317f8.js" crossorigin="anonymous"></script>
+
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css"/>
+
+    <!-- Bootstrap and custom css -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.custom.min.css"/>
+    <link rel="stylesheet" href="~/css/custom.css" asp-append-version="true"/>
+
+
+    @* Sweet Alert 2 plug in *@
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+<body>
+
+<partial name="Partials_custom/_Navbar"/>
+
+<!-- Main Content-->
+
+@RenderBody()
+
+
+<partial name="Partials_custom/_Footer"/>
+
+
+<!-- Bootstrap core JS-->
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core theme JS-->
+<script src="~/js/scripts.js"></script>
+<script src="~/js/scripts_front_end.js"></script>
+
+
+@await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>
