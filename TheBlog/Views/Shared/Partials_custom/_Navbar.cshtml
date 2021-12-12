@@ -1,4 +1,5 @@
 ﻿@using TheBlog.Services
+@using TheBlog.Enums
 
 <nav id="navBar" class="navbar navbar-expand-md navbar-light sticky-top bg-white container-fluid shadow-bottom pb-0 mb-0">
     <div class="container container-narrow">
@@ -24,13 +25,20 @@
                             <a class="nav-link @Html.IsActive("Home", "Contact")" asp-controller="Home" asp-action="Contact">Contact</a>
                         </li>
 
-                        @if (User.IsInRole("Administrator") || User.IsInRole("Moderator"))
+                        @if (User.IsInRole(BlogRole.Administrator.ToString()) || User.IsInRole(BlogRole.Moderator.ToString()))
                         {
                             <li class="nav-item ">
                                 <a class="nav-link @Html.IsActive("Categories", "Index")" asp-controller="Categories" asp-action="Index">Category List</a>
                             </li>
                             <li class="nav-item ">
                                 <a class="nav-link @Html.IsActive("Posts", "Index")" asp-controller="Posts" asp-action="Index">Post List</a>
+                            </li>
+                        }
+                        
+                        @if (User.IsInRole(BlogRole.Administrator.ToString()))
+                        {
+                            <li class="nav-item ">
+                                <a class="nav-link @Html.IsActive("Account", "Manage")" asp-area="Identity" asp-page="/Account/Manage/ManageRoles">Manage Roles</a>
                             </li>
                         }
                     </ul>

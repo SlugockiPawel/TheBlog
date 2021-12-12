@@ -18,7 +18,7 @@
                 @* post *@
                 <article class="row mb-0">
                     <div class="col-12 text-center mb-0">
-                        <img class="img-fluid mb-4" width="100%" src="@_imageService.DecodeImage(@Model.ImageData, @Model.ContentType)" alt="@Model.Title image file">
+                        <img class="img-fluid mb-4"  src="@_imageService.DecodeImage(@Model.ImageData, @Model.ContentType)" alt="@Model.Title image file">
                         <a class="post-link" asp-controller="Categories" asp-action="CategoryIndex" asp-route-categoryName="@Model.Category.Name.ToLower()">
                             @Model.Category.Name
                         </a>
