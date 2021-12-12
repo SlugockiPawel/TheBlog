@@ -1,0 +1,29 @@
+﻿@page  
+@using Microsoft.EntityFrameworkCore
+@model ManageRolesModel
+@{
+    ViewData["Title"] = "Manage Roles";
+    Layout = "Manage/_ManageRolesLayout";
+}
+
+
+<main class="container container-narrow">
+    <div class="row">
+        <div class="col-12">
+            <h1>Admins:</h1>
+            <ul>
+                @foreach (var admin in @Model.Input.Admins)
+                {
+                    <li>@admin.Email</li>
+                }
+            </ul>
+        </div>
+    </div>
+</main>
+
+
+
+
+@* @section Scripts { *@
+@*     <partial name="_ValidationScriptsPartial" /> *@
+@* } *@
