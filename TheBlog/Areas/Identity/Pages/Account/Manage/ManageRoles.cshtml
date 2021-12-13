@@ -1,5 +1,5 @@
-﻿@page  
-@using Microsoft.EntityFrameworkCore
+﻿@page 
+
 @model ManageRolesModel
 @{
     ViewData["Title"] = "Manage Roles";
@@ -10,18 +10,67 @@
 <main class="container container-narrow">
     <div class="row">
         <div class="col-12">
-            <h1>Admins:</h1>
-            <ul>
-                @foreach (var admin in @Model.Input.Admins)
-                {
-                    <li>@admin.Email</li>
-                }
-            </ul>
+            <h3 class="widget-title mt-5 text-center">Administrators</h3>
+            <div class="col-12 border-partial mb-3"></div>
+
+            @foreach (var user in Model.Input.Admins)
+            {
+                <ul class="border-1 border-top border-bottom bg-light-custom">
+                    <li class="row ">
+                        <div class="col-6 d-flex align-self-center">
+                            <p class="mb-0 me-3">@user.FullName</p>
+                            <p class="mb-0">@user.Email</p>
+                        </div>
+                        <div class="col-6 d-flex align-self-center gx-2">
+                            <button class="btn btn-sm btn-primary mt-0 me-3">Add Moderator Role</button>
+                            <button class="btn btn-sm btn-secondary mt-0 me-3">Remove Admin Role</button>
+                        </div>
+                    </li>
+                </ul>
+            }
+
+            <h3 class="widget-title mt-5 text-center">Moderators</h3>
+            <div class="col-12 border-partial mb-3"></div>
+
+            @foreach (var user in Model.Input.Moderators)
+            {
+                <ul class="border-1 border-top border-bottom bg-light-custom">
+                    <li class="row ">
+                        <div class="col-6 d-flex align-self-center">
+                            <p class="mb-0 me-3">@user.FullName</p>
+                            <p class="mb-0">@user.Email</p>
+                        </div>
+                        <div class="col-6 d-flex align-self-center gx-2">
+                            <button class="btn btn-sm btn-primary mt-0 me-3">Add Admin Role</button>
+                            <button class="btn btn-sm btn-secondary mt-0 me-3">Remove Moderator Role</button>
+                        </div>
+                    </li>
+                </ul>
+            }
+
+            <h3 class="widget-title mt-5 text-center">Standard Users</h3>
+            <div class="col-12 border-partial mb-3"></div>
+
+            @foreach (var user in Model.Input.NormalUsers)
+            {
+                <ul class="border-1 border-top border-bottom bg-light-custom">
+                    <li class="row ">
+                        <div class="col-6 d-flex align-self-center">
+                            <p class="mb-0 me-3">@user.FullName</p>
+                            <p class="mb-0">@user.Email</p>
+                        </div>
+                        <div class="col-6 d-flex align-self-center gx-2">
+                            <button class="btn btn-sm btn-primary mt-0 me-3">Add Admin Role</button>
+                            <button class="btn btn-sm btn-secondary mt-0">Add Moderator Role</button>
+                        </div>
+                    </li>
+                </ul>
+            }
         </div>
+
+      
     </div>
 </main>
-
-
 
 
 @* @section Scripts { *@

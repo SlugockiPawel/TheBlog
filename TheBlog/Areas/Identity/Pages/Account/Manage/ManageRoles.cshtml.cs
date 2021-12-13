@@ -5,11 +5,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 using System;
+using System.Collections.Immutable;
 using System.Linq;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TheBlog.Data;
 using TheBlog.Enums;
 using TheBlog.Models;
+using X.PagedList;
 
 namespace TheBlog.Areas.Identity.Pages.Account.Manage
 {
@@ -32,13 +35,12 @@ namespace TheBlog.Areas.Identity.Pages.Account.Manage
             public List<BlogUser> NormalUsers { get; set; } = new();
         }
 
-
-
         public async Task<IActionResult> OnGetAsync()
         {
-          
-
             Input.Admins = await GetUsersByRoleAsync(BlogRole.Administrator.ToString());
+            Input.Moderators = await GetUsersByRoleAsync(BlogRole.Moderator.ToString());
+            Input.NormalUsers = await GetUsersWithoutRoleAsync();
+
 
             return Page();
         }
