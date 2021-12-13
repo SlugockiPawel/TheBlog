@@ -13,8 +13,10 @@ namespace TheBlog
 {
     /*  TO DO LIST:
      *
-     *  TODO add 3rd party auth GOOGLE
-     *  TODO add delete comment for author (not only for moderator)
+     *  TODO display admins, moderators and normal users in ManageRoles page
+     * TODO add buttons to add/remove roles (removing slugocki.pawel@gmail.com must be forbidden)
+     *
+     *  TODO add 3rd party auth Facebook
      *  TODO cannot delete user when there are comments connected to it
      *
      *
