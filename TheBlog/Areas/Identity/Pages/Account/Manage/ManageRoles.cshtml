@@ -1,5 +1,6 @@
 ﻿@page 
 
+@using TheBlog.Enums
 @model ManageRolesModel
 @{
     ViewData["Title"] = "Manage Roles";
@@ -13,17 +14,23 @@
             <h3 class="widget-title mt-5 text-center">Administrators</h3>
             <div class="col-12 border-partial mb-3"></div>
 
-            @foreach (var user in Model.Input.Admins)
+            @foreach (var bUser in Model.Input.Admins)
             {
                 <ul class="border-1 border-top border-bottom bg-light-custom">
                     <li class="row ">
-                        <div class="col-6 d-flex align-self-center">
-                            <p class="mb-0 me-3">@user.FullName</p>
-                            <p class="mb-0">@user.Email</p>
-                        </div>
-                        <div class="col-6 d-flex align-self-center gx-2">
-                            <button class="btn btn-sm btn-primary mt-0 me-3">Add Moderator Role</button>
-                            <button class="btn btn-sm btn-secondary mt-0 me-3">Remove Admin Role</button>
+                        <div class="col-12 d-flex align-self-center justify-content-between">
+                            <div class="d-flex align-self-center">
+                                <p class="mb-0 me-3">@bUser.FullName</p>
+                                <p class="mb-0">@bUser.Email</p>
+                            </div>
+                            <form class="d-flex align-self-center" method="post">
+                                @Html.Hidden("UserId", bUser.Id)
+                                @Html.Hidden("DeleteRole", BlogRole.Administrator.ToString())
+                                @Html.Hidden("FutureRole", BlogRole.Moderator.ToString())
+
+                                <button type="submit" value="Submit" class="btn btn-sm btn-primary mt-0 me-3" asp-page-handler="AddRoleToUser">Add Moderator Role</button>
+                                <button type="submit" value="Submit" class="btn btn-sm btn-secondary mt-0" asp-page-handler="RemoveRoleFromUser">Remove Admin Role</button>
+                            </form>
                         </div>
                     </li>
                 </ul>
@@ -32,17 +39,25 @@
             <h3 class="widget-title mt-5 text-center">Moderators</h3>
             <div class="col-12 border-partial mb-3"></div>
 
-            @foreach (var user in Model.Input.Moderators)
+            @foreach (var bUser in Model.Input.Moderators)
             {
                 <ul class="border-1 border-top border-bottom bg-light-custom">
                     <li class="row ">
-                        <div class="col-6 d-flex align-self-center">
-                            <p class="mb-0 me-3">@user.FullName</p>
-                            <p class="mb-0">@user.Email</p>
-                        </div>
-                        <div class="col-6 d-flex align-self-center gx-2">
-                            <button class="btn btn-sm btn-primary mt-0 me-3">Add Admin Role</button>
-                            <button class="btn btn-sm btn-secondary mt-0 me-3">Remove Moderator Role</button>
+                        <div class="col-12 d-flex align-self-center justify-content-between">
+                            <div class="d-flex align-self-center">
+                                <p class="mb-0 me-3">@bUser.FullName</p>
+                                <p class="mb-0">@bUser.Email</p>
+                            </div>
+                            <div class="d-flex align-self-center">
+                                <form class="d-flex align-self-center" method="post">
+                                    @Html.Hidden("UserId", bUser.Id)
+                                    @Html.Hidden("DeleteRole", BlogRole.Moderator.ToString())
+                                    @Html.Hidden("FutureRole", BlogRole.Administrator.ToString())
+
+                                    <button type="submit" class="btn btn-sm btn-primary mt-0 me-3" asp-page-handler="AddRoleToUser">Add Admin Role</button>
+                                    <button type="submit" class="btn btn-sm btn-secondary mt-0" asp-page-handler="RemoveRoleFromUser">Remove Moderator Role</button>
+                                </form>
+                            </div>
                         </div>
                     </li>
                 </ul>
@@ -51,24 +66,30 @@
             <h3 class="widget-title mt-5 text-center">Standard Users</h3>
             <div class="col-12 border-partial mb-3"></div>
 
-            @foreach (var user in Model.Input.NormalUsers)
+            @foreach (var bUser in Model.Input.NormalUsers)
             {
                 <ul class="border-1 border-top border-bottom bg-light-custom">
                     <li class="row ">
-                        <div class="col-6 d-flex align-self-center">
-                            <p class="mb-0 me-3">@user.FullName</p>
-                            <p class="mb-0">@user.Email</p>
-                        </div>
-                        <div class="col-6 d-flex align-self-center gx-2">
-                            <button class="btn btn-sm btn-primary mt-0 me-3">Add Admin Role</button>
-                            <button class="btn btn-sm btn-secondary mt-0">Add Moderator Role</button>
+                        <div class="col-12 d-flex align-self-center justify-content-between">
+                            <div class="d-flex align-self-center">
+                                <p class="mb-0 me-3">@bUser.FullName</p>
+                                <p class="mb-0">@bUser.Email</p>
+                            </div>
+                            <form class="d-flex align-self-center" method="post">
+                                @Html.Hidden("UserId", bUser.Id)
+                                @Html.Hidden("ModeratorRole", BlogRole.Moderator.ToString())
+                                @Html.Hidden("AdminRole", BlogRole.Administrator.ToString())
+
+                                <button type="submit" name="command" value="Moderator" class="btn btn-sm btn-primary mt-0 me-3" asp-page-handler="AddRoleToUser">Add Moderator Role</button>
+                                <button type="submit" name="command" value="Admin" class="btn btn-sm btn-primary mt-0 me-3" asp-page-handler="AddRoleToUser">Add Admin Role</button>
+                            </form>
                         </div>
                     </li>
                 </ul>
             }
         </div>
 
-      
+
     </div>
 </main>
 
