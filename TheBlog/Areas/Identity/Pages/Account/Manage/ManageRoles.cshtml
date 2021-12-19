@@ -11,7 +11,7 @@
 <main class="container container-narrow">
     <div class="row">
         <div class="col-12">
-            
+
             @if (!ModelState.IsValid)
             {
                 <div class="text-center text-danger fw-bold" asp-validation-summary="All"></div>
@@ -94,12 +94,10 @@
                 </ul>
             }
         </div>
-
-
     </div>
 </main>
 
 
-@* @section Scripts { *@
-@*     <partial name="_ValidationScriptsPartial" /> *@
-@* } *@
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+}
