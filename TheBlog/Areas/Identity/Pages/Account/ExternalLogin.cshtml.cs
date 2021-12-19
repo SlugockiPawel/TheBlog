@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Security.Claims;
@@ -13,6 +14,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using TheBlog.Models;
 using TheBlog.Services;
@@ -28,17 +30,22 @@ namespace TheBlog.Areas.Identity.Pages.Account
         private readonly UserManager<BlogUser> _userManager;
         private readonly IBlogEmailSender _emailSender;
         private readonly ILogger<ExternalLoginModel> _logger;
+        private readonly IImageService _imageService;
+        private readonly IConfiguration _configuration;
+
 
         public ExternalLoginModel(
             SignInManager<BlogUser> signInManager,
             UserManager<BlogUser> userManager,
             ILogger<ExternalLoginModel> logger,
-            IBlogEmailSender emailSender)
+            IBlogEmailSender emailSender, IConfiguration configuration, IImageService imageService)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _logger = logger;
             _emailSender = emailSender;
+            _configuration = configuration;
+            _imageService = imageService;
         }
 
         [BindProperty] public InputModel Input { get; set; }
@@ -130,8 +137,12 @@ namespace TheBlog.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var names = info.Principal.Identity?.Name?.Split(' ');
-                BlogUser user = new();
 
+                BlogUser user = new()
+                {
+                    ImageData = await _imageService.EncodeImageAsync(_configuration["DefaultUserImage"]),
+                    ContentType = Path.GetExtension(_configuration["DefaultUserImage"]),
+                };
 
                 if (names is not null && names.Length > 1)
                 {
