@@ -57,6 +57,11 @@ namespace TheBlog.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
+            if (user.Email == "slugocki.pawel@gmail.com")
+            {
+                throw new InvalidOperationException($"Cannot delete app owner");
+            }
+
             RequirePassword = await _userManager.HasPasswordAsync(user);
             if (RequirePassword)
             {
