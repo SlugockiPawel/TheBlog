@@ -1,10 +1,13 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using TheBlog.Data;
 using TheBlog.Models;
 
 namespace TheBlog.Areas.Identity.Pages.Account.Manage
@@ -14,19 +17,20 @@ namespace TheBlog.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<BlogUser> _userManager;
         private readonly SignInManager<BlogUser> _signInManager;
         private readonly ILogger<DeletePersonalDataModel> _logger;
+        private readonly ApplicationDbContext _context;
 
         public DeletePersonalDataModel(
             UserManager<BlogUser> userManager,
             SignInManager<BlogUser> signInManager,
-            ILogger<DeletePersonalDataModel> logger)
+            ILogger<DeletePersonalDataModel> logger, ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _context = context;
         }
 
-        [BindProperty]
-        public InputModel Input { get; set; }
+        [BindProperty] public InputModel Input { get; set; }
 
         public class InputModel
         {
@@ -72,8 +76,17 @@ namespace TheBlog.Areas.Identity.Pages.Account.Manage
                 }
             }
 
+            var comments = _context.Comments.Where(c => c.BlogUserId == user.Id);
+
+            if (await comments.AnyAsync())
+            {
+                _context.Comments.RemoveRange(comments);
+                await _context.SaveChangesAsync();
+            }
+
             var result = await _userManager.DeleteAsync(user);
             var userId = await _userManager.GetUserIdAsync(user);
+
             if (!result.Succeeded)
             {
                 throw new InvalidOperationException($"Unexpected error occurred deleting user with ID '{userId}'.");
