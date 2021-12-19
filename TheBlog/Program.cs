@@ -12,17 +12,8 @@ using TheBlog.Services;
 namespace TheBlog
 {
     /*  TO DO LIST:
-     *
-     * TODO resign user after role change so it is refreshed automatically
-     * TODO show error message with all users visible in Manage Roles
-     *
-     *  TODO display admins, moderators and normal users in ManageRoles page
-     * TODO add buttons to add/remove roles (removing slugocki.pawel@gmail.com must be forbidden)
-     *
-     *  TODO add 3rd party auth Facebook
      *  TODO cannot delete user when there are comments connected to it
-     *
-     *
+     *  TODO add 3rd party auth Facebook
      */
     public class Program
     {
