@@ -51,11 +51,6 @@ namespace TheBlog.Areas.Identity.Pages.Account.Manage
 
         public async Task<IActionResult> OnPostAddRoleToUserAsync(string userId, string futureRole, [CanBeNull] string command)
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
             if (command is not null)
             {
                 futureRole = string.Equals(command, "Admin") ? BlogRole.Administrator.ToString() : BlogRole.Moderator.ToString();
@@ -65,12 +60,19 @@ namespace TheBlog.Areas.Identity.Pages.Account.Manage
 
             if (user is null)
             {
-                return RedirectToPage();
+                ModelState.AddModelError("ModelError", "User is not in database, try again");
             }
 
             if ( await _userManager.IsInRoleAsync(user, futureRole))
             {
-                return RedirectToPage();
+                ModelState.AddModelError("ModelError", $"{user} is already in {futureRole} role");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                await PopulateInputModel();
+
+                return Page();
             }
 
             await _userManager.AddToRoleAsync(user, futureRole);
@@ -81,26 +83,28 @@ namespace TheBlog.Areas.Identity.Pages.Account.Manage
 
         public async Task<IActionResult> OnPostRemoveRoleFromUserAsync(string userId, string deleteRole)
         {
-            if (!ModelState.IsValid)
-            {
-                return RedirectToPage();
-            }
-
             var user = await _userManager.FindByIdAsync(userId);
 
             if (user is null)
             {
-                return RedirectToPage();
+                ModelState.AddModelError("ModelError", "User is not in database, try again");
             }
 
             if (user.Email == "slugocki.pawel@gmail.com" && deleteRole == BlogRole.Administrator.ToString())
             {
-                return RedirectToPage();
+                ModelState.AddModelError("ModelError", "Cannot revoke Administrator role from app owner");
             }
 
             if (!await _userManager.IsInRoleAsync(user, deleteRole))
             {
-                return RedirectToPage();
+                ModelState.AddModelError("ModelError", "User is not in this role, delete unsuccessful");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                await PopulateInputModel();
+
+                return Page();
             }
 
             await _userManager.RemoveFromRoleAsync(user, deleteRole);

@@ -11,6 +11,12 @@
 <main class="container container-narrow">
     <div class="row">
         <div class="col-12">
+            
+            @if (!ModelState.IsValid)
+            {
+                <div class="text-center text-danger fw-bold" asp-validation-summary="All"></div>
+            }
+
             <h3 class="widget-title mt-5 text-center">Administrators</h3>
             <div class="col-12 border-partial mb-3"></div>
 
@@ -81,7 +87,7 @@
                                 @Html.Hidden("AdminRole", BlogRole.Administrator.ToString())
 
                                 <button type="submit" name="command" value="Moderator" class="btn btn-sm btn-primary mt-0 me-3" asp-page-handler="AddRoleToUser">Add Moderator Role</button>
-                                <button type="submit" name="command" value="Admin" class="btn btn-sm btn-primary mt-0 me-3" asp-page-handler="AddRoleToUser">Add Admin Role</button>
+                                <button type="submit" name="command" value="Admin" class="btn btn-sm btn-primary mt-0" asp-page-handler="AddRoleToUser">Add Admin Role</button>
                             </form>
                         </div>
                     </li>
