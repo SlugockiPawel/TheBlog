@@ -70,9 +70,9 @@ namespace TheBlog.Areas.Identity.Pages.Account.Manage
 
             if (!ModelState.IsValid)
             {
-                await PopulateInputModel();
+                TempData["Error"] = GetFirstModelStateErrorMessage();
 
-                return Page();
+                return RedirectToPage();
             }
 
             await _userManager.AddToRoleAsync(user, futureRole);
@@ -89,8 +89,7 @@ namespace TheBlog.Areas.Identity.Pages.Account.Manage
             {
                 ModelState.AddModelError("ModelError", "User is not in database, try again");
             }
-
-            if (user.Email == "slugocki.pawel@gmail.com" && deleteRole == BlogRole.Administrator.ToString())
+            else if (user.Email == "slugocki.pawel@gmail.com" && deleteRole == BlogRole.Administrator.ToString())
             {
                 ModelState.AddModelError("ModelError", "Cannot revoke Administrator role from app owner");
             }
@@ -102,9 +101,9 @@ namespace TheBlog.Areas.Identity.Pages.Account.Manage
 
             if (!ModelState.IsValid)
             {
-                await PopulateInputModel();
+                TempData["Error"] = GetFirstModelStateErrorMessage();
 
-                return Page();
+                return RedirectToPage();
             }
 
             await _userManager.RemoveFromRoleAsync(user, deleteRole);
@@ -158,6 +157,11 @@ namespace TheBlog.Areas.Identity.Pages.Account.Manage
             Input.Moderators = await _userManager.GetUsersInRoleAsync(BlogRole.Moderator.ToString()).Result.ToListAsync();
             Input.NormalUsers = await GetUsersWithoutRoleAsync();
 
+        }
+        private string GetFirstModelStateErrorMessage()
+        {
+            return ViewData.ModelState.Values
+                .SelectMany(x => x.Errors).FirstOrDefault(err => !string.IsNullOrWhiteSpace(err.ErrorMessage))?.ErrorMessage;
         }
     }
 }
