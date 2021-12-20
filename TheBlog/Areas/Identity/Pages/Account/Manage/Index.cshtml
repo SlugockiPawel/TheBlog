@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Profile";
     ViewData["ActivePage"] = ManageNavPages.Index;
+    Layout = "Manage/_IdentityLayout";
 }
 
 <h4>@ViewData["Title"]</h4>
@@ -30,8 +31,8 @@
             <button id="update-profile-button" type="submit" class="btn btn-primary form-button">Save</button>
         </form>
     </div>
-    <div class="col-md-6">
-        <img src="@Model.CurrentImage" class="img-fluid rounded-circle" width="60%"/>
+    <div class="col-md-6 text-center">
+        <img src="@Model.CurrentImage" class="img-fluid rounded-circle" width="50%"/>
     </div>
 </div>
 
