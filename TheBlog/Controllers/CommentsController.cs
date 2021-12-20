@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using MimeKit.Encodings;
 using TheBlog.Data;
 using TheBlog.Models;
 using TheBlog.Services;
@@ -58,8 +59,7 @@ namespace TheBlog.Controllers
                 return RedirectToAction("Details", "Posts", new { slug = postSlug }, $"commentSection");
             }
 
-            TempData["Error"] = ModelState.Values.FirstOrDefault()?.Errors.FirstOrDefault()?.ErrorMessage;
-
+            TempData["Error"] = GetFirstModelStateErrorMessage();
 
             return RedirectToAction("Details", "Posts", new { slug = postSlug },
                 $"commentSection");
@@ -128,6 +128,8 @@ namespace TheBlog.Controllers
                     $"commentSection"); // in View, there is an id for every comment <h4> so after editing, View will stop right there
                 // return RedirectToAction("Details", "Posts", new {slug = newComment.Post.Slug}, $"commentNumber_{comment.Id}"); // in View, there is an id for every comment <h4> so after editing, View will stop right there
             }
+
+            TempData["Error"] = GetFirstModelStateErrorMessage();
 
             return RedirectToAction("Details", "Posts", new { slug = postSlug },
                 $"commentSection");
@@ -230,5 +232,11 @@ namespace TheBlog.Controllers
         //         x => new { x.Key, x.Value.Errors }
         //     ).FirstOrDefault().Errors.First().ErrorMessage;
         // }
+
+        private string GetFirstModelStateErrorMessage()
+        {
+           return ViewData.ModelState.Values
+                .SelectMany(x => x.Errors).FirstOrDefault(err => !string.IsNullOrWhiteSpace(err.ErrorMessage))?.ErrorMessage;
+        }
     }
 }
