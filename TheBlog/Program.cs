@@ -12,7 +12,10 @@ using TheBlog.Services;
 namespace TheBlog
 {
     /*  TO DO LIST:
-     *  TODO cannot delete user when there are comments connected to it
+     *
+     *  TODO add Error message for comment Edit
+     * TODO correct error messages for ManageRoles
+     *
      *  TODO add 3rd party auth Facebook
      */
     public class Program
