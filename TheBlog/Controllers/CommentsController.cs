@@ -12,11 +12,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MimeKit.Encodings;
 using TheBlog.Data;
+using TheBlog.Enums;
 using TheBlog.Models;
 using TheBlog.Services;
 
 namespace TheBlog.Controllers
 {
+    
     public class CommentsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -28,14 +30,15 @@ namespace TheBlog.Controllers
             _userManager = userManager;
         }
 
-        [Authorize(Roles = "Administrator, Moderator")]
         // GET: Comments
+        [Authorize(Roles = "Administrator,Moderator")]
         public async Task<IActionResult> Index()
         {
             var originalComments = await _context.Comments.ToListAsync();
             return View("Index", originalComments);
         }
 
+        [Authorize(Roles = "Moderator")]
         public async Task<IActionResult> ModeratedIndex()
         {
             var moderatedComments = await _context.Comments.Where(c => c.Moderated != null).ToListAsync();
@@ -47,6 +50,7 @@ namespace TheBlog.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create([Bind("PostId,Body")] Comment comment, string postSlug)
         {
             if (ModelState.IsValid)
@@ -66,7 +70,7 @@ namespace TheBlog.Controllers
         }
 
 
-        [Authorize(Roles = "Administrator, Moderator")]
+        [Authorize(Roles = "Moderator")]
         // GET: Comments/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -92,6 +96,7 @@ namespace TheBlog.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Body")] Comment comment, string postSlug)
         {
             if (id != comment.Id)
@@ -137,6 +142,7 @@ namespace TheBlog.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Moderator")]
         public async Task<IActionResult> Moderate(int id,
             [Bind("Id,Body,ModeratedBody,ModerationType")]
             Comment comment, string postSlug)

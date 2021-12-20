@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +19,7 @@ using X.PagedList;
 
 namespace TheBlog.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class PostsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -36,6 +39,7 @@ namespace TheBlog.Controllers
         }
 
         //GET: Search Posts
+        [AllowAnonymous]
         public async Task<IActionResult> SearchIndex(int? page, string searchTerm)
         {
             ViewData["SearchTerm"] = searchTerm; // when we go from page 1 to page 2, we will maintain this search term
@@ -56,6 +60,7 @@ namespace TheBlog.Controllers
         }
 
         // GET: Posts by Tag
+        [AllowAnonymous]
         public async Task<IActionResult> TagIndex(int? page, string tagText)
         {
             ViewData["TagText"] = tagText; // when we go from page 1 to page 2, we will maintain tagText
@@ -89,6 +94,7 @@ namespace TheBlog.Controllers
 
         // GET: Posts/Details/5
         // public async Task<IActionResult> Details(int? id)
+        [AllowAnonymous]
         public async Task<IActionResult> Details(string slug)
         {
             if (string.IsNullOrWhiteSpace(slug))

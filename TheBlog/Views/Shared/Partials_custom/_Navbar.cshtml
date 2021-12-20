@@ -25,7 +25,7 @@
                             <a class="nav-link @Html.IsActive("Home", "Contact")" asp-controller="Home" asp-action="Contact">Contact</a>
                         </li>
 
-                        @if (User.IsInRole(BlogRole.Administrator.ToString()) || User.IsInRole(BlogRole.Moderator.ToString()))
+                        @if (User.IsInRole(BlogRole.Administrator.ToString()))
                         {
                             <li class="nav-item ">
                                 <a class="nav-link @Html.IsActive("Categories", "Index")" asp-controller="Categories" asp-action="Index">Category List</a>
