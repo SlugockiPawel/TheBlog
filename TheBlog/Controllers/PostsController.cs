@@ -344,6 +344,17 @@ namespace TheBlog.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var post = await _context.Posts.FindAsync(id);
+
+            if (post is null)
+            {
+                return NotFound();
+            }
+
+            if (!User.IsInRole(BlogRole.Administrator.ToString()))
+            {
+                throw new InvalidOperationException("You are not authorized to delete categories!");
+            }
+
             _context.Posts.Remove(post);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

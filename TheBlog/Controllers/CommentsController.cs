@@ -192,15 +192,24 @@ namespace TheBlog.Controllers
                 return NotFound();
             }
 
+
             var comment = await _context.Comments
                 .Include(c => c.BlogUser)
                 .Include(c => c.Moderator)
                 .Include(c => c.Post)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (comment == null)
             {
                 return NotFound();
             }
+
+            if (!User.IsInRole(BlogRole.Moderator.ToString()) && comment.BlogUser.Id != _userManager.GetUserId(User))
+            {
+                throw new InvalidOperationException("You are not authoried to delete other people comments!");
+            }
+
+            
 
             return View(comment);
         }
@@ -211,7 +220,20 @@ namespace TheBlog.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id, string slug)
         {
-            var comment = await _context.Comments.FindAsync(id);
+            var comment = await _context.Comments
+                .Include(c => c.BlogUser)
+                .FirstOrDefaultAsync(c => c.Id == id);
+                
+            if (comment == null)
+            {
+                return NotFound();
+            }
+
+            if (!User.IsInRole(BlogRole.Moderator.ToString()) && comment.BlogUser.Id != _userManager.GetUserId(User))
+            {
+                throw new InvalidOperationException("You are not authorized to delete other people comments!");
+            }
+
             _context.Comments.Remove(comment);
             await _context.SaveChangesAsync();
 
