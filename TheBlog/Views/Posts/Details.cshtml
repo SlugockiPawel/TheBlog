@@ -50,6 +50,11 @@
 
                     <h4 id="commentSection" class="text-center">@Model.Comments.Count COMMENT(S)</h4>
                     <div class="border-partial"></div>
+                    
+                    @if (TempData["Error"] is not null)
+                    {
+                        <div class="text-center text-danger fw-bold my-3">@TempData["Error"].ToString()</div>
+                    }
 
                     @* Displaying Comments related to this post *@
 

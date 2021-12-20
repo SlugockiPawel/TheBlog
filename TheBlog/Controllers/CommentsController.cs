@@ -25,7 +25,7 @@ namespace TheBlog.Controllers
         {
             _context = context;
             _userManager = userManager;
-}
+        }
 
         [Authorize(Roles = "Administrator, Moderator")]
         // GET: Comments
@@ -57,6 +57,9 @@ namespace TheBlog.Controllers
                 // return RedirectToAction(nameof(Index));
                 return RedirectToAction("Details", "Posts", new { slug = postSlug }, $"commentSection");
             }
+
+            TempData["Error"] = ModelState.Values.FirstOrDefault()?.Errors.FirstOrDefault()?.ErrorMessage;
+
 
             return RedirectToAction("Details", "Posts", new { slug = postSlug },
                 $"commentSection");
@@ -126,14 +129,15 @@ namespace TheBlog.Controllers
                 // return RedirectToAction("Details", "Posts", new {slug = newComment.Post.Slug}, $"commentNumber_{comment.Id}"); // in View, there is an id for every comment <h4> so after editing, View will stop right there
             }
 
-            return RedirectToAction("Details", "Posts", new { slug = postSlug},
+            return RedirectToAction("Details", "Posts", new { slug = postSlug },
                 $"commentSection");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Moderate(int id,
-            [Bind("Id,Body,ModeratedBody,ModerationType")] Comment comment, string postSlug)
+            [Bind("Id,Body,ModeratedBody,ModerationType")]
+            Comment comment, string postSlug)
         {
             if (id != comment.Id)
             {
@@ -176,7 +180,7 @@ namespace TheBlog.Controllers
                 $"commentSection");
         }
 
-        
+
         [Authorize]
         // GET: Comments/Delete/5
         public async Task<IActionResult> Delete(int? id)

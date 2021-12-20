@@ -109,6 +109,9 @@ namespace TheBlog.Controllers
                 return NotFound();
             }
 
+        
+          
+
             ViewData["DistinctTags"] = await _blogSearchService.GetDistinctTags(15);
             ViewData["Categories"] = await _blogSearchService.GetDistinctCategories();
 
