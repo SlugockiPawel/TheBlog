@@ -13,6 +13,7 @@ namespace TheBlog
 {
     /*  TO DO LIST:
      *
+     * TODO store default admin password in usersecrets.json
      *  TODO add Error message for comment Edit
      * TODO correct error messages for ManageRoles
      *
