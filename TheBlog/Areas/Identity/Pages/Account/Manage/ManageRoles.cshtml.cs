@@ -12,6 +12,7 @@ using JetBrains.Annotations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Build.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using TheBlog.Data;
 using TheBlog.Enums;
 using TheBlog.Models;
@@ -20,21 +21,24 @@ using X.PagedList;
 
 namespace TheBlog.Areas.Identity.Pages.Account.Manage
 {
-
     [ValidateAntiForgeryToken]
     [Authorize(Roles = "Administrator")]
     public class ManageRolesModel : PageModel
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<BlogUser> _userManager;
+        private readonly IConfiguration _configuration;
 
-        public ManageRolesModel(ApplicationDbContext context, UserManager<BlogUser> userManager)
+        public ManageRolesModel(ApplicationDbContext context, UserManager<BlogUser> userManager,
+            IConfiguration configuration)
         {
             _context = context;
             _userManager = userManager;
+            _configuration = configuration;
         }
 
         [BindProperty] public InputModel Input { get; set; } = new();
+
         public class InputModel
         {
             public List<BlogUser> Admins { get; set; } = new();
@@ -49,13 +53,16 @@ namespace TheBlog.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAddRoleToUserAsync(string userId, string futureRole, [CanBeNull] string command)
+        public async Task<IActionResult> OnPostAddRoleToUserAsync(string userId, string futureRole,
+            [CanBeNull] string command)
         {
             if (command is not null)
             {
-                futureRole = string.Equals(command, "Admin") ? BlogRole.Administrator.ToString() : BlogRole.Moderator.ToString();
+                futureRole = string.Equals(command, "Admin")
+                    ? BlogRole.Administrator.ToString()
+                    : BlogRole.Moderator.ToString();
             }
-            
+
             var user = await _userManager.FindByIdAsync(userId);
 
             if (user is null)
@@ -63,7 +70,7 @@ namespace TheBlog.Areas.Identity.Pages.Account.Manage
                 ModelState.AddModelError("ModelError", "User is not in database, try again");
             }
 
-            if ( await _userManager.IsInRoleAsync(user, futureRole))
+            if (await _userManager.IsInRoleAsync(user, futureRole))
             {
                 ModelState.AddModelError("ModelError", $"{user} is already in {futureRole} role");
             }
@@ -89,7 +96,8 @@ namespace TheBlog.Areas.Identity.Pages.Account.Manage
             {
                 ModelState.AddModelError("ModelError", "User is not in database, try again");
             }
-            else if (user.Email == "slugocki.pawel@gmail.com" && deleteRole == BlogRole.Administrator.ToString())
+            else if (user.Email == _configuration.GetValue<string>("AppOwner:Email") &&
+                     deleteRole == BlogRole.Administrator.ToString())
             {
                 ModelState.AddModelError("ModelError", "Cannot revoke Administrator role from app owner");
             }
@@ -153,15 +161,18 @@ namespace TheBlog.Areas.Identity.Pages.Account.Manage
 
         private async Task PopulateInputModel()
         {
-            Input.Admins = await _userManager.GetUsersInRoleAsync(BlogRole.Administrator.ToString()).Result.ToListAsync();
-            Input.Moderators = await _userManager.GetUsersInRoleAsync(BlogRole.Moderator.ToString()).Result.ToListAsync();
+            Input.Admins = await _userManager.GetUsersInRoleAsync(BlogRole.Administrator.ToString()).Result
+                .ToListAsync();
+            Input.Moderators =
+                await _userManager.GetUsersInRoleAsync(BlogRole.Moderator.ToString()).Result.ToListAsync();
             Input.NormalUsers = await GetUsersWithoutRoleAsync();
-
         }
+
         private string GetFirstModelStateErrorMessage()
         {
             return ViewData.ModelState.Values
-                .SelectMany(x => x.Errors).FirstOrDefault(err => !string.IsNullOrWhiteSpace(err.ErrorMessage))?.ErrorMessage;
+                .SelectMany(x => x.Errors).FirstOrDefault(err => !string.IsNullOrWhiteSpace(err.ErrorMessage))
+                ?.ErrorMessage;
         }
     }
 }

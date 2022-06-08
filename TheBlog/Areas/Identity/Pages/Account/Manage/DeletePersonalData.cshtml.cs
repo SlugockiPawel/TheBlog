@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using TheBlog.Data;
 using TheBlog.Models;
@@ -18,16 +19,18 @@ namespace TheBlog.Areas.Identity.Pages.Account.Manage
         private readonly SignInManager<BlogUser> _signInManager;
         private readonly ILogger<DeletePersonalDataModel> _logger;
         private readonly ApplicationDbContext _context;
+        private readonly IConfiguration _configuration;
 
         public DeletePersonalDataModel(
             UserManager<BlogUser> userManager,
             SignInManager<BlogUser> signInManager,
-            ILogger<DeletePersonalDataModel> logger, ApplicationDbContext context)
+            ILogger<DeletePersonalDataModel> logger, ApplicationDbContext context, IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _context = context;
+            _configuration = configuration;
         }
 
         [BindProperty] public InputModel Input { get; set; }
@@ -61,7 +64,7 @@ namespace TheBlog.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            if (user.Email == "slugocki.pawel@gmail.com")
+            if (user.Email == _configuration.GetValue<string>("AppOwner:Email"))
             {
                 throw new InvalidOperationException($"Cannot delete app owner");
             }
