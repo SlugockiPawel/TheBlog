@@ -13,11 +13,8 @@ namespace TheBlog
 {
     /*  TO DO LIST:
      *
-     * TODO store default admin password in usersecrets.json
-     *  TODO add Error message for comment Edit
-     * TODO correct error messages for ManageRoles
-     *
-     *  TODO add 3rd party auth Facebook
+     * TODO store emailsettings in secrets
+     * TODO check authorization methods if app is secured
      */
     public class Program
     {
