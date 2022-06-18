@@ -12,9 +12,6 @@ using TheBlog.Services;
 namespace TheBlog
 {
     /*  TO DO LIST:
-     *
-     * TODO store emailsettings in secrets
-     * TODO reformat main picture to more compressed format
      * TODO check authorization methods if app is secured
      */
     public class Program
