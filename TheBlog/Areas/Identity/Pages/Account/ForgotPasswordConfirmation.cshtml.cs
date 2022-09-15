@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace TheBlog.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
-    public class ForgotPasswordConfirmation : PageModel
+    public sealed class ForgotPasswordConfirmation : PageModel
     {
         public void OnGet()
         {

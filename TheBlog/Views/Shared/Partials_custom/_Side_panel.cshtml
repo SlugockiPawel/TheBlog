@@ -1,7 +1,4 @@
-﻿@using TheBlog.Models
-@using System.Collections
-
-<div class="row">
+﻿<div class="row">
     <div class="text-center">
         <div class="col-12 mt-md-0">
             <h3 class="widget-title mt-md-0 mt-4">About Me</h3>
@@ -74,10 +71,10 @@
         </div>
         <div class="col-12 border-partial"></div>
         <div class="col-12 tagcloud">
-           @foreach (var tag in ViewData["DistinctTags"] as IList<Tag>)
-           {
-               <a asp-controller="Posts" asp-action="TagIndex" asp-route-tagText="@tag.Text.ToLower()">@tag.Text</a>
-           }
+            @foreach (var tag in ViewData["DistinctTags"] as IList<Tag>)
+            {
+                <a asp-controller="Posts" asp-action="TagIndex" asp-route-tagText="@tag.Text.ToLower()">@tag.Text</a>
+            }
         </div>
     </div>
 </div>

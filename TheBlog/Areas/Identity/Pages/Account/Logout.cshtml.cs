@@ -12,7 +12,7 @@ using TheBlog.Models;
 namespace TheBlog.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
-    public class LogoutModel : PageModel
+    public sealed class LogoutModel : PageModel
     {
         private readonly SignInManager<BlogUser> _signInManager;
         private readonly ILogger<LogoutModel> _logger;

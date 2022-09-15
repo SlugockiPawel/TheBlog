@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 using TheBlog.Models;
 namespace TheBlog.Areas.Identity.Pages.Account.Manage
 {
-    public class ChangePasswordModel : PageModel
+    public sealed class ChangePasswordModel : PageModel
     {
         private readonly UserManager<BlogUser> _userManager;
         private readonly SignInManager<BlogUser> _signInManager;
@@ -32,7 +32,7 @@ namespace TheBlog.Areas.Identity.Pages.Account.Manage
         [TempData]
         public string StatusMessage { get; set; }
 
-        public class InputModel
+        public sealed class InputModel
         {
             [Required]
             [DataType(DataType.Password)]

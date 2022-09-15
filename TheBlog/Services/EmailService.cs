@@ -8,7 +8,7 @@ using TheBlog.ViewModels;
 
 namespace TheBlog.Services
 {
-    public class EmailService : IBlogEmailSender
+    public sealed class EmailService : IBlogEmailSender
     {
         private readonly EmailSettings _emailSettings;
 

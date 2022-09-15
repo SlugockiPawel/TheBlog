@@ -17,7 +17,7 @@ using X.PagedList;
 namespace TheBlog.Controllers
 {
     [Authorize(Roles = "Administrator")]
-    public class CategoriesController : Controller
+    public sealed class CategoriesController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly IImageService _imageService;
@@ -92,7 +92,7 @@ namespace TheBlog.Controllers
         }
 
         // POST: Blogs/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // To protect from over posting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -134,7 +134,7 @@ namespace TheBlog.Controllers
         }
 
         // POST: Blogs/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // To protect from over posting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]

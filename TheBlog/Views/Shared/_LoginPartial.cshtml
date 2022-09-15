@@ -1,17 +1,16 @@
-﻿@using Microsoft.AspNetCore.Identity
-@using TheBlog.Services
+﻿@using TheBlog.Services
+@using Microsoft.AspNetCore.Identity
 @inject SignInManager<BlogUser> SignInManager
-@inject UserManager<BlogUser> UserManager
 
 
 @if (SignInManager.IsSignedIn(User))
 {
     <li>
-        <a  class="dropdown-item @Html.IsActive("Account", "Manage")" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>
+        <a class="dropdown-item @Html.IsActive("Account", "Manage")" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>
     </li>
     <li>
-        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button  type="submit" class="dropdown-item btn btn-link">Logout</button>
+        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <button type="submit" class="dropdown-item btn btn-link">Logout</button>
         </form>
     </li>
 }

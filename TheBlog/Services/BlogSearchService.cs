@@ -10,7 +10,7 @@ using X.PagedList;
 
 namespace TheBlog.Services
 {
-    public class BlogSearchService
+    public sealed class BlogSearchService
     {
         private readonly ApplicationDbContext _context;
         public BlogSearchService(ApplicationDbContext context)

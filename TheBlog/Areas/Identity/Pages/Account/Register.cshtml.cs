@@ -23,7 +23,7 @@ using TheBlog.Services;
 namespace TheBlog.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
-    public class RegisterModel : PageModel
+    public sealed class RegisterModel : PageModel
     {
         private readonly SignInManager<BlogUser> _signInManager;
         private readonly UserManager<BlogUser> _userManager;
@@ -55,7 +55,7 @@ namespace TheBlog.Areas.Identity.Pages.Account
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
-        public class InputModel
+        public sealed class InputModel
         {
             [DisplayName("Custom Image")] public IFormFile ImageFile { get; set; }
 

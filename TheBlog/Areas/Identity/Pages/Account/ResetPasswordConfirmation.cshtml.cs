@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace TheBlog.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
-    public class ResetPasswordConfirmationModel : PageModel
+    public sealed class ResetPasswordConfirmationModel : PageModel
     {
         public void OnGet()
         {

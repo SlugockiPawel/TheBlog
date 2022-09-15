@@ -1,16 +1,15 @@
 ﻿@using TheBlog.Services
 @using Microsoft.AspNetCore.Identity
 @using TheBlog.Enums
-
-@model TheBlog.Models.Comment
-@inject IImageService _imageService
-@inject UserManager<BlogUser> _userManager
+@model Comment
+@inject IImageService ImageService
+@inject UserManager<BlogUser> UserManager
 
 
 <div class="mb-5">
     <div class="row m-0 p-0">
         <div class="col-md-3 d-flex align-items-start justify-content-center border-end ">
-            <img src="@_imageService.DecodeImage(Model.BlogUser.ImageData, Model.BlogUser.ContentType)" style="max-width: 120px" class="avatar" alt="@Model.BlogUser image">
+            <img src="@ImageService.DecodeImage(Model.BlogUser.ImageData, Model.BlogUser.ContentType)" style="max-width: 120px" class="avatar" alt="@Model.BlogUser image">
         </div>
         <div class="col-md-9">
             <div class="col-12">
@@ -47,7 +46,7 @@
                 <div class="col-3">
                     @* Render Edit and Delete Buttons *@
 
-                    @if (Model.Moderated is null && Model.Deleted is null && Model.BlogUserId == _userManager.GetUserId(User))
+                    @if (Model.Moderated is null && Model.Deleted is null && Model.BlogUserId == UserManager.GetUserId(User))
                     {
                         <a href="" data-bs-toggle="modal" data-bs-target="#editModal_@Model.Id" class="post-link fw-bolder">EDIT</a>
 

@@ -10,7 +10,7 @@ using TheBlog.Models;
 
 namespace TheBlog.Areas.Identity.Pages.Account.Manage
 {
-    public class SetPasswordModel : PageModel
+    public sealed class SetPasswordModel : PageModel
     {
         private readonly UserManager<BlogUser> _userManager;
         private readonly SignInManager<BlogUser> _signInManager;
@@ -29,7 +29,7 @@ namespace TheBlog.Areas.Identity.Pages.Account.Manage
         [TempData]
         public string StatusMessage { get; set; }
 
-        public class InputModel
+        public sealed class InputModel
         {
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]

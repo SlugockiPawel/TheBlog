@@ -7,7 +7,7 @@ namespace TheBlog.Areas.Identity.Pages
 {
     [AllowAnonymous]
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public class ErrorModel : PageModel
+    public sealed class ErrorModel : PageModel
     {
         public string RequestId { get; set; }
 

@@ -14,7 +14,7 @@ using TheBlog.Models;
 
 namespace TheBlog.Areas.Identity.Pages.Account.Manage
 {
-    public class EnableAuthenticatorModel : PageModel
+    public sealed class EnableAuthenticatorModel : PageModel
     {
         private readonly UserManager<BlogUser> _userManager;
         private readonly ILogger<EnableAuthenticatorModel> _logger;
@@ -45,7 +45,7 @@ namespace TheBlog.Areas.Identity.Pages.Account.Manage
         [BindProperty]
         public InputModel Input { get; set; }
 
-        public class InputModel
+        public sealed class InputModel
         {
             [Required]
             [StringLength(7, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]

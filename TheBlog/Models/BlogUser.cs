@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Runtime.ExceptionServices;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
 namespace TheBlog.Models
 {
-    public class BlogUser : IdentityUser
+    public sealed class BlogUser : IdentityUser
     {
         [Required]
         [StringLength(50, ErrorMessage = "The {0} must be between {2} and {1} characters long.", MinimumLength = 2)]
@@ -34,7 +30,7 @@ namespace TheBlog.Models
         public string FullName => $"{FirstName} {LastName}";
 
         // Navigation properties
-        public virtual ICollection<Category> Categories { get; set; } = new HashSet<Category>();
-        public virtual ICollection<Post> Posts { get; set; } = new HashSet<Post>();
+        public ICollection<Category> Categories { get; set; } = new HashSet<Category>();
+        public ICollection<Post> Posts { get; set; } = new HashSet<Post>();
     }
 }

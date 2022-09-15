@@ -4,7 +4,7 @@ using Npgsql;
 
 namespace TheBlog.Data
 {
-    public class ConnectionService
+    public sealed class ConnectionService
     {
         public static string GetConnectionString(IConfiguration configuration)
         {

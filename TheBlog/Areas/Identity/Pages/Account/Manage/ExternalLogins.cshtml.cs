@@ -10,7 +10,7 @@ using TheBlog.Models;
 
 namespace TheBlog.Areas.Identity.Pages.Account.Manage
 {
-    public class ExternalLoginsModel : PageModel
+    public sealed class ExternalLoginsModel : PageModel
     {
         private readonly UserManager<BlogUser> _userManager;
         private readonly SignInManager<BlogUser> _signInManager;

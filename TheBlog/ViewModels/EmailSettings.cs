@@ -1,6 +1,6 @@
 ﻿namespace TheBlog.ViewModels
 {
-    public class EmailSettings
+    public sealed class EmailSettings
     {
         //We can configure and use an SMTP server (e.g. google)
         public string Email { get; set; }

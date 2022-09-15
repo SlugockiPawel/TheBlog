@@ -10,7 +10,7 @@ using TheBlog.Models;
 
 namespace TheBlog.Services
 {
-    public class DataService
+    public sealed class DataService
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly RoleManager<IdentityRole> _roleManager;

@@ -14,7 +14,7 @@ using TheBlog.Models;
 namespace TheBlog.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
-    public class ResetPasswordModel : PageModel
+    public sealed class ResetPasswordModel : PageModel
     {
         private readonly UserManager<BlogUser> _userManager;
 
@@ -26,7 +26,7 @@ namespace TheBlog.Areas.Identity.Pages.Account
         [BindProperty]
         public InputModel Input { get; set; }
 
-        public class InputModel
+        public sealed class InputModel
         {
             [Required]
             [EmailAddress]

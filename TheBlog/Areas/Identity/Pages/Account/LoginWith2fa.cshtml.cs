@@ -13,7 +13,7 @@ using TheBlog.Models;
 namespace TheBlog.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
-    public class LoginWith2faModel : PageModel
+    public sealed class LoginWith2faModel : PageModel
     {
         private readonly SignInManager<BlogUser> _signInManager;
         private readonly ILogger<LoginWith2faModel> _logger;
@@ -31,7 +31,7 @@ namespace TheBlog.Areas.Identity.Pages.Account
 
         public string ReturnUrl { get; set; }
 
-        public class InputModel
+        public sealed class InputModel
         {
             [Required]
             [StringLength(7, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]

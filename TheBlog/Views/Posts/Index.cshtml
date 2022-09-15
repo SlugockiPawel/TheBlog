@@ -1,6 +1,6 @@
-﻿@inject IImageService _imageService;
+﻿@inject IImageService ImageService;
 @using TheBlog.Services
-@model IEnumerable<TheBlog.Models.Post>
+@model IEnumerable<Post>
 
 @{
     ViewData["Title"] = "Index";
@@ -33,7 +33,7 @@
         {
             <tr>
                 <td>
-                    <img class="img-fluid" width="200px" src="@_imageService.DecodeImage(item.ImageData, item.ContentType)" alt="@item.Title image file"/>
+                    <img class="img-fluid" width="200px" src="@ImageService.DecodeImage(item.ImageData, item.ContentType)" alt="@item.Title image file"/>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Title)

@@ -16,7 +16,7 @@ using TheBlog.Services;
 namespace TheBlog.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
-    public class ResendEmailConfirmationModel : PageModel
+    public sealed class ResendEmailConfirmationModel : PageModel
     {
         private readonly UserManager<BlogUser> _userManager;
         private readonly IBlogEmailSender _emailSender;
@@ -30,7 +30,7 @@ namespace TheBlog.Areas.Identity.Pages.Account
         [BindProperty]
         public InputModel Input { get; set; }
 
-        public class InputModel
+        public sealed class InputModel
         {
             [Required]
             [EmailAddress]

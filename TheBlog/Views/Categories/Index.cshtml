@@ -1,7 +1,6 @@
 ﻿@using TheBlog.Services
-
-@model IEnumerable<TheBlog.Models.Category>
-@inject IImageService _imageService;
+@model IEnumerable<Category>
+@inject IImageService ImageService;
 
 @{
     ViewData["Title"] = "Index";
@@ -53,7 +52,7 @@
                     @Html.DisplayFor(modelItem => blog.Updated)
                 </td>
                 <td>
-                    <img class="img-fluid" width="200px" src="@_imageService.DecodeImage(blog.ImageData, blog.ContentType)" alt="@blog.Name image file"/>
+                    <img class="img-fluid" width="200px" src="@ImageService.DecodeImage(blog.ImageData, blog.ContentType)" alt="@blog.Name image file"/>
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@blog.Id">Edit</a> |

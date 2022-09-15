@@ -12,7 +12,7 @@ using TheBlog.Models;
 
 namespace TheBlog.Areas.Identity.Pages.Account.Manage
 {
-    public class DownloadPersonalDataModel : PageModel
+    public sealed class DownloadPersonalDataModel : PageModel
     {
         private readonly UserManager<BlogUser> _userManager;
         private readonly ILogger<DownloadPersonalDataModel> _logger;

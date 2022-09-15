@@ -10,7 +10,7 @@ using TheBlog.Models;
 
 namespace TheBlog.Areas.Identity.Pages.Account.Manage
 {
-    public class Disable2faModel : PageModel
+    public sealed class Disable2faModel : PageModel
     {
         private readonly UserManager<BlogUser> _userManager;
         private readonly ILogger<Disable2faModel> _logger;

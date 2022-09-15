@@ -12,7 +12,7 @@ using TheBlog.Services;
 namespace TheBlog.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
-    public class RegisterConfirmationModel : PageModel
+    public sealed class RegisterConfirmationModel : PageModel
     {
         private readonly UserManager<BlogUser> _userManager;
         private readonly IBlogEmailSender _sender;

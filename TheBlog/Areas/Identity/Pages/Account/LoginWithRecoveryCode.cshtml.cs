@@ -13,7 +13,7 @@ using TheBlog.Models;
 namespace TheBlog.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
-    public class LoginWithRecoveryCodeModel : PageModel
+    public sealed class LoginWithRecoveryCodeModel : PageModel
     {
         private readonly SignInManager<BlogUser> _signInManager;
         private readonly ILogger<LoginWithRecoveryCodeModel> _logger;
@@ -29,7 +29,7 @@ namespace TheBlog.Areas.Identity.Pages.Account
 
         public string ReturnUrl { get; set; }
 
-        public class InputModel
+        public sealed class InputModel
         {
             [BindProperty]
             [Required]

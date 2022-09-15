@@ -1,12 +1,8 @@
-﻿@using TheBlog.Models
-@using X.PagedList
+﻿@inject IImageService ImageService
 @using X.PagedList.Mvc.Core
 @using X.PagedList.Web.Common
-@using Microsoft.EntityFrameworkCore.Metadata.Internal
-@using System.Collections
 @using TheBlog.Services
-@inject IImageService _imageService
-@model IPagedList<Post>
+@model X.PagedList.IPagedList<Post>
 
 @{
     ViewData["Title"] = "Home Page";
@@ -27,7 +23,7 @@
                     {
                         <article class="row mb-5">
                             <div class="col-12 text-center">
-                                <img class="img-fluid mb-4" width="100%" src="@_imageService.DecodeImage(post.ImageData, post.ContentType)" alt="@post.Title image file">
+                                <img class="img-fluid mb-4" width="100%" src="@ImageService.DecodeImage(post.ImageData, post.ContentType)" alt="@post.Title image file">
                                 <a class="post-link" asp-controller="Categories" asp-action="CategoryIndex" asp-route-categoryName="@post.Category.Name.ToLower()">
                                     @post.Category.Name
                                 </a>
@@ -58,12 +54,12 @@
                         @* </div> *@
 
                         <div class="col-12 d-flex justify-content-center">
-                            @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }),
+                            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }),
                                 new PagedListRenderOptions
                                 {
                                     // UlElementClasses = new string[] {"text-center"},
-                                    LiElementClasses = new string[] { "page-item" },
-                                    PageClasses = new string[] { "page-link" },
+                                    LiElementClasses = new[] { "page-item" },
+                                    PageClasses = new[] { "page-link" }
                                 })
                         </div>
                     </div>

@@ -13,7 +13,7 @@ using TheBlog.Models;
 
 namespace TheBlog.Areas.Identity.Pages.Account.Manage
 {
-    public class DeletePersonalDataModel : PageModel
+    public sealed class DeletePersonalDataModel : PageModel
     {
         private readonly UserManager<BlogUser> _userManager;
         private readonly SignInManager<BlogUser> _signInManager;
@@ -35,7 +35,7 @@ namespace TheBlog.Areas.Identity.Pages.Account.Manage
 
         [BindProperty] public InputModel Input { get; set; }
 
-        public class InputModel
+        public sealed class InputModel
         {
             [Required]
             [DataType(DataType.Password)]

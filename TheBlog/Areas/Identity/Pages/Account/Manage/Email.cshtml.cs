@@ -43,7 +43,7 @@ namespace TheBlog.Areas.Identity.Pages.Account.Manage
         [BindProperty]
         public InputModel Input { get; set; }
 
-        public class InputModel
+        public sealed class InputModel
         {
             [Required]
             [EmailAddress]

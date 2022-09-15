@@ -1,10 +1,6 @@
 ﻿@using TheBlog.Services
-@using Microsoft.AspNetCore.Identity
-@using TheBlog.Enums
-@using System.Linq
-@model TheBlog.Models.Post
-@inject IImageService _imageService
-@inject UserManager<BlogUser> _userManager
+@model Post
+@inject IImageService ImageService
 
 @{
     ViewData["Title"] = "Details";
@@ -18,7 +14,7 @@
                 @* post *@
                 <article class="row mb-0">
                     <div class="col-12 text-center mb-0">
-                        <img class="img-fluid mb-4"  src="@_imageService.DecodeImage(@Model.ImageData, @Model.ContentType)" alt="@Model.Title image file">
+                        <img class="img-fluid mb-4" src="@ImageService.DecodeImage(Model.ImageData, Model.ContentType)" alt="@Model.Title image file">
                         <a class="post-link" asp-controller="Categories" asp-action="CategoryIndex" asp-route-categoryName="@Model.Category.Name.ToLower()">
                             @Model.Category.Name
                         </a>
@@ -50,7 +46,7 @@
 
                     <h4 id="commentSection" class="text-center">@Model.Comments.Count COMMENT(S)</h4>
                     <div class="border-partial"></div>
-                    
+
                     @if (TempData["Error"] is not null)
                     {
                         <div class="text-center text-danger fw-bold my-3">@TempData["Error"].ToString()</div>
