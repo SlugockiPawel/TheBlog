@@ -13,6 +13,12 @@
 
 	<ItemGroup>
 		<None Include="compilerconfig.json" />
+		<None Include="wwwroot\assets\images\logo\logo1-biale.svg" />
+		<None Include="wwwroot\assets\images\logo\logo1.svg" />
+		<None Include="wwwroot\assets\images\logo\logo2-biale.svg" />
+		<None Include="wwwroot\assets\images\logo\logo2.svg" />
+		<None Include="wwwroot\assets\images\logo\logo3-biale.svg" />
+		<None Include="wwwroot\assets\images\logo\logo3.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
