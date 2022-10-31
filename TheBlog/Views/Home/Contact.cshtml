@@ -6,7 +6,7 @@
 
 <main class="container container-narrow mt-5">
     <div class="row mt-5">
-            
+
         <div class="col-12 mb-4  text-center">
             <img src="/assets/images/contact.png" width="100%" alt="">
         </div>
@@ -15,12 +15,9 @@
             <h3 class="post-title">Contact Me</h3>
         </div>
         <div class="border-partial"></div>
-        <div class="col-12 mb-4">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi, praesentium? Nihil quibusdam beatae nam a aliquam nulla, aspernatur praesentium explicabo repellat consequuntur delectus illum commodi quod. Vel sint sed nemo?
-            Voluptatum eveatem accusamus in quae aliquam id veniam ab explicabo vitae, similique magni. Earum doloremque ratione eaque.ci illum veniam fugit? Numquam rem est voluptas, quisquam error architecto quos quis sed praesentium hic ex, impedit eligendi alias consequatur quibusdam non natus illo vitae voluptatum nesciunt magni!</p>
-        </div>
+
     </div>
-   
+
     <form asp-controller="Home" asp-action="Contact" class="row gy-2 gx-2">
         <div asp-validation-summary="All" class="text-danger"></div>
         <div class="col-md-6 col-12 order-1">
@@ -64,14 +61,14 @@
 
         <div class="col-12 text-end order-5">
             <div id="success"></div>
-                <button class="btn btn-primary form-button shadow-none" id="sendMessageButton" type="submit">Send</button>
-            </div>
+            <button class="btn btn-primary form-button shadow-none" id="sendMessageButton" type="submit">Send</button>
+        </div>
     </form>
 </main>
 
 
 @section Scripts{
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 
-  
+
 }
