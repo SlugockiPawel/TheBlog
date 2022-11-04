@@ -29,7 +29,11 @@ public sealed class Startup
         // Configuration.GetConnectionString("DefaultConnection")));
 
         services.AddDbContext<ApplicationDbContext>(
-            options => options.UseNpgsql(ConnectionService.GetConnectionString(Configuration))
+            options =>
+                options.UseNpgsql(
+                    ConnectionService.GetConnectionString(Configuration),
+                    o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)
+                )
         );
         // Configuration.GetConnectionString("PostgresConnection")));
 
@@ -52,9 +56,7 @@ public sealed class Startup
             .AddAuthentication()
             .AddGoogle(options =>
             {
-                var googleAuthNSection = Configuration.GetSection(
-                    "Authentication:Google"
-                );
+                var googleAuthNSection = Configuration.GetSection("Authentication:Google");
 
                 options.ClientId = googleAuthNSection["ClientId"];
                 options.ClientSecret = googleAuthNSection["ClientSecret"];
@@ -110,10 +112,7 @@ public sealed class Startup
                 new { controller = "Posts", action = "Details" }
             );
 
-            endpoints.MapControllerRoute(
-                "default",
-                "{controller=Home}/{action=Index}/{id?}"
-            );
+            endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
 
             endpoints.MapRazorPages();
         });
