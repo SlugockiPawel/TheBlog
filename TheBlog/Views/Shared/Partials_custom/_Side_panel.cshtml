@@ -24,13 +24,12 @@
         <div class="col-12 border-partial"></div>
         <div class="col-12">
             <ul class="ps-0 bg-white ">
-                @foreach (var category in ViewData["Categories"] as IList<Category>)
+                @foreach (var category in (ViewData["Categories"] as IList<Category>)!)
                 {
                     <li class="categories">
                         <a class="category-link" asp-controller="Categories" asp-action="CategoryIndex" asp-route-categoryName="@category.Name.ToLower()">@category.Name</a>
                     </li>
                 }
-
             </ul>
         </div>
     </div>
