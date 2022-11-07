@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using TheBlog.Data;
@@ -32,7 +33,8 @@ public class PostsApiController : ControllerBase
                         Title = p.Title,
                         Abstract = p.Abstract,
                         ImageData = p.ImageData,
-                        ContentType = p.ContentType
+                        ContentType = p.ContentType,
+                        Created = DateTime.SpecifyKind(p.Created, DateTimeKind.Utc)
                     }
             )
             .ToList();
