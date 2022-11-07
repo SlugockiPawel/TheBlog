@@ -12,38 +12,38 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Content Remove="compilerconfig.json"/>
+        <Content Remove="compilerconfig.json" />
     </ItemGroup>
 
     <ItemGroup>
-        <None Include="compilerconfig.json"/>
-        <None Include="wwwroot\assets\images\logo\logo1-biale.svg"/>
-        <None Include="wwwroot\assets\images\logo\logo1.svg"/>
-        <None Include="wwwroot\assets\images\logo\logo2-biale.svg"/>
-        <None Include="wwwroot\assets\images\logo\logo2.svg"/>
-        <None Include="wwwroot\assets\images\logo\logo3-biale.svg"/>
-        <None Include="wwwroot\assets\images\logo\logo3.svg"/>
+        <None Include="compilerconfig.json" />
+        <None Include="wwwroot\assets\images\logo\logo1-biale.svg" />
+        <None Include="wwwroot\assets\images\logo\logo1.svg" />
+        <None Include="wwwroot\assets\images\logo\logo2-biale.svg" />
+        <None Include="wwwroot\assets\images\logo\logo2.svg" />
+        <None Include="wwwroot\assets\images\logo\logo3-biale.svg" />
+        <None Include="wwwroot\assets\images\logo\logo3.svg" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="MailKit" Version="2.15.0"/>
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="6.0.0"/>
-        <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.0"/>
-        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.0"/>
-        <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.0"/>
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.0"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.0"/>
+        <PackageReference Include="MailKit" Version="2.15.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="6.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.0"/>
-        <PackageReference Include="MimeKit" Version="2.15.1"/>
-        <PackageReference Include="Npgsql" Version="6.0.0"/>
-        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.0"/>
-        <PackageReference Include="X.PagedList" Version="8.1.0"/>
-        <PackageReference Include="X.PagedList.Mvc.Core" Version="8.1.0"/>
-        <PackageReference Include="X.PagedList.Web.Common" Version="8.0.7"/>
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.0" />
+        <PackageReference Include="MimeKit" Version="2.15.1" />
+        <PackageReference Include="Npgsql" Version="6.0.0" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.0" />
+        <PackageReference Include="X.PagedList" Version="8.1.0" />
+        <PackageReference Include="X.PagedList.Mvc.Core" Version="8.1.0" />
+        <PackageReference Include="X.PagedList.Web.Common" Version="8.0.7" />
     </ItemGroup>
 
 </Project>
