@@ -39,6 +39,11 @@ public class PostsApiController : ControllerBase
             )
             .ToList();
 
-        return Ok(posts);
+        if (posts.Count > 0)
+        {
+            return Ok(posts);
+        }
+
+        return NotFound();
     }
 }
