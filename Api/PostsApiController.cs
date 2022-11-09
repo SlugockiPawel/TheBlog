@@ -31,6 +31,7 @@ public class PostsApiController : ControllerBase
                     new PostDto
                     {
                         Title = p.Title,
+                        Slug = p.Slug,
                         Abstract = p.Abstract,
                         ImageData = p.ImageData,
                         ContentType = p.ContentType,
