@@ -27,7 +27,8 @@
                 @foreach (var category in (ViewData["Categories"] as IList<Category>)!)
                 {
                     <li class="categories">
-                        <a class="category-link" asp-controller="Categories" asp-action="CategoryIndex" asp-route-categoryName="@category.Name.ToLower()">@category.Name</a>
+                        <a class="category-link" asp-controller="Categories" asp-action="CategoryIndex" 
+                           asp-route-categoryName="@category.Name.ToLower()">@category.Name</a>
                     </li>
                 }
             </ul>
@@ -44,17 +45,17 @@
         <div class="col-12">
             <ul class="list-group list-group-horizontal justify-content-center follow-icons ">
                 <li>
-                    <a class="" href="">
+                    <a class="" target="_blank" href="https://www.linkedin.com/in/slugocki/">
                         <i class="fab fa-linkedin-in " aria-hidden="true" title="Linked In"></i>
                     </a>
                 </li>
                 <li>
-                    <a href="">
+                    <a target="_blank" href="https://github.com/SlugockiPawel">
                         <i class="fab fa-github mx-2" aria-hidden="true" title="Github"></i>
                     </a>
                 </li>
                 <li>
-                    <a href="">
+                    <a target="_blank" href="https://www.slugocki.com.pl">
                         <i class="fab fa-slack-hash" aria-hidden="true" title="Portfolio Page"></i>
                     </a>
                 </li>
